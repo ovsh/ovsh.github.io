@@ -30,52 +30,48 @@ html, body {
     min-height: 110%;
 }
 
-
-
 a:link {
-  color: white;
-  text-decoration: underline;
+    color: white;
+    text-decoration: underline;
 }
 
 a:visited {
-  color: white;
-  text-decoration: underline;
+    color: white;
+    text-decoration: underline;
 }
 
 a:hover {
-  color: rgba(255,255,255,0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .four {
-  background-color: rgb(220,57,43);
+    background-color: rgb(220, 57, 43);
     color: white;
     min-height: 110%;
 }
 
 a.b:link {
-  color: black;
+    color: black;
 }
 
 a.b:hover {
-  color: rgba(0,0,0,0.5);
+    color: rgba(0, 0, 0, 0.5);
 }
 
 a.b:visited {
-  color: black;
+    color: black;
 }
 
 .five {
-    background: rgb(33,150,243);
+    background: rgb(33, 150, 243);
     color: white;
     min-height: 110%;
 }
 
-
 .title {
     z-index: 2;
     position: relative;
-    left: 20%;
-    /*transform: translate(0%, 80%);*/
+    margin: 0 auto;
 }
 
 h2 {
