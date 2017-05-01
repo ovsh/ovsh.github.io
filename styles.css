@@ -3,6 +3,13 @@ html, body {
     font-family: monospace;
 }
 
+@media (max-width: 480px) {
+    h2 {
+        font-weight: 200;
+        font-size: 4em;
+    }
+}
+
 .block {
     position: relative;
     margin: 0 auto;
@@ -77,5 +84,4 @@ a.b:visited {
 h2 {
     font-weight: 200;
     font-size: 2em;
-    /*color: rgb(84, 209, 255);*/
 }
