@@ -75,7 +75,17 @@ a.b:visited {
     margin: 0 auto;
 }
 
+
+
 h2 {
     font-weight: 200;
     font-size: 2em;
+}
+
+@media only screen and (max-width: 480px) {
+    h2 {
+        font-weight: 200;
+        font-size: 2em;
+        padding: 10px;
+    }
 }
