@@ -1,0 +1,85 @@
+html, body {
+    height: 100%;
+    font-family: monospace;
+}
+
+.block {
+    position: relative;
+    margin: 0 auto;
+    min-height: 100%;
+    text-align: center;
+    z-index: 2;
+    background: black;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+
+.one {
+    background: black;
+}
+
+.two {
+    background: rgb(78, 42, 132);
+    min-height: 110%;
+}
+
+.three {
+    background: white;
+    color: black;
+    min-height: 110%;
+}
+
+
+
+a:link {
+  color: white;
+  text-decoration: underline;
+}
+
+a:visited {
+  color: white;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: rgba(255,255,255,0.8);
+}
+
+.four {
+  background-color: rgb(220,57,43);
+    color: white;
+    min-height: 110%;
+}
+
+a.b:link {
+  color: black;
+}
+
+a.b:hover {
+  color: rgba(0,0,0,0.5);
+}
+
+a.b:visited {
+  color: black;
+}
+
+.five {
+    background: rgb(33,150,243);
+    color: white;
+    min-height: 110%;
+}
+
+
+.title {
+    z-index: 2;
+    position: relative;
+    left: 20%;
+    /*transform: translate(0%, 80%);*/
+}
+
+h2 {
+    font-weight: 200;
+    font-size: 2em;
+    /*color: rgb(84, 209, 255);*/
+}
