@@ -1,8 +1,6 @@
 html, body {
     height: 100%;
-    font-family: monospace;
 }
-
 
 .block {
     position: relative;
@@ -14,6 +12,30 @@ html, body {
     display: flex;
     align-items: center;
     color: white;
+}
+
+.details {
+    position: relative;
+    margin: 0 auto;
+    min-height: 120%;
+    z-index: 2;
+    background: white;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+
+
+.exp_title {
+
+  text-align: center;
+}
+
+.item {
+      margin: 0 auto;
 }
 
 .one {
@@ -52,7 +74,7 @@ a:hover {
 }
 
 a.b:link {
-    color: black;
+    color: white;
 }
 
 a.b:hover {
@@ -60,7 +82,7 @@ a.b:hover {
 }
 
 a.b:visited {
-    color: black;
+    color: white;
 }
 
 .five {
@@ -75,11 +97,19 @@ a.b:visited {
     margin: 0 auto;
 }
 
-
-
 h2 {
     font-weight: 200;
     font-size: 2em;
+}
+
+
+a.details:link {
+  text-decoration: none;
+}
+
+a.details:hover {
+  text-decoration: none;
+  color: red;
 }
 
 @media only screen and (max-width: 480px) {
