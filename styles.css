@@ -27,15 +27,12 @@ html, body {
     color: black;
 }
 
-
-
 .exp_title {
-
-  text-align: center;
+    text-align: center;
 }
 
 .item {
-      margin: 0 auto;
+    margin: 0 auto;
 }
 
 .one {
@@ -102,14 +99,13 @@ h2 {
     font-size: 2em;
 }
 
-
 a.details:link {
-  text-decoration: none;
+    text-decoration: none;
 }
 
 a.details:hover {
-  text-decoration: none;
-  color: red;
+    text-decoration: none;
+    color: red;
 }
 
 @media only screen and (max-width: 480px) {
@@ -117,5 +113,12 @@ a.details:hover {
         font-weight: 200;
         font-size: 2em;
         padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .details {
+        padding-top: 3.5em;
+        padding-bottom: 3.5em;
     }
 }
