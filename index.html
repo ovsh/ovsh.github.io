@@ -3,174 +3,280 @@
 
 <head>
 
-    <meta http-equiv="X-UA-Compatible" name="viewport" content="width=device-width,initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" name="viewport" content="width=device-width,initial-scale=1.0" />
 
-    <title>Miki Ovshievich</title>
-    <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
-    <link rel="stylesheet" href="./styles.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Courier">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="semantic/semantic.min.js"></script>
-    <script src="./index.js"></script>
+  <title>Miki Ovshievich</title>
+  <link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Courier">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- <script src="semantic/semantic.min.js" async></script> -->
+  <script src="./index.js"></script>
 
 </head>
 
 
 <body>
-    <div class="block one" id="home">
-        <div class="title">
-            <h2>Hi, I'm Miki. I'm an aspiring Software Engineer & 2x Startup Founder originally from Israel.
-        </div>
+  <div class="block one" id="home">
+
+    <div class="title">
+
     </div>
 
-    <div class="block two" id="nu">
-        <div class="title">
-                <h2>I'm currently studying Computer Science at Northwestern University.</h2>
-        </div>
+    <div class="title">
+      <h2>Hi, I'm Miki.</h2>
+      <div class="basic component">
+        <button id="idf-btn" class="ui basic inverted button">Veteran</button>
+        <button id="nu-btn" class="ui basic inverted button">Computer Science</button>
+        <button id="vc-btn" class="ui basic inverted button">Venture Capital</button>
+
+        <button id="reshaped-btn" class="ui basic inverted button">Reshaped</button>
+        <button id="ngp-btn" class="ui basic inverted button">Private Equity</button>
+        <button id="spotlight-btn" class="ui basic inverted button">Spotlight</button>
+        <br />
+        <!-- <button id="dog-btn" class="ui basic inverted button">Bonus</button> -->
+      </div>
     </div>
 
-    <div class="details" id="idf">
-
-
-        <div class="ui divided items container">
-            <h2 class="exp_title">Current</h2>
-            <div class="item">
-                <div class="ui tiny image">
-                    <img src="./assets/reshaped.png">
+    <div class="title">
+      <div id="reshaped">
+        <div class="ui  container segment left aligned">
+          <div class="ui  items">
+            <div class=" item">
+              <div class="ui tiny image">
+                <img src="./assets/reshaped.png">
+              </div>
+              <div class="content">
+                <div class="header">Reshaped, LLC</div>
+                <div class="meta">
+                  CEO & Co-Founder
                 </div>
-                <div class="content">
-                    <div class="header">Reshaped, LLC</div>
-                    <div class="meta">
-                        CEO & Co-Founder
-                    </div>
-                    <div class="description">
-                        <p>Hardware startup. Building the world’s first instant-wash dishwasher. The product aims to eliminate the need ($53.3b dollar industry) for foodservice disposables (single-use cups, dinnerware and utensils), and transform dishwashing
-                            to a chore-free, seamless experience.</p>
+                <div class="description">
+                  <p>Hardware startup. Building the world’s first instant-wash dishwasher. The product aims to eliminate the need ($53.3b dollar industry) for foodservice disposables (single-use cups, dinnerware and utensils), and transform dishwashing to
+                    a chore-free, seamless experience.</p>
 
-                        <p>Winner of the Northwestern University 2017 Venture Grant.</p>
-                    </div>
-                    <div class="extra">
-                      <a href="http://www.reshaped.co">
-                        <div class="ui basic right floated  black button">
-                            Website
-                            <i class="right chevron icon"></i>
-                        </div>
-                      </a>
-                    </div>
+                  <p>Awarded the Northwestern University 2017 Venture Grant.</p>
                 </div>
+                <div class="extra">
+                  <a href="http://www.reshaped.co">
+                    <div class="ui  right floated black button">
+                      Website
+                      <i class="right chevron icon"></i>
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
-            <div class="item">
-                <div class="ui tiny image">
-                    <img src="./assets/spotlight.png">
-                </div>
-                <div class="content">
-                    <div class="header">Spotlight</div>
-                    <div class="meta">
-                        Software Engineer & Founder
-                    </div>
-                    <div class="description">
-                        <p>Software startup. Intra-school entrepreneurship platform & collaboration hub.</p>
-                    </div>
-                    <div class="extra">
-                        <div class="ui basic right floated  disabled black button">
-                            Work in Progress
-                            <i class="right chevron icon"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="ui tiny image">
-                  <img src="./assets/406.png">
-                </div>
-                <div class="content">
-                    <div class="header">.406 Ventures</div>
-                    <div class="meta">
-                        Student VC Fellow
-                    </div>
-                    <div class="description">
-                        <p></p>
-                    </div>
-                    <div class="extra">
-                      <a href="http://www.406ventures.com/">
-                        <div class="ui basic right floated  black button">
-                            Website
-                            <i class="right chevron icon"></i>
-                        </div>
-                      </a>
-                    </div>
-                </div>
-            </div>
-                        <div class="item">
-                            <div class="ui tiny image">
-                                <img src="./assets/ngp.png">
-                            </div>
-                            <div class="content">
-                                <div class="header">NextGen Growth Partners</div>
-                                <div class="meta">
-                                    Incoming Private Equity Intern
-                                </div>
-                                <div class="description">
-                                    <p></p>
-                                </div>
-                                <div class="extra">
-                                  <a href="http://nextgengp.com/">
-                                    <div class="ui basic right floated  black button">
-                                        Website
-                                        <i class="right chevron icon"></i>
-                                    </div></a>
-                                </div>
-                            </div>
-                        </div>
-            <h2 class="exp_title">Past</h2>
-            <div class="item">
-                <div class="ui tiny image">
-                    <img src="./assets/idf.png">
-                </div>
-                <div class="content">
-                    <a class="header">Israeli Defense Forces</a>
-                    <div class="meta">
-                        <p>Lieutenant, Human Operations Officer</p>
-                    </div>
-                    <div class="description">
-                        <p>Oversaw all human operations for 30,000 personnel during wartime and peacetime. Won 2x National Military Innovation Awards for two years in a row. Lead 7 human operations teams comprising of Officers, NCOs, and soldiers.</p>
-                    </div>
-                    <div class="extra">
-                      <a href="https://en.wikipedia.org/wiki/Israel_Defense_Forces">
-                        <div class="ui basic right floated  black button">
-                            Website
-                            <i class="right chevron icon"></i>
-                        </div></a>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
 
-    <div class="block four" id="kaiya">
-        <div class="title">
-              <h2>Bonus: My dog caught commiting a <a class="b" href="./assets/kaiya.jpg">crime</a>.</h2>
+      </div>
+
+      <div id="idf">
+        <div class="ui  container segment left aligned">
+          <div class="ui  items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img src="./assets/idf.png">
+              </div>
+              <div class="content">
+                <div class="header">Israeli Defense Forces</div>
+                <div class="meta">
+                  <p>Lieutenant, Human Operations Officer</p>
+                </div>
+                <div class="description">
+                  <p>Oversaw all human operations for 30,000 personnel during wartime and peacetime. Won 2x National Military Innovation Awards. Lead 7 human operations teams comprising of Officers, NCOs, and soldiers.
+                  </p>
+                  <p>
+                    Awarded National Innovation Award (Israel Independence Day 2014): <br/> Initiated a quarter-long immersive Officer Recruitment Program for all officer school candidates from the southern C4I command. The program successfully increased
+                    the acceptance rate to Military Officer School at a rate of 300% in a period of 3 months, was accredited as an official military program and implemented throughout all the C4I corps.</p>
+                </div>
+                <div class="extra">
+                  <a href="https://en.wikipedia.org/wiki/Israel_Defense_Forces">
+                    <div class="ui  right floated black button">
+                      Website
+                      <i class="right chevron icon"></i>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    </div>
+      </div>
 
+      <div id="nu">
+        <div class="ui  container segment left aligned">
+          <div class="ui  items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img src="./assets/nu-ln.png">
+              </div>
+              <div class="content">
+                <div class="header">Northwestern University</div>
+                <div class="meta">
+                  Bachelor of Science (B.Sc.), '19 Computer Science
 
-
-    <div class="block last" id="contact">
-        <div class="title">
-            <h2>Contact me <a href="mailto:mik.ovsh@gmail.com?Subject=Wow%20your%20dog%20is%20so%20cute!" target="_top">here</a> or on <a href="https://www.linkedin.com/in/mikiov/">Linkedin</a>.</h2>
+                </div>
+                <div class="description">
+                  <p>Current student in the McCormick School of Engineering.</p>
+                  <p>Dean's list with High Honors: Winter 2017.</p>
+                </div>
+                <div class="extra">
+                  <a href="https://www.mccormick.northwestern.edu/">
+                    <div class="ui  right floated black button">
+                      Website
+                      <i class="right chevron icon"></i>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      <div id="vc">
+        <div class="ui  container segment left aligned">
+          <div class="ui  items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img src="./assets/406.png">
+              </div>
+              <div class="content">
+                <div class="header">.406 Ventures</div>
+                <div class="meta">
+                  Student VC Fellow
+                </div>
+                <div class="description">
+                  <p>Student Fellow for Boston based venture capital firm that invests in early-stage technology companies. </p>
+                  <p>
+                    Provide deal flow sourcing and analysis, expand firm engagement with students, and evaluate indexed start-ups as well as Fellow-founded companies on bi-weekly conference calls.
+                  </p>
+                </div>
+                <div class="extra">
+                  <a href="http://www.406ventures.com/">
+                    <div class="ui  right floated black button">
+                      Website
+                      <i class="right chevron icon"></i>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div id="spotlight">
+        <div class="ui  container segment left aligned">
+          <div class="ui  items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img src="./assets/spotlight.png">
+              </div>
+              <div class="content">
+                <div class="header">Spotlight</div>
+                <div class="meta">
+                  Software Engineer & Founder
+                </div>
+                <div class="description">
+                  <p>Software startup: School opportunities discovery platform. Find and join active startups / student groups / research labs in your school.</p> <p>Launching Q3 2017.</p>
+                </div>
+                <div class="extra">
+                  <div class="ui  right floated black button disabled">
+                    Work in Progress
+                    <i class="right chevron icon"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="ngp">
+        <div class="ui  container segment left aligned">
+          <div class="ui  items">
+            <div class="item">
+              <div class="ui tiny image">
+                <img src="./assets/ngp.png">
+              </div>
+              <div class="content">
+                <div class="header">NextGen Growth Partners</div>
+                <div class="meta">
+                  Incoming Private Equity Intern
+                </div>
+                <div class="description">
+                  <p> Investment thesis development, industry analyses, company due diligences, deal sourcing, modeling & structuring.</p>
+                </div>
+                <div class="extra">
+                  <a href="http://nextgengp.com/">
+                    <div class="ui  right floated black button">
+                      Website
+                      <i class="right chevron icon"></i>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
+    <!-- end of 3rd block -->
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <div class="block four" id="kaiya">
+    <div class="title">
+      <h3>Bonus: My dog caught commiting a <a class="b" href="./assets/kaiya.jpg">crime</a>.</h3>
+    </div>
+  </div>
+
+
+
+  <div class="block last" id="contact">
+    <div class="title">
+      <h3>Contact me <a href="mailto:mik.ovsh@gmail.com?Subject=Wow%20your%20dog%20is%20so%20cute!" target="_top">here</a> or on <a href="https://www.linkedin.com/in/mikiov/">Linkedin</a>.</h3>
+    </div>
+  </div>
 
 
 </body>
 
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  (function(i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    (i[r] =
+      i[r] ||
+      function() {
+        (i[r].q = i[r].q || []).push(arguments);
+      }), (i[r].l = 1 * new Date());
+    (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga"
+  );
 
-  ga('create', 'UA-98451071-1', 'auto');
-  ga('send', 'pageview');
-
+  ga("create", "UA-98451071-1", "auto");
+  ga("send", "pageview");
 </script>
