@@ -29,6 +29,9 @@ body {
 
 .block.one {
   background: white;
+  background-image: url("./assets/bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .two {
@@ -43,7 +46,7 @@ body {
 }
 
 a:link {
-  color: white;
+  color:  white;
   text-decoration: underline;
 }
 
@@ -57,13 +60,13 @@ a:hover {
 }
 
 .four {
-  background-color: rgb(220, 57, 43);
-  color: white;
+  background-color: white;
+  /*color: white;*/
   min-height: 110%;
 }
 
 a.b:link {
-  color: white;
+  color:  rgb(220, 57, 43);
 }
 
 a.b:hover {
@@ -71,7 +74,7 @@ a.b:hover {
 }
 
 a.b:visited {
-  color: white;
+  color:  rgb(220, 57, 43);
 }
 
 .five {
@@ -112,6 +115,12 @@ h2 {
 }
 
 h3 {
+  color: rgb(220, 57, 43);
+  font-weight: 200;
+  font-size: 1.5rem;
+}
+
+h3.a {
   color: white;
   font-weight: 200;
   font-size: 1.5rem;
