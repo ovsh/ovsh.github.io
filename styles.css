@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -27,7 +28,7 @@ html, body {
 }
 
 .block.one {
-  background: black;
+  background: white;
 }
 
 .two {
@@ -37,7 +38,7 @@ html, body {
 
 .three {
   background: white;
-  color: black;
+  color: white;
   min-height: 110%;
 }
 
@@ -105,7 +106,7 @@ a.b:visited {
 }
 
 h2 {
-  color: white;
+  color: black;
   font-weight: 200;
   font-size: 3em;
 }
@@ -128,7 +129,6 @@ a.details:hover {
 .display-none {
   display: none;
 }
-
 
 /*.ui.items>.item>.content>.header {
   color: white;
