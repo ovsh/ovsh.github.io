@@ -57,26 +57,32 @@ a{color:inherit}
 .hero{padding:64px 0 56px;text-align:center;position:relative}
 .hero .wrap{position:relative;z-index:2}
 
-/* the sky IS the page: a drawn pixel-art sky. Banded gradient (hard stops,
-   the medium's own dither), hand-drawn SVG clouds on a rect grid,
-   crispEdges everywhere. */
-.sky{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+/* the sky belongs to the hero: a drawn pixel-art sky. Banded gradient
+   (hard stops, the medium's own dither), hand-drawn SVG clouds on a rect
+   grid, crispEdges everywhere. It scrolls away with the hero and fades
+   into plain paper, so content sections sit on solid white. (Absolute,
+   not fixed: a full-viewport fixed layer caused paint dropout on scroll
+   in some browsers.) */
+.sky{position:absolute;top:0;left:0;right:0;height:clamp(780px,130vh,1400px);z-index:-1;
+  pointer-events:none;overflow:hidden;
   background:linear-gradient(180deg,
     #d3e5f8 0 14%,#dfecfa 14% 32%,#eaf3fc 32% 52%,
-    #f5faff 52% 74%,#ecf3fb 74% 100%)}
+    #f5faff 52% 74%,#ecf3fb 74% 100%);
+  -webkit-mask-image:linear-gradient(180deg,#000 70%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 70%,transparent 100%)}
 .puff{position:absolute}
 .puff svg{display:block;width:100%;height:auto;shape-rendering:crispEdges}
-.p1{width:320px;top:9vh;left:16vw;
+.p1{width:320px;top:72px;left:16vw;
   animation:drift 170s ease-in-out -60s infinite alternate}
-.p2{width:300px;top:11vh;right:7vw;
+.p2{width:300px;top:84px;right:7vw;
   animation:drift 220s ease-in-out -150s infinite alternate-reverse}
-.p3{width:230px;top:38vh;left:-3vw;opacity:.85;
+.p3{width:230px;top:34%;left:-3vw;opacity:.85;
   animation:drift 140s ease-in-out -40s infinite alternate}
-.p4{width:210px;top:52vh;right:-2vw;opacity:.7;
+.p4{width:210px;top:46%;right:-2vw;opacity:.7;
   animation:drift 120s ease-in-out -90s infinite alternate-reverse}
-.p5{width:420px;bottom:4vh;left:16vw;opacity:.8;
+.p5{width:420px;top:72%;left:16vw;opacity:.8;
   animation:drift 190s ease-in-out -20s infinite alternate}
-.p6{width:170px;top:26vh;left:56vw;opacity:.75;
+.p6{width:170px;top:200px;left:56vw;opacity:.75;
   animation:drift 150s ease-in-out -110s infinite alternate}
 @keyframes drift{from{transform:translateX(-4vw)}to{transform:translateX(5vw)}}
 .puff svg{animation:bob 7s ease-in-out infinite alternate}
@@ -97,13 +103,13 @@ a{color:inherit}
 @keyframes charge{0%,8%{fill:#e9f2fc}9%,64%{fill:#bfe4c9}65%,100%{fill:#e9f2fc}}
 
 /* pixel sun, rays twinkling in frames */
-.sun{position:absolute;width:84px;top:15vh;left:7vw;opacity:.9}
+.sun{position:absolute;width:84px;top:112px;left:7vw;opacity:.9}
 .sun svg{display:block;width:100%;height:auto;shape-rendering:crispEdges}
 .rays{animation:twinkle 4s steps(1,end) infinite}
 @keyframes twinkle{0%,54%{opacity:1}55%,100%{opacity:.4}}
 
 /* gulls */
-.birds{position:absolute;width:72px;top:31vh;left:0;opacity:.75;
+.birds{position:absolute;width:72px;top:240px;left:0;opacity:.75;
   animation:fly 75s linear -14s infinite}
 .birds svg{display:block;width:100%;height:auto;shape-rendering:crispEdges}
 @keyframes fly{from{transform:translateX(-14vw)}to{transform:translateX(112vw)}}
@@ -184,6 +190,10 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
   section{padding-top:60px}
   .case{padding:56px 0;border-radius:20px}
   .hero{border-radius:0 0 20px 20px}
+  .sky{height:clamp(720px,120vh,1100px)}
+  .p1{width:190px}.p2{width:170px}.p3{width:140px}
+  .p4{width:130px}.p5{width:250px}.p6{width:100px}
+  .sun{width:58px}.strike{width:38px;top:120px}
 }
 </style>
 </head>
