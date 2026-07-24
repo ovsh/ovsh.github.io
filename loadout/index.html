@@ -168,9 +168,16 @@ applies as you read.
   }
   .secmeta { font-family: var(--mono); font-size: 13px; color: var(--mute); margin-top: 8px; }
 
-  /* client window (screenshot) */
+  /* client window (screenshot), bracketed as the viewport's equipped item */
+  .clientwrap { position: relative; margin-top: 34px; }
+  .clientwrap .brk { position: absolute; width: 22px; height: 22px; z-index: 1; }
+  .clientwrap .brk::before { content: ""; position: absolute; inset: 0; border: 3px solid var(--buff); }
+  .clientwrap .tl { top: -11px; left: -11px; } .clientwrap .tl::before { border-right: 0; border-bottom: 0; }
+  .clientwrap .tr { top: -11px; right: -11px; } .clientwrap .tr::before { border-left: 0; border-bottom: 0; }
+  .clientwrap .bl { bottom: -11px; left: -11px; } .clientwrap .bl::before { border-right: 0; border-top: 0; }
+  .clientwrap .br { bottom: -11px; right: -11px; } .clientwrap .br::before { border-left: 0; border-top: 0; }
   .clientframe {
-    margin-top: 34px; background: var(--client);
+    background: var(--client);
     border: 1px solid rgba(255, 255, 255, .08);
     border-radius: 12px; overflow: hidden;
     box-shadow: 0 24px 60px rgba(23, 24, 26, .28);
@@ -331,7 +338,6 @@ applies as you read.
     starts.</p>
 
     <div class="actions">
-      <!-- REPLACE: verify this asset URL resolves once the v0.5.0 GitHub release is published -->
       <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
         <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
         DEPLOY TO MENU BAR
@@ -356,8 +362,11 @@ applies as you read.
       <h2>The library. Every skill, every tool, one window.</h2>
       <p class="secmeta">~/.claude/skills · ~/.agents/skills · ~/.cursor/skills · ~/.config/opencode/skills</p>
     </div>
-    <div class="clientframe">
-      <img src="assets/library.png" alt="The Loadout library window. A sidebar lists system prompts and skills, the middle column lists 43 skills with green status dots, and the detail pane shows the architect skill with an On, Name, Manual, Off control and its rendered documentation.">
+    <div class="clientwrap">
+      <span class="brk tl" aria-hidden="true"></span><span class="brk tr" aria-hidden="true"></span><span class="brk bl" aria-hidden="true"></span><span class="brk br" aria-hidden="true"></span>
+      <div class="clientframe">
+        <img src="assets/library.png" alt="The Loadout library window. A sidebar lists system prompts and skills, the middle column lists 43 skills with green status dots, and the detail pane shows the architect skill with an On, Name, Manual, Off control and its rendered documentation.">
+      </div>
     </div>
     <p class="clientcap">
       <span class="live">● 43 of 43 active</span>
@@ -470,8 +479,7 @@ applies as you read.
         <p class="secmeta">one DMG, or two commands from source</p>
       </div>
       <div class="actions">
-        <!-- REPLACE: verify this asset URL resolves once the v0.5.0 GitHub release is published -->
-        <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
+          <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
           <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
           DOWNLOAD FOR MACOS
         </a>
