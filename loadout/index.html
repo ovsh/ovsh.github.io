@@ -1,37 +1,47 @@
 <!doctype html>
 <!--
-DIRECTION CONTRACT (impeccable, seed f7b02b17, assigned index 6, user-confirmed;
-copy revised 2026-07-24 after user feedback: patch grammar stays visual, the
-words carry the offer plainly)
+DIRECTION CONTRACT (canon standing preference, user-chosen 2026-07-24;
+recorded in PRODUCT.md Brand Commitments. No roll: the standing exit was
+taken. Bar named by the user: raycast.com, studied live before this build.)
 
-THESIS: The page borrows the balance-patch dispatch's visual grammar, but the
-headline sells the product, not the conceit. It refuses the category default:
-dark gradient hero, feature card grid.
+THESIS: The conventional modern Mac-app landing page, played completely
+straight at Raycast's craft level. It refuses the themed conceit (the
+rejected patch-notes world) and the decorated hero: no gradients, no
+illustration. Screenshots are real app windows only; mechanism panels are
+typographic evidence (real JSON, real paths), never fake UI. A real
+prompt-editor capture is excluded deliberately: it would publish the
+user's private CLAUDE.md contents.
 
-OWN-WORLD: Bone dispatch-document ground, near-black embedded client windows,
-Archivo variable (expanded black display, plain body), mono metadata, diff
-inks as the only saturated color: buff green +, nerf red -, deploy terracotta
-for the one primary action. Heavy 3px ink rules; HUD corner brackets mark
-exactly one equipped thing per viewport.
+OWN-WORLD: Near-black instrument ground (#0A0B0D), Archivo at normal width,
+hairline cards, quiet paired section headers, mono reserved for real paths
+and JSON, one dim green accent (the app icon's equipped-slot green), one
+off-white glowing CTA.
 
-STORY: A developer lands, reads one line that says what this is, sees the
-real menu bar and the real library window, reads how the switch works,
+STORY: A developer lands, reads one plain line, sees the real library
+window, learns the three mechanisms with evidence, checks the safety facts,
 downloads.
 
-FIRST VIEWPORT: Wordmark row, headline stating the offer, version + date +
-platform in mono, one supporting sentence, Download button + build-from-source
-link, then the real menu bar strip with a bracket callout on the Loadout item.
+FIRST VIEWPORT: Fixed pill nav; centered hero statement, one supporting
+sentence, Download for Mac + build-from-source, mono fact line; the real
+library window rising beneath.
 
-FORM: Patch-notes dispatch, candidate 6 of the loadout-world list (roll
-assigned). Motion: change entries apply on scroll; nothing else moves.
+FORM: Category canon at full fidelity. Signature moment: the skillOverrides
+toggle demo edits real JSON. Everything else reveals once and holds still.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loadout: skill manager for Claude Code, Cursor, and OpenCode</title>
-<meta name="description" content="A Mac menu-bar app that shows every skill installed for Claude Code, Cursor, and OpenCode, and turns each one on or off. Free, MIT, signed and notarized.">
+<meta name="description" content="A free Mac menu-bar app that shows every skill installed for Claude Code, Cursor, and OpenCode, and turns each one on or off. Also edits global prompts: CLAUDE.md and Codex's AGENTS.md. Open source, signed and notarized.">
 <link rel="icon" type="image/png" href="assets/appicon.png">
+<script>document.documentElement.classList.add("js");</script>
+<meta property="og:title" content="Loadout: skill manager for Claude Code, Cursor, and OpenCode">
+<meta property="og:description" content="Every skill your AI tools have, one switch each. Free Mac menu-bar app, open source, signed and notarized.">
+<meta property="og:image" content="https://ovsh.github.io/loadout/assets/library.png">
+<meta property="og:url" content="https://ovsh.github.io/loadout/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 <style>
   @font-face {
     font-family: "Archivo";
@@ -41,420 +51,560 @@ assigned). Motion: change entries apply on scroll; nothing else moves.
     font-display: swap;
   }
   :root {
-    --bone: #F4F2EC;
-    --sheet: #FBFAF7;
-    --ink: #17181A;
-    --mute: #5D6167;
-    --faint: #9A9DA2;
-    --hairline: rgba(23, 24, 26, .14);
-    --buff: #2E7D46;
-    --nerf: #BE4934;
-    --deploy: #C2593A;
-    --client: #101012;
-    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+    --bg: #0A0B0D;
+    --panel: #111216;
+    --panel-2: #14161A;
+    --fg: #F2F3F5;
+    --mute: #9BA0A6;
+    --dim: #6C7076;
+    --line: rgba(255, 255, 255, .08);
+    --line-strong: rgba(255, 255, 255, .16);
+    --green: #6CAB82;
+    --green-text: #8FC4A4;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+    --ease: cubic-bezier(.19, 1, .22, 1);
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
   body {
-    background: var(--bone);
-    color: var(--ink);
-    font-family: "Archivo", system-ui, sans-serif;
-    font-size: 17px;
-    line-height: 1.6;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Archivo", system-ui, -apple-system, sans-serif;
+    font-size: 16.5px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   a { color: inherit; }
   img { max-width: 100%; height: auto; display: block; }
-  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+  ::selection { background: rgba(108, 171, 130, .35); }
+  .wrap { max-width: 1152px; margin: 0 auto; padding: 0 24px; }
 
-  /* ---------- masthead ---------- */
-  .topbar {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    padding: 18px 0 14px;
-    border-bottom: 3px solid var(--ink);
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
-  .topbar img { width: 28px; height: 28px; }
-  .topbar .word {
-    font-weight: 800; font-stretch: 118%; letter-spacing: .06em;
-    font-size: 15px;
-  }
-  .topbar nav { margin-left: auto; display: flex; gap: 22px; }
-  .topbar nav a {
-    font-family: var(--mono); font-size: 12.5px; text-decoration: none;
-    color: var(--mute);
-  }
-  .topbar nav a:hover { color: var(--ink); }
 
-  .masthead { padding: 56px 0 0; }
-  h1.headline {
-    font-weight: 850; font-stretch: 122%;
-    font-size: clamp(34px, 6.6vw, 76px);
-    line-height: 1.02; letter-spacing: -0.015em;
-    max-width: 16ch;
+  /* ---------- nav ---------- */
+  .nav-shell {
+    position: fixed; top: 14px; left: 0; right: 0; z-index: 40;
+    padding: 0 16px;
   }
-  h1.headline .on { color: var(--buff); }
-  h1.headline .off { color: var(--nerf); }
-  .patchmeta {
-    font-family: var(--mono); font-size: 13.5px; color: var(--mute);
-    margin-top: 18px;
+  nav.pill {
+    max-width: 960px; margin: 0 auto;
+    display: flex; align-items: center; gap: 26px;
+    padding: 9px 10px 9px 16px;
+    background: rgba(14, 15, 18, .72);
+    -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    transition: background .25s ease, border-color .25s ease, box-shadow .25s ease;
   }
-  .offer {
-    max-width: 56ch; margin-top: 22px;
-    font-size: clamp(18px, 2.4vw, 22px); line-height: 1.5; font-weight: 500;
+  nav.pill.scrolled {
+    background: rgba(10, 11, 13, .88);
+    border-color: var(--line-strong);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
   }
-  .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 26px; margin: 30px 0 8px; }
-  .deploy {
-    position: relative;
-    background: var(--deploy); color: #FFF7F2; text-decoration: none;
-    font-weight: 750; font-stretch: 112%; letter-spacing: .1em; font-size: 15px;
-    padding: 15px 30px; display: inline-flex; align-items: center; gap: 12px;
-    transition: background .18s ease;
+  .brand {
+    display: flex; align-items: center; gap: 9px;
+    text-decoration: none; font-weight: 640; font-size: 15.5px;
+    letter-spacing: .005em;
   }
-  .deploy:hover { background: #AD4C30; }
-  .deploy .brk { position: absolute; width: 12px; height: 12px; opacity: 0; transition: opacity .18s ease; }
-  .deploy .brk::before { content: ""; position: absolute; inset: 0; border: 2.5px solid var(--ink); }
-  .deploy .tl { top: -7px; left: -7px; } .deploy .tl::before { border-right: 0; border-bottom: 0; }
-  .deploy .tr { top: -7px; right: -7px; } .deploy .tr::before { border-left: 0; border-bottom: 0; }
-  .deploy .bl { bottom: -7px; left: -7px; } .deploy .bl::before { border-right: 0; border-top: 0; }
-  .deploy .br { bottom: -7px; right: -7px; } .deploy .br::before { border-left: 0; border-top: 0; }
-  .deploy:hover .brk { opacity: 1; }
-  .altaction { font-family: var(--mono); font-size: 13.5px; color: var(--mute); }
-  .altaction a { color: var(--ink); }
-  .subnote { font-family: var(--mono); font-size: 12.5px; color: var(--faint); margin-bottom: 34px; }
+  .brand img { width: 26px; height: 26px; }
+  nav.pill .links { margin-left: auto; display: flex; gap: 4px; }
+  nav.pill .links a {
+    text-decoration: none; color: var(--mute); font-size: 14px;
+    font-weight: 480; padding: 7px 11px; border-radius: 8px;
+    transition: color .15s ease, background .15s ease;
+  }
+  nav.pill .links a:hover { color: var(--fg); background: rgba(255, 255, 255, .05); }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: #E9EAEC; color: #17181B;
+    text-decoration: none; font-weight: 560; font-size: 14px;
+    padding: 8px 14px; border-radius: 10px; border: 0; cursor: pointer;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 0 14px rgba(255, 255, 255, .14),
+                inset 0 -1px 0 rgba(0, 0, 0, .18);
+    transition: background .15s ease, box-shadow .2s ease;
+  }
+  .btn:hover { background: #FFFFFF; box-shadow: 0 0 0 1px rgba(0, 0, 0, .55), 0 0 22px rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(0, 0, 0, .18); }
 
-  /* menu bar strip */
-  .stripzone { border-top: 1px solid var(--hairline); padding: 26px 0 60px; }
-  .striplabel { font-family: var(--mono); font-size: 12.5px; color: var(--mute); margin-bottom: 14px; }
-  .striplabel b { color: var(--buff); font-weight: 600; }
-  .stripframe { position: relative; display: inline-block; max-width: 100%; }
-  .stripframe img {
-    width: 460px; max-width: 100%; border-radius: 6px;
-    box-shadow: 0 10px 28px rgba(23, 24, 26, .18);
+  /* ---------- hero ---------- */
+  header.hero { padding: 160px 0 0; text-align: center; }
+  h1 {
+    font-size: clamp(40px, 6.4vw, 68px);
+    font-weight: 640;
+    line-height: 1.04;
+    letter-spacing: -.03em;
+    max-width: 17ch;
+    margin: 0 auto;
+    text-wrap: balance;
   }
-  .callout {
-    position: absolute; top: -5px; left: 0.8%; width: 10.4%; height: calc(100% + 10px);
-    pointer-events: none;
+  .hero p.sub {
+    max-width: 54ch; margin: 26px auto 0;
+    font-size: clamp(16.5px, 2vw, 18.5px); color: var(--mute); font-weight: 440;
+    text-wrap: balance;
   }
-  .callout i { position: absolute; width: 9px; height: 9px; }
-  .callout i::before { content: ""; position: absolute; inset: 0; border: 2px solid var(--buff); }
-  .callout .tl { top: 0; left: 0; } .callout .tl::before { border-right: 0; border-bottom: 0; }
-  .callout .tr { top: 0; right: 0; } .callout .tr::before { border-left: 0; border-bottom: 0; }
-  .callout .bl { bottom: 0; left: 0; } .callout .bl::before { border-right: 0; border-top: 0; }
-  .callout .br { bottom: 0; right: 0; } .callout .br::before { border-left: 0; border-top: 0; }
+  .hero .actions {
+    display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+    gap: 14px 22px; margin-top: 34px;
+  }
+  .btn.big { font-size: 15.5px; padding: 12px 22px; font-weight: 590; }
+  .ghost {
+    display: inline-flex; align-items: center; gap: 7px;
+    color: var(--mute); text-decoration: none; font-size: 15px; font-weight: 480;
+    padding: 12px 6px;
+    transition: color .15s ease;
+  }
+  .ghost:hover { color: var(--fg); }
+  .ghost svg { opacity: .7; }
+  .hero .facts {
+    margin-top: 22px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--dim);
+    letter-spacing: .01em;
+  }
+  .hero .facts span + span::before { content: "·"; margin: 0 10px; color: var(--dim); }
+
+  .hero-shot { margin-top: 64px; padding-bottom: 40px; }
+  .window {
+    border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, .55), 0 4px 16px rgba(0, 0, 0, .4);
+    background: #101012;
+  }
 
   /* ---------- sections ---------- */
-  section { padding: 64px 0 0; }
-  .rule { border-top: 3px solid var(--ink); padding-top: 18px; }
-  h2 {
-    font-weight: 800; font-stretch: 120%;
-    font-size: clamp(28px, 4.4vw, 44px); line-height: 1.08;
-    letter-spacing: -0.01em; max-width: 24ch;
-  }
-  .secmeta { font-family: var(--mono); font-size: 13px; color: var(--mute); margin-top: 8px; }
+  section.wrap { padding-top: 150px; }
+  .pair { margin-bottom: 44px; }
+  .pair h2 { font-size: 21px; font-weight: 560; letter-spacing: -.005em; line-height: 1.45; }
+  .pair .echo { font-size: 21px; font-weight: 560; color: var(--dim); letter-spacing: -.005em; line-height: 1.45; }
 
-  /* client window (screenshot), bracketed as the viewport's equipped item */
-  .clientwrap { position: relative; margin-top: 34px; }
-  .clientwrap .brk { position: absolute; width: 22px; height: 22px; z-index: 1; }
-  .clientwrap .brk::before { content: ""; position: absolute; inset: 0; border: 3px solid var(--buff); }
-  .clientwrap .tl { top: -11px; left: -11px; } .clientwrap .tl::before { border-right: 0; border-bottom: 0; }
-  .clientwrap .tr { top: -11px; right: -11px; } .clientwrap .tr::before { border-left: 0; border-bottom: 0; }
-  .clientwrap .bl { bottom: -11px; left: -11px; } .clientwrap .bl::before { border-right: 0; border-top: 0; }
-  .clientwrap .br { bottom: -11px; right: -11px; } .clientwrap .br::before { border-left: 0; border-top: 0; }
-  .clientframe {
-    background: var(--client);
-    border: 1px solid rgba(255, 255, 255, .08);
+  /* menu bar section */
+  .menubar-grid {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 64px; align-items: center;
+  }
+  .menubar-grid .copy p { color: var(--mute); max-width: 44ch; }
+  .menubar-grid .copy p + p { margin-top: 14px; }
+  .menubar-grid .copy strong { color: var(--fg); font-weight: 560; }
+  .mb-stage { display: flex; flex-direction: column; align-items: flex-start; gap: 0; }
+  .mb-wrap { position: relative; width: min(400px, 100%); }
+  .mb-strip {
+    width: 100%;
+    border-radius: 8px; overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 10px 32px rgba(0, 0, 0, .45);
+  }
+  .mb-ring {
+    position: absolute; left: 1%; top: 50%; transform: translateY(-50%);
+    width: 8.5%; aspect-ratio: 1;
+    border: 1.5px solid var(--green); border-radius: 9px;
+    pointer-events: none;
+  }
+  .mb-pop {
+    width: min(300px, 88%);
+    margin: 14px 0 0 24px;
     border-radius: 12px; overflow: hidden;
-    box-shadow: 0 24px 60px rgba(23, 24, 26, .28);
-  }
-  .clientcap {
-    display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline;
-    font-family: var(--mono); font-size: 12.5px; color: var(--mute);
-    margin-top: 14px;
-  }
-  .clientcap .live { color: var(--buff); }
-
-  /* change entries */
-  .entry {
-    display: grid; grid-template-columns: 56px 1fr; gap: 0 22px;
-    padding: 34px 0 38px; border-bottom: 1px solid var(--hairline);
-  }
-  .entry:last-of-type { border-bottom: 0; }
-  .marker {
-    font-family: var(--mono); font-weight: 700; font-size: 30px; line-height: 1;
-    color: var(--buff); padding-top: 4px;
-  }
-  .pending .marker { opacity: 0; transform: scale(.6); }
-  .applied .marker {
-    opacity: 1; transform: scale(1);
-    transition: opacity .4s ease, transform .45s cubic-bezier(.16, 1, .3, 1);
-  }
-  .entry h3 {
-    font-weight: 750; font-stretch: 114%; font-size: 23px; line-height: 1.2;
-    position: relative; display: inline-block; padding-bottom: 6px;
-  }
-  .entry h3::after {
-    content: ""; position: absolute; left: 0; bottom: 0; height: 3px;
-    width: 100%; background: var(--buff);
-    transform-origin: left;
-  }
-  .pending h3::after { transform: scaleX(0); }
-  .applied h3::after {
-    transform: scaleX(1);
-    transition: transform .6s cubic-bezier(.16, 1, .3, 1) .15s;
-  }
-  .entry p { max-width: 68ch; margin-top: 12px; color: var(--ink); }
-  .entry p + p { margin-top: 10px; }
-  code {
-    font-family: var(--mono); font-size: .86em;
-    background: rgba(23, 24, 26, .06);
-    border: 1px solid var(--hairline);
-    border-radius: 4px; padding: 1px 5px;
-    white-space: nowrap;
-  }
-  .entry .shots {
-    margin-top: 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;
-  }
-  .entry .shots figure { margin: 0; }
-  .entry .shots img {
-    border-radius: 10px;
-    box-shadow: 0 14px 34px rgba(23, 24, 26, .2);
-  }
-  .entry .shots figcaption {
-    font-family: var(--mono); font-size: 12px; color: var(--faint); margin-top: 10px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 56px rgba(0, 0, 0, .55);
   }
 
-  /* safety facts */
-  .facts { margin-top: 26px; display: grid; gap: 18px; max-width: 70ch; }
-  .facts p { padding-left: 24px; border-left: 1px solid var(--ink); }
+  /* how it works rows */
+  .mech { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 64px; align-items: center; }
+  .mech + .mech { margin-top: 96px; }
+  .mech h3 { font-size: 18px; font-weight: 580; letter-spacing: -.005em; }
+  .mech .copy p { color: var(--mute); margin-top: 12px; max-width: 46ch; }
+  .mech .copy p code, .trust p code {
+    font-family: var(--mono); font-size: .86em; color: var(--fg);
+    background: rgba(255, 255, 255, .06); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1.5px 5px; white-space: nowrap;
+  }
+  .artifact {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    overflow: hidden;
+    transition: border-color .2s ease;
+  }
+  .artifact:hover { border-color: var(--line-strong); }
+  .artifact .bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 11px 16px; border-bottom: 1px solid var(--line);
+    font-family: var(--mono); font-size: 12px; color: var(--dim);
+  }
+  .artifact .bar .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); flex: none; }
+  .artifact pre {
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.75;
+    color: var(--mute); padding: 18px 20px; overflow-x: auto; tab-size: 2;
+  }
+  .artifact pre .k { color: var(--fg); }
+  .artifact pre .v { color: var(--green-text); }
+  .artifact pre .c { color: var(--dim); }
 
-  /* deploy section */
-  .deployzone {
-    margin-top: 70px; background: var(--ink); color: var(--bone);
-    padding: 58px 0 62px;
+  /* toggle demo */
+  .demo-row {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px 16px; border-bottom: 1px solid var(--line);
   }
-  .deployzone h2 { color: var(--bone); }
-  .deployzone .secmeta { color: rgba(244, 242, 236, .55); }
-  .deployzone .actions { margin-top: 30px; }
-  .deployzone .deploy .brk::before { border-color: var(--bone); }
-  .deployzone .altaction { color: rgba(244, 242, 236, .6); }
-  .deployzone .altaction a { color: var(--bone); }
-  .buildblock {
-    margin-top: 30px; font-family: var(--mono); font-size: 13.5px;
-    background: #1D1D22; border: 1px solid rgba(255, 255, 255, .1);
-    border-radius: 8px; padding: 18px 20px; max-width: 560px;
-    color: #C8CAD0; overflow-x: auto;
+  .switch {
+    position: relative; width: 40px; height: 24px; flex: none;
+    border-radius: 12px; border: 1px solid var(--line-strong);
+    background: rgba(255, 255, 255, .08); cursor: pointer;
+    transition: background .25s ease, border-color .25s ease;
   }
-  .buildblock .c { color: #6E7280; }
-  .deployzone .fineprint {
-    font-family: var(--mono); font-size: 12.5px;
-    color: rgba(244, 242, 236, .55); margin-top: 26px; max-width: 66ch;
+  .switch .knob {
+    position: absolute; top: 2px; left: 2px; width: 18px; height: 18px;
+    border-radius: 50%; background: #D8DADD;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .4);
+    transition: transform .3s var(--ease);
   }
-  .deployzone .fineprint a { color: rgba(244, 242, 236, .8); }
+  .switch[aria-checked="true"] { background: var(--green); border-color: var(--green); }
+  .switch[aria-checked="true"] .knob { transform: translateX(16px); }
+  .demo-row .name { font-family: var(--mono); font-size: 13.5px; color: var(--fg); }
+  .demo-row .state { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--dim); }
+  #ov-line { transition: opacity .35s ease; }
+  #ov-line.gone { opacity: 0; }
+  .demo-hint { font-size: 13px; color: var(--dim); margin-top: 12px; }
 
-  footer.site {
-    background: var(--ink); color: rgba(244, 242, 236, .55);
-    padding: 0 0 40px;
+  /* shelf diagram */
+  .shelf-step { display: flex; align-items: baseline; gap: 12px; padding: 4px 0; }
+  .shelf-step .tag {
+    flex: none; width: 34px; text-align: right;
+    font-family: var(--mono); font-size: 11.5px; color: var(--dim);
   }
-  footer.site .wrap {
-    border-top: 1px solid rgba(244, 242, 236, .16); padding-top: 22px;
-    display: flex; flex-wrap: wrap; gap: 8px 26px;
-    font-family: var(--mono); font-size: 12.5px;
-  }
-  footer.site a { color: rgba(244, 242, 236, .8); text-decoration: none; }
-  footer.site a:hover { color: var(--bone); }
+  .shelf-step .path { font-family: var(--mono); font-size: 13px; color: var(--mute); overflow-wrap: anywhere; white-space: normal; }
+  .shelf-step .path b { color: var(--fg); font-weight: 560; }
+  .shelf-note { border-top: 1px solid var(--line); padding: 12px 20px 14px; font-size: 13px; color: var(--dim); }
 
-  @media (max-width: 640px) {
-    body { font-size: 16px; }
-    .entry { grid-template-columns: 34px 1fr; gap: 0 14px; }
-    .marker { font-size: 22px; }
+  /* prompt files */
+  .file-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px;
   }
+  .file-row + .file-row { border-top: 1px solid var(--line); }
+  .file-row .fname { font-family: var(--mono); font-size: 13.5px; color: var(--fg); }
+  .file-row .fpath { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--dim); overflow-wrap: anywhere; }
+  .file-row svg { flex: none; opacity: .55; }
+
+  /* trust */
+  .trust-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+  .trust dl { border-top: 1px solid var(--line); }
+  .trust dt {
+    font-weight: 560; font-size: 15.5px; padding-top: 18px;
+  }
+  .trust dd { padding: 4px 0 18px; border-bottom: 1px solid var(--line); color: var(--mute); font-size: 14.5px; }
+  .trust dd code {
+    font-family: var(--mono); font-size: .88em; color: var(--fg);
+    background: rgba(255, 255, 255, .06); border: 1px solid var(--line);
+    border-radius: 5px; padding: 1.5px 5px;
+  }
+  .trust dd a { color: var(--mute); }
+  .trust dd a:hover { color: var(--fg); }
+  .trust .shot-note { font-size: 13px; color: var(--dim); margin-top: 14px; }
+
+  /* download close */
+  section.close.wrap { padding-top: 160px; text-align: center; }
+  .close img.icon { width: 72px; height: 72px; margin: 0 auto 26px; }
+  .close h2 { font-size: clamp(30px, 4.4vw, 44px); font-weight: 640; letter-spacing: -.025em; line-height: 1.1; }
+  .close p { color: var(--mute); margin: 16px auto 0; max-width: 44ch; }
+  .close .actions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 14px 22px; margin-top: 32px; }
+  .close .facts { margin-top: 20px; font-family: var(--mono); font-size: 12.5px; color: var(--dim); }
+  .close .facts span + span::before { content: "·"; margin: 0 10px; }
+
+  /* footer */
+  footer { margin-top: 140px; border-top: 1px solid var(--line); }
+  .foot {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 3fr);
+    gap: 40px 48px;
+    padding: 44px 0 24px; font-size: 13.5px; color: var(--dim);
+  }
+  .foot .fbrand { display: flex; align-items: center; gap: 8px; color: var(--fg); font-weight: 560; font-size: 14.5px; }
+  .foot .fbrand img { width: 22px; height: 22px; }
+  .foot .fabout { margin-top: 12px; max-width: 34ch; line-height: 1.6; }
+  .foot h4 { font-size: 12.5px; font-weight: 560; color: var(--mute); margin-bottom: 12px; letter-spacing: .01em; }
+  .foot ul { list-style: none; }
+  .foot li + li { margin-top: 9px; }
+  .foot a { color: var(--dim); text-decoration: none; transition: color .15s ease; }
+  .foot a:hover { color: var(--fg); }
+  .foot-base {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px 24px;
+    padding: 20px 0 36px; border-top: 1px solid var(--line);
+    font-size: 12.5px; color: var(--dim);
+  }
+  .foot-base .spacer { margin-left: auto; }
+
+  /* reveal motion (hidden state only when JS is running; see head script) */
+  html.js .rv { opacity: 0; transform: translateY(14px); }
+  html.js .rv.in { opacity: 1; transform: none; transition: opacity .7s var(--ease), transform .7s var(--ease); }
+  .hero .rv.in:nth-child(2) { transition-delay: .08s; }
+  .hero .rv.in:nth-child(3) { transition-delay: .16s; }
+  .hero .rv.in:nth-child(4) { transition-delay: .24s; }
+  html.js .hero-shot.rv { transform: translateY(18px) scale(.985); }
+  html.js .hero-shot.rv.in { transform: none; transition-duration: .9s; }
   @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    .marker, .applied .marker { opacity: 1 !important; transform: none !important; transition: none !important; }
-    .entry h3::after, .applied h3::after { transform: scaleX(1) !important; transition: none !important; }
+    html.js .rv, html.js .hero-shot.rv { opacity: 1; transform: none; }
+    html.js .rv.in { transition: none; }
+    .switch .knob, #ov-line { transition: none; }
+  }
+
+  /* responsive */
+  @media (max-width: 920px) {
+    nav.pill { gap: 12px; padding: 8px 8px 8px 12px; }
+    nav.pill .links { gap: 0; }
+    nav.pill .links a { padding: 6px 7px; font-size: 13px; }
+    section.wrap { padding-top: 110px; }
+    header.hero { padding-top: 136px; }
+    .menubar-grid, .mech, .trust-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+    .mech + .mech { margin-top: 72px; }
+    .mech .copy p, .menubar-grid .copy p { max-width: 60ch; }
+    section.close.wrap { padding-top: 120px; }
+    .foot { grid-template-columns: minmax(0, 1fr); gap: 30px; padding-top: 36px; }
+  }
+  @media (max-width: 620px) {
+    .nav-shell { padding: 0 10px; top: 10px; }
+    .brand .word { display: none; }
+    nav.pill { gap: 8px; }
+    nav.pill .links a { font-size: 12.5px; padding: 6px 6px; }
+    nav.pill .btn { font-size: 13px; padding: 7px 11px; }
   }
 </style>
 </head>
 <body>
 
-<header class="wrap topbar">
-  <img src="assets/appicon.png" alt="Loadout app icon: a dark tile with a grid of gear slots, one equipped in green">
-  <span class="word">LOADOUT</span>
-  <nav>
-    <a href="#how">how it works</a>
-    <a href="https://github.com/ovsh/skillbox">github</a>
-    <a href="#get">download</a>
+<div class="nav-shell">
+  <nav class="pill" aria-label="Main">
+    <a class="brand" href="#top"><img src="assets/appicon.png" alt="" width="26" height="26"><span class="word">Loadout</span></a>
+    <div class="links">
+      <a href="#how">How it works</a>
+      <a href="#safety">Safety</a>
+      <a href="https://github.com/ovsh/skillbox" target="_blank" rel="noopener">GitHub</a>
+    </div>
+    <a class="btn" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">Download</a>
   </nav>
+</div>
+
+<header class="hero wrap" id="top">
+  <h1 class="rv hero-rv">Every skill your AI tools have, one switch each.</h1>
+  <p class="sub rv hero-rv">Loadout is a free menu-bar app for the Mac. It lists every skill installed for Claude Code, Cursor, and OpenCode, live from disk, and turns each one on or off. It edits your global agent prompts too.</p>
+  <div class="actions rv hero-rv">
+    <a class="btn big" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">Download for Mac</a>
+    <a class="ghost" href="https://github.com/ovsh/skillbox#building-from-source" target="_blank" rel="noopener">Build from source
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+  <p class="facts rv hero-rv"><span>Free, MIT</span><span>Signed and notarized</span><span>macOS 14+</span></p>
+  <div class="hero-shot rv hero-rv">
+    <img class="window" src="assets/library.png" alt="The Loadout library window: 43 skills listed with green active dots, and the how skill open with its On, Name, Manual, and Off controls." width="1290" height="791">
+  </div>
 </header>
 
 <main>
-  <div class="wrap masthead">
-    <h1 class="headline">Every skill your AI tools have, one switch each.</h1>
-    <p class="patchmeta">v0.5.0 · 2026-07-24 · macOS 14+</p>
-    <p class="offer">Loadout sits in the Mac menu bar, lists every skill
-    installed for Claude Code, Cursor, and OpenCode, and turns any of them
-    <span style="color:var(--buff)">on</span> or
-    <span style="color:var(--nerf)">off</span>. Every change is reversible.</p>
-
-    <div class="actions">
-      <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
-        <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
-        DOWNLOAD FOR MACOS
-      </a>
-      <span class="altaction">or <a href="https://github.com/ovsh/skillbox">build from source</a></span>
+  <section class="wrap" id="menubar">
+    <div class="pair rv">
+      <h2>Lives in the menu bar.</h2>
+      <p class="echo">What's active, in two seconds.</p>
     </div>
-    <p class="subnote">Free · MIT · signed and notarized</p>
-  </div>
-
-  <div class="wrap stripzone">
-    <p class="striplabel">Loadout is the one in <b>green brackets</b>. That's
-    the whole interface until you need more.</p>
-    <span class="stripframe">
-      <img src="assets/menubar.png" width="460" alt="A real macOS menu bar strip. The leftmost icon, a small backpack, is Loadout, marked with green corner brackets.">
-      <span class="callout" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></span>
-    </span>
-  </div>
-
-  <section class="wrap" id="library">
-    <div class="rule">
-      <h2>Every skill, every tool, one window.</h2>
-      <p class="secmeta">~/.claude/skills · ~/.agents/skills · ~/.cursor/skills · ~/.config/opencode/skills</p>
-    </div>
-    <div class="clientwrap">
-      <span class="brk tl" aria-hidden="true"></span><span class="brk tr" aria-hidden="true"></span><span class="brk bl" aria-hidden="true"></span><span class="brk br" aria-hidden="true"></span>
-      <div class="clientframe">
-        <img src="assets/library.png" alt="The Loadout library window. A sidebar lists system prompts and skills, the middle column lists 43 skills with green status dots, and the detail pane shows the architect skill with an On, Name, Manual, Off control and its rendered documentation.">
+    <div class="menubar-grid">
+      <div class="copy rv">
+        <p>The backpack next to your clock is the whole app most of the day. Click it and the popover shows your most recently changed skills, a switch for each, and the count of what's on.</p>
+        <p>For real housekeeping, <strong>Open Loadout</strong> brings up the library: every skill across all four skills folders (<code>~/.claude</code>, <code>~/.cursor</code>, <code>~/.config/opencode</code>, and the shared <code>~/.agents</code>), searchable, with multi-select and bulk switches. Directory watchers keep both views current, so a <code>git pull</code> in your skills folder shows up on its own.</p>
+      </div>
+      <div class="mb-stage rv">
+        <div class="mb-wrap">
+          <img class="mb-strip" src="assets/menubar.png" alt="The macOS menu bar with the Loadout backpack icon ringed on the far left of the icon strip." width="400" height="45">
+          <span class="mb-ring" aria-hidden="true"></span>
+        </div>
+        <img class="mb-pop" src="assets/popover.png" alt="The Loadout popover: five skills with green switches, 43 of 43 active, and Open Loadout and Quit actions." width="291" height="264">
       </div>
     </div>
-    <p class="clientcap">
-      <span class="live">● 43 of 43 active</span>
-      <span>green dot = Claude can use it right now</span>
-    </p>
   </section>
 
   <section class="wrap" id="how">
-    <div class="rule">
-      <h2>How the switch works</h2>
+    <div class="pair rv">
+      <h2>How it works.</h2>
+      <p class="echo">Two switch mechanisms, one prompt editor. All reversible.</p>
     </div>
 
-    <article class="entry">
-      <div class="marker" aria-hidden="true">+</div>
-      <div>
-        <h3>Claude Code: the setting it already understands</h3>
-        <p>The switch writes <code>skillOverrides</code> in
-        <code>~/.claude/settings.json</code>, the per-skill setting Claude Code
-        already supports. Claude Code watches that file, so toggles reach live
-        sessions without a restart. The skill's folder never moves.</p>
-        <div class="shots">
-          <figure>
-            <img src="assets/popover.png" width="315" alt="The Loadout menu bar popover: 43 of 43 active, five recently touched skills with green dots and switches, Open Loadout and Quit actions.">
-            <figcaption>recent skills, right in the menu bar</figcaption>
-          </figure>
+    <div class="mech">
+      <div class="copy rv">
+        <h3>Claude Code and the Agent SDK</h3>
+        <p>The switch writes Claude Code's documented <code>skillOverrides</code> map in <code>~/.claude/settings.json</code>. Claude Code watches that file, so a toggle reaches live sessions, and apps built on Anthropic's Agent SDK read the same map. The skill's folder never moves.</p>
+        <p>Four states per skill, matching the documented values: on, name only, user-invocable only, off.</p>
+      </div>
+      <div class="artifact rv">
+        <div class="demo-row">
+          <button class="switch" id="ov-switch" role="switch" aria-checked="false" aria-label="Toggle the architect skill">
+            <span class="knob"></span>
+          </button>
+          <span class="name">architect</span>
+          <span class="state" id="ov-state">off</span>
         </div>
+        <div class="bar"><span class="dot"></span>~/.claude/settings.json</div>
+        <pre>{
+  <span class="k">"skillOverrides"</span>: {
+<span id="ov-line">    <span class="k">"architect"</span>: <span class="v">"off"</span>,
+</span>    <span class="k">"design-motion"</span>: <span class="v">"name-only"</span>
+  }
+}</pre>
       </div>
-    </article>
-
-    <article class="entry">
-      <div class="marker" aria-hidden="true">+</div>
-      <div>
-        <h3>Cursor and OpenCode: the folder moves, and moves back</h3>
-        <p>Those tools have no off switch, so off means the skill folder is
-        parked in Loadout's Application Support folder. On brings it back
-        byte-identical. Symlinked skills are never moved.</p>
-      </div>
-    </article>
-
-    <article class="entry">
-      <div class="marker" aria-hidden="true">+</div>
-      <div>
-        <h3>The whole kit at once</h3>
-        <p>Select all, or ⌘-click a set, and turn everything on or off in one
-        click. Delete moves folders to the Trash, never <code>rm</code>.</p>
-        <div class="shots">
-          <figure>
-            <img src="assets/bulk.png" width="640" alt="The library window with all 43 skills checked. The detail pane reads 43 skills selected and offers Turn On, Turn Off, and Delete actions.">
-            <figcaption>all 43 selected</figcaption>
-          </figure>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry">
-      <div class="marker" aria-hidden="true">+</div>
-      <div>
-        <h3>Edit CLAUDE.md and AGENTS.md in the same window</h3>
-        <p><code>~/.claude/CLAUDE.md</code> and <code>~/.codex/AGENTS.md</code>
-        are read before every session. Loadout shows them next to your skills,
-        with autosave that won't overwrite changes made on disk.</p>
-      </div>
-    </article>
-  </section>
-
-  <section class="wrap" id="safety">
-    <div class="rule">
-      <h2>Built to be trusted with your files</h2>
     </div>
-    <div class="facts">
-      <p>Before its first ever write, Loadout backs up
-      <code>settings.json</code>. After that it patches exactly one key and
-      round-trips everything else untouched.</p>
-      <p>No destructive code path exists: off is a settings entry, shelving
-      moves back, delete goes to the Trash.</p>
-      <p>MIT-licensed Swift, with all file handling in a separate library
-      covered by its own test suite.</p>
-      <p>Two network calls exist: a GitHub update check, and PostHog analytics
-      under a random install id. Events carry skill folder names, never file
-      contents. Both are in the source, where you can read them.</p>
+
+    <div class="mech">
+      <div class="copy rv">
+        <h3>Cursor, the agents directory, OpenCode</h3>
+        <p>These tools have no override map, so their switches shelve the folder instead. Off moves it to Loadout's shelf; on moves it back, byte-identical. Symlinked skills are never moved.</p>
+      </div>
+      <div class="artifact rv">
+        <div class="bar"><span class="dot"></span>lossless shelving</div>
+        <pre style="padding:14px 20px 8px"><span class="shelf-step"><span class="tag">off</span><span class="path">~/.cursor/skills/<b>arena</b>/ &nbsp;&rarr;&nbsp; ~/Library/Application Support/Loadout/shelf/cursor/<b>arena</b>/</span></span><span class="shelf-step"><span class="tag">on</span><span class="path">restored to ~/.cursor/skills/<b>arena</b>/, byte-identical</span></span></pre>
+        <div class="shelf-note">The shelf is a plain folder. Even without Loadout, your skills are right there.</div>
+      </div>
+    </div>
+
+    <div class="mech">
+      <div class="copy rv">
+        <h3>Global prompts, same window</h3>
+        <p>Two global instruction files open in the same window for quick edits: CLAUDE.md for Claude Code, and AGENTS.md for OpenAI's Codex CLI. Codex is a bonus here: Loadout doesn't manage its skills, just this one file. Autosave is revision-guarded: if a file changes on disk while you type, Loadout refuses to clobber the newer copy.</p>
+      </div>
+      <div class="artifact rv">
+        <div class="bar"><span class="dot"></span>system prompts</div>
+        <div class="file-row">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8.5 1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5L8.5 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8.5 1v3.5H12" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="fname">CLAUDE.md</span>
+          <span class="fpath">~/.claude/CLAUDE.md</span>
+        </div>
+        <div class="file-row">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8.5 1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5L8.5 1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M8.5 1v3.5H12" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+          <span class="fname">AGENTS.md</span>
+          <span class="fpath">~/.codex/AGENTS.md</span>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="deployzone" id="get">
-    <div class="wrap">
-      <h2>Get Loadout</h2>
-      <div class="actions">
-        <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
-          <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
-          DOWNLOAD FOR MACOS
-        </a>
-        <span class="altaction"><a href="https://github.com/ovsh/skillbox/releases">all releases</a></span>
-      </div>
-      <div class="buildblock">
-        <div class="c"># or build it yourself (Xcode 16+, macOS 14+)</div>
-        <div>git clone https://github.com/ovsh/skillbox && cd skillbox</div>
-        <div>./scripts/install_app.sh</div>
-      </div>
-      <p class="fineprint">Signed with a Developer ID and notarized by Apple.
-      Requires macOS 14. Updates itself from
-      <a href="https://github.com/ovsh/skillbox/releases">GitHub Releases</a>.</p>
+  <section class="wrap trust" id="safety">
+    <div class="pair rv">
+      <h2>Careful with your files.</h2>
+      <p class="echo">Every action reversible, every claim checkable in the source.</p>
     </div>
+    <div class="trust-grid">
+      <div class="rv">
+        <dl>
+          <dt>One backup, made once</dt>
+          <dd>Before its first write, Loadout copies your settings to <code>~/.claude/settings.json.loadout.bak</code> and then leaves the backup alone.</dd>
+          <dt>One key owned</dt>
+          <dd>It patches <code>skillOverrides</code> and nothing else. Every other setting keeps its value, and file permissions are preserved.</dd>
+          <dt>Delete means Trash</dt>
+          <dd>Deleting a skill moves its folder to the macOS Trash, recoverable like any file. Nothing is erased in place.</dd>
+          <dt>Open source, tested</dt>
+          <dd>MIT licensed. The engine that touches your files is a separate, fully unit-tested Swift package. <a href="https://github.com/ovsh/skillbox" target="_blank" rel="noopener">Read it before you trust it.</a></dd>
+          <dt>What goes over the network</dt>
+          <dd>Two things: an update check against GitHub Releases, and anonymous PostHog analytics under a random install id. Events carry skill folder names, never file contents.</dd>
+        </dl>
+      </div>
+      <div class="rv">
+        <img class="window" src="assets/bulk.png" alt="Bulk actions in the Loadout library: 43 skills selected, with Turn On, Turn Off, and Delete buttons, and a caption explaining that Turn Off hides skills from Claude while files stay on disk." width="1290" height="791">
+        <p class="shot-note">The app says it in-place too: Turn Off hides skills, files stay on disk.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="close wrap" id="download">
+    <img class="icon rv" src="assets/appicon.png" alt="" width="72" height="72">
+    <h2 class="rv">Equip your agents.</h2>
+    <p class="rv">A loadout is the gear you take into a match. See what your tools are carrying, then decide.</p>
+    <div class="actions rv">
+      <a class="btn big" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">Download for Mac</a>
+      <a class="ghost" href="https://github.com/ovsh/skillbox#building-from-source" target="_blank" rel="noopener">Build from source
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <p class="facts rv"><span>v0.5.0</span><span>Free, MIT</span><span>macOS 14+</span></p>
   </section>
 </main>
 
-<footer class="site">
+<footer>
   <div class="wrap">
-    <span>Loadout</span>
-    <a href="https://github.com/ovsh/skillbox">source, MIT</a>
-    <a href="https://ovsh.github.io/">more from ovsh</a>
+    <div class="foot">
+      <div>
+        <span class="fbrand"><img src="assets/appicon.png" alt="">Loadout</span>
+        <p class="fabout">The skill manager for your AI coding tools. Free, open source, and quiet about it.</p>
+      </div>
+      <nav aria-label="Product">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">Download for Mac</a></li>
+          <li><a href="https://github.com/ovsh/skillbox/releases" target="_blank" rel="noopener">Releases</a></li>
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#safety">Safety</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Project">
+        <h4>Project</h4>
+        <ul>
+          <li><a href="https://github.com/ovsh/skillbox" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://github.com/ovsh/skillbox#building-from-source" target="_blank" rel="noopener">Build from source</a></li>
+          <li><a href="https://github.com/ovsh/skillbox/blob/master/LICENSE" target="_blank" rel="noopener">MIT license</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="foot-base">
+      <span>Formerly Skillbox; the GitHub repo keeps the old name.</span>
+      <span class="spacer">macOS 14+</span>
+    </div>
   </div>
 </footer>
 
 <script>
-  // Change entries apply as they scroll in. Without JS they render applied.
-  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if ("IntersectionObserver" in window && !reduced) {
-    const entries = document.querySelectorAll(".entry");
-    entries.forEach(e => e.classList.add("pending"));
-    const io = new IntersectionObserver((hits) => {
-      hits.forEach(h => {
-        if (h.isIntersecting) {
-          h.target.classList.remove("pending");
-          h.target.classList.add("applied");
-          io.unobserve(h.target);
-        }
-      });
-    }, { threshold: 0.25 });
-    entries.forEach(e => io.observe(e));
-  }
+  (function () {
+    var reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Nav: tighten once the page scrolls.
+    var pill = document.querySelector("nav.pill");
+    var onScroll = function () { pill.classList.toggle("scrolled", scrollY > 10); };
+    addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    // Hero entrance: reveal on load with the CSS stagger.
+    var heroEls = document.querySelectorAll(".hero-rv");
+    setTimeout(function () {
+      heroEls.forEach(function (el) { el.classList.add("in"); });
+    }, 60);
+
+    // Scroll reveal for everything below the hero.
+    var els = document.querySelectorAll(".rv:not(.hero-rv)");
+    if (!reduced && "IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.18, rootMargin: "0px 0px -40px 0px" });
+      els.forEach(function (el) { io.observe(el); });
+    } else {
+      els.forEach(function (el) { el.classList.add("in"); });
+    }
+
+    // skillOverrides demo: the switch edits the JSON the way the app does.
+    // On = the override entry is removed (Claude Code's default state).
+    var sw = document.getElementById("ov-switch");
+    var line = document.getElementById("ov-line");
+    var state = document.getElementById("ov-state");
+    var hideTimer = null;
+    sw.addEventListener("click", function () {
+      var next = sw.getAttribute("aria-checked") !== "true";
+      sw.setAttribute("aria-checked", String(next));
+      state.textContent = next ? "on" : "off";
+      clearTimeout(hideTimer);
+      if (next) {
+        line.classList.add("gone");
+        hideTimer = setTimeout(function () { line.style.display = "none"; }, reduced ? 0 : 350);
+      } else {
+        line.style.display = "";
+        void line.offsetWidth;
+        line.classList.remove("gone");
+      }
+    });
+  })();
 </script>
 </body>
 </html>
