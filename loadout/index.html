@@ -1,37 +1,36 @@
 <!doctype html>
 <!--
-DIRECTION CONTRACT (impeccable, seed f7b02b17, assigned index 6, user-confirmed)
+DIRECTION CONTRACT (impeccable, seed f7b02b17, assigned index 6, user-confirmed;
+copy revised 2026-07-24 after user feedback: patch grammar stays visual, the
+words carry the offer plainly)
 
-THESIS: The page is a game balance patch applied to your agents. It refuses
-the category default: dark gradient hero, feature card grid.
+THESIS: The page borrows the balance-patch dispatch's visual grammar, but the
+headline sells the product, not the conceit. It refuses the category default:
+dark gradient hero, feature card grid.
 
 OWN-WORLD: Bone dispatch-document ground, near-black embedded client windows,
-Archivo variable (expanded black display numerals, plain body), mono metadata,
-diff inks as the only saturated color: buff green +, nerf red -, deploy
-terracotta for the one primary action. Heavy 3px ink rules; HUD corner
-brackets mark exactly one equipped thing per viewport.
+Archivo variable (expanded black display, plain body), mono metadata, diff
+inks as the only saturated color: buff green +, nerf red -, deploy terracotta
+for the one primary action. Heavy 3px ink rules; HUD corner brackets mark
+exactly one equipped thing per viewport.
 
-STORY: A developer lands, reads "PATCH 0.5.0" and one plain sentence, sees
-the real menu bar and the real library window, reads the changes as buff
-entries, trusts the dev commentary, downloads.
+STORY: A developer lands, reads one line that says what this is, sees the
+real menu bar and the real library window, reads how the switch works,
+downloads.
 
-FIRST VIEWPORT: Patch masthead: wordmark row, giant version numerals with a
-one-time 4-to-5 odometer roll, date + platform in mono, one offer sentence,
-DEPLOY button + build-from-source link, then the real menu bar strip with a
-bracket callout on the Loadout item.
+FIRST VIEWPORT: Wordmark row, headline stating the offer, version + date +
+platform in mono, one supporting sentence, Download button + build-from-source
+link, then the real menu bar strip with a bracket callout on the Loadout item.
 
 FORM: Patch-notes dispatch, candidate 6 of the loadout-world list (roll
-assigned). Staging: single-column document, entries apply on scroll. Dealt
-challengers (drum-machine step row et al.) weighed and declined: weaker
-audience identification than the patch grammar. Motion narrative: the patch
-applies as you read.
+assigned). Motion: change entries apply on scroll; nothing else moves.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Loadout, the skill manager for AI coding tools on your Mac</title>
-<meta name="description" content="Loadout is a menu-bar Mac app that shows every skill your AI tools have installed and lets you equip or bench each one. Claude Code, Cursor, OpenCode.">
+<title>Loadout: skill manager for Claude Code, Cursor, and OpenCode</title>
+<meta name="description" content="A Mac menu-bar app that shows every skill installed for Claude Code, Cursor, and OpenCode, and turns each one on or off. Free, MIT, signed and notarized.">
 <link rel="icon" type="image/png" href="assets/appicon.png">
 <style>
   @font-face {
@@ -87,37 +86,22 @@ applies as you read.
   .topbar nav a:hover { color: var(--ink); }
 
   .masthead { padding: 56px 0 0; }
-  .kicker {
-    font-family: var(--mono); font-size: 13px; color: var(--buff);
-    letter-spacing: .14em; text-transform: uppercase;
+  h1.headline {
+    font-weight: 850; font-stretch: 122%;
+    font-size: clamp(34px, 6.6vw, 76px);
+    line-height: 1.02; letter-spacing: -0.015em;
+    max-width: 16ch;
   }
-  .patchline {
-    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 28px;
-    margin-top: 10px;
-  }
-  h1.version {
-    font-weight: 850; font-stretch: 125%;
-    font-size: clamp(30px, 9vw, 118px);
-    line-height: .96; letter-spacing: -0.015em;
-    display: flex; align-items: baseline;
-  }
-  .digitwin {
-    display: inline-block; height: 1em; overflow: hidden; line-height: 1;
-    vertical-align: baseline;
-  }
-  .digitcol {
-    display: flex; flex-direction: column; line-height: 1;
-  }
+  h1.headline .on { color: var(--buff); }
+  h1.headline .off { color: var(--nerf); }
   .patchmeta {
     font-family: var(--mono); font-size: 13.5px; color: var(--mute);
-    display: grid; gap: 3px;
+    margin-top: 18px;
   }
   .offer {
-    max-width: 62ch; margin-top: 26px;
-    font-size: clamp(19px, 2.6vw, 24px); line-height: 1.45; font-weight: 500;
+    max-width: 56ch; margin-top: 22px;
+    font-size: clamp(18px, 2.4vw, 22px); line-height: 1.5; font-weight: 500;
   }
-  .offer .equip { color: var(--buff); }
-  .offer .bench { color: var(--nerf); }
   .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 26px; margin: 30px 0 8px; }
   .deploy {
     position: relative;
@@ -199,8 +183,6 @@ applies as you read.
     font-family: var(--mono); font-weight: 700; font-size: 30px; line-height: 1;
     color: var(--buff); padding-top: 4px;
   }
-  /* With JS, entries start pending and apply on scroll; without JS they
-     render applied. */
   .pending .marker { opacity: 0; transform: scale(.6); }
   .applied .marker {
     opacity: 1; transform: scale(1);
@@ -222,9 +204,6 @@ applies as you read.
   }
   .entry p { max-width: 68ch; margin-top: 12px; color: var(--ink); }
   .entry p + p { margin-top: 10px; }
-  .entry .devnote {
-    font-size: 15px; color: var(--mute); font-style: italic; margin-top: 12px;
-  }
   code {
     font-family: var(--mono); font-size: .86em;
     background: rgba(23, 24, 26, .06);
@@ -244,16 +223,9 @@ applies as you read.
     font-family: var(--mono); font-size: 12px; color: var(--faint); margin-top: 10px;
   }
 
-  /* dev commentary */
-  .commentary { margin-top: 30px; display: grid; gap: 26px; }
-  .commentary blockquote {
-    border-left: 1px solid var(--ink);
-    padding: 2px 0 2px 24px; max-width: 70ch;
-  }
-  .commentary blockquote p { font-size: 18px; line-height: 1.55; }
-  .commentary blockquote footer {
-    font-family: var(--mono); font-size: 12.5px; color: var(--mute); margin-top: 10px;
-  }
+  /* safety facts */
+  .facts { margin-top: 26px; display: grid; gap: 18px; max-width: 70ch; }
+  .facts p { padding-left: 24px; border-left: 1px solid var(--ink); }
 
   /* deploy section */
   .deployzone {
@@ -295,11 +267,9 @@ applies as you read.
     body { font-size: 16px; }
     .entry { grid-template-columns: 34px 1fr; gap: 0 14px; }
     .marker { font-size: 22px; }
-    .patchline { gap: 4px 18px; }
   }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .digitcol span { transform: translateY(0) !important; transition: none !important; }
     .marker, .applied .marker { opacity: 1 !important; transform: none !important; transition: none !important; }
     .entry h3::after, .applied h3::after { transform: scaleX(1) !important; transition: none !important; }
   }
@@ -311,46 +281,34 @@ applies as you read.
   <img src="assets/appicon.png" alt="Loadout app icon: a dark tile with a grid of gear slots, one equipped in green">
   <span class="word">LOADOUT</span>
   <nav>
-    <a href="#changes">changes</a>
-    <a href="#commentary">notes</a>
+    <a href="#how">how it works</a>
     <a href="https://github.com/ovsh/skillbox">github</a>
-    <a href="#deploy">install</a>
+    <a href="#get">download</a>
   </nav>
 </header>
 
 <main>
   <div class="wrap masthead">
-    <p class="kicker">Balance update for your agents</p>
-    <div class="patchline">
-      <h1 class="version" id="version" aria-label="Patch 0.5.0">
-        <span>PATCH&nbsp;0.</span><span class="digitwin"><span class="digitcol" id="rollCol"><span id="rollDigit">5</span></span></span><span>.0</span>
-      </h1>
-      <div class="patchmeta">
-        <span>2026-07-24 · macOS 14+</span>
-        <span>formerly shipped as Skillbox</span>
-      </div>
-    </div>
-
-    <p class="offer">Loadout is a menu-bar Mac app that shows every skill your
-    AI tools have installed and lets you <span class="equip">equip</span> or
-    <span class="bench">bench</span> each one. A loadout is the gear you take
-    into a match. This is where you kit out Claude Code before the work
-    starts.</p>
+    <h1 class="headline">Every skill your AI tools have, one switch each.</h1>
+    <p class="patchmeta">v0.5.0 · 2026-07-24 · macOS 14+</p>
+    <p class="offer">Loadout sits in the Mac menu bar, lists every skill
+    installed for Claude Code, Cursor, and OpenCode, and turns any of them
+    <span style="color:var(--buff)">on</span> or
+    <span style="color:var(--nerf)">off</span>. Every change is reversible.</p>
 
     <div class="actions">
       <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
         <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
-        DEPLOY TO MENU BAR
+        DOWNLOAD FOR MACOS
       </a>
       <span class="altaction">or <a href="https://github.com/ovsh/skillbox">build from source</a></span>
     </div>
-    <p class="subnote" id="dmgnote">Signed and notarized DMG · free · MIT</p>
+    <p class="subnote">Free · MIT · signed and notarized</p>
   </div>
 
   <div class="wrap stripzone">
-    <p class="striplabel">It lives next to your other tools. <b>The bracketed
-    one</b> is Loadout, captured from the menu bar of the Mac it was built
-    on.</p>
+    <p class="striplabel">Loadout is the one in <b>green brackets</b>. That's
+    the whole interface until you need more.</p>
     <span class="stripframe">
       <img src="assets/menubar.png" width="460" alt="A real macOS menu bar strip. The leftmost icon, a small backpack, is Loadout, marked with green corner brackets.">
       <span class="callout" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></span>
@@ -359,7 +317,7 @@ applies as you read.
 
   <section class="wrap" id="library">
     <div class="rule">
-      <h2>The library. Every skill, every tool, one window.</h2>
+      <h2>Every skill, every tool, one window.</h2>
       <p class="secmeta">~/.claude/skills · ~/.agents/skills · ~/.cursor/skills · ~/.config/opencode/skills</p>
     </div>
     <div class="clientwrap">
@@ -370,34 +328,27 @@ applies as you read.
     </div>
     <p class="clientcap">
       <span class="live">● 43 of 43 active</span>
-      <span>the developer's real machine, not a mockup</span>
       <span>green dot = Claude can use it right now</span>
     </p>
   </section>
 
-  <section class="wrap" id="changes">
+  <section class="wrap" id="how">
     <div class="rule">
-      <h2>Changes</h2>
-      <p class="secmeta">what equipping actually does, mechanism by mechanism</p>
+      <h2>How the switch works</h2>
     </div>
 
     <article class="entry">
       <div class="marker" aria-hidden="true">+</div>
       <div>
-        <h3>One switch per skill for Claude Code</h3>
-        <p>The switch writes Claude Code's own per-skill control, the
-        <code>skillOverrides</code> map in <code>~/.claude/settings.json</code>.
-        Claude Code watches that file, so flipping a skill applies to live
+        <h3>Claude Code: the setting it already understands</h3>
+        <p>The switch writes <code>skillOverrides</code> in
+        <code>~/.claude/settings.json</code>, the per-skill setting Claude Code
+        already supports. Claude Code watches that file, so toggles reach live
         sessions without a restart. The skill's folder never moves.</p>
-        <p>The detail pane exposes all four states Claude Code understands:
-        on, name-only, manual-only, off.</p>
-        <p class="devnote">Dev note: we researched what each tool actually
-        respects instead of inventing a mechanism. This is the documented one,
-        and the built-in /skills picker writes the same key.</p>
         <div class="shots">
           <figure>
             <img src="assets/popover.png" width="315" alt="The Loadout menu bar popover: 43 of 43 active, five recently touched skills with green dots and switches, Open Loadout and Quit actions.">
-            <figcaption>the popover: flip gear without leaving the menu bar</figcaption>
+            <figcaption>recent skills, right in the menu bar</figcaption>
           </figure>
         </div>
       </div>
@@ -406,27 +357,23 @@ applies as you read.
     <article class="entry">
       <div class="marker" aria-hidden="true">+</div>
       <div>
-        <h3>Benching for tools without an off switch</h3>
-        <p>Cursor, the agents directory, and OpenCode have no override map, so
-        Loadout shelves the skill folder instead: a same-volume move to its own
-        shelf, restored byte-identical when you re-equip. Nothing is copied,
-        nothing is rewritten.</p>
-        <p>Symlinked skills are never moved. If a skill is linked between
-        tools, Loadout refuses to shelve it rather than break the link.</p>
+        <h3>Cursor and OpenCode: the folder moves, and moves back</h3>
+        <p>Those tools have no off switch, so off means the skill folder is
+        parked in Loadout's Application Support folder. On brings it back
+        byte-identical. Symlinked skills are never moved.</p>
       </div>
     </article>
 
     <article class="entry">
       <div class="marker" aria-hidden="true">+</div>
       <div>
-        <h3>Bulk balance passes</h3>
-        <p>Select all, or ⌘-click a set, then turn the whole selection on or
-        off at once. Delete moves folders to the Trash. Loadout never runs
-        <code>rm</code> on your skills.</p>
+        <h3>The whole kit at once</h3>
+        <p>Select all, or ⌘-click a set, and turn everything on or off in one
+        click. Delete moves folders to the Trash, never <code>rm</code>.</p>
         <div class="shots">
           <figure>
             <img src="assets/bulk.png" width="640" alt="The library window with all 43 skills checked. The detail pane reads 43 skills selected and offers Turn On, Turn Off, and Delete actions.">
-            <figcaption>43 selected: one click to turn the whole kit on or off</figcaption>
+            <figcaption>all 43 selected</figcaption>
           </figure>
         </div>
       </div>
@@ -435,51 +382,37 @@ applies as you read.
     <article class="entry">
       <div class="marker" aria-hidden="true">+</div>
       <div>
-        <h3>Your global prompts, editable in place</h3>
+        <h3>Edit CLAUDE.md and AGENTS.md in the same window</h3>
         <p><code>~/.claude/CLAUDE.md</code> and <code>~/.codex/AGENTS.md</code>
-        are what your agents are actually told before every session. Loadout
-        shows them in the sidebar and lets you edit them inline, with autosave
-        that refuses to overwrite changes another program made on disk.</p>
+        are read before every session. Loadout shows them next to your skills,
+        with autosave that won't overwrite changes made on disk.</p>
       </div>
     </article>
   </section>
 
-  <section class="wrap" id="commentary">
+  <section class="wrap" id="safety">
     <div class="rule">
-      <h2>Developer commentary</h2>
-      <p class="secmeta">the safety posture, stated as facts</p>
+      <h2>Built to be trusted with your files</h2>
     </div>
-    <div class="commentary">
-      <blockquote>
-        <p>Loadout backs up <code>settings.json</code> once, before the first
-        write it ever makes, and from then on patches exactly one key:
-        <code>skillOverrides</code>. Your permissions, hooks, and everything
-        else in that file round-trip untouched.</p>
-        <footer>on touching a file you also hand-edit</footer>
-      </blockquote>
-      <blockquote>
-        <p>Every action is reversible. Off is a settings entry, benching is a
-        move that moves back, delete goes to the Trash. There is no code path
-        that destroys a skill's files.</p>
-        <footer>on being trustable at 2am</footer>
-      </blockquote>
-      <blockquote>
-        <p>The whole app is MIT-licensed Swift. The engine that touches your
-        files is a separate library covered by its own test suite, and you can
-        read every line before you let it near your setup.</p>
-        <footer>on <a href="https://github.com/ovsh/skillbox">reading the source</a></footer>
-      </blockquote>
+    <div class="facts">
+      <p>Before its first ever write, Loadout backs up
+      <code>settings.json</code>. After that it patches exactly one key and
+      round-trips everything else untouched.</p>
+      <p>No destructive code path exists: off is a settings entry, shelving
+      moves back, delete goes to the Trash.</p>
+      <p>MIT-licensed Swift, with all file handling in a separate library
+      covered by its own test suite.</p>
+      <p>Two network calls exist: a GitHub update check, and PostHog analytics
+      under a random install id. Events carry skill folder names, never file
+      contents. Both are in the source, where you can read them.</p>
     </div>
   </section>
 
-  <section class="deployzone" id="deploy">
+  <section class="deployzone" id="get">
     <div class="wrap">
-      <div>
-        <h2>Deploy it</h2>
-        <p class="secmeta">one DMG, or two commands from source</p>
-      </div>
+      <h2>Get Loadout</h2>
       <div class="actions">
-          <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
+        <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
           <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
           DOWNLOAD FOR MACOS
         </a>
@@ -490,10 +423,9 @@ applies as you read.
         <div>git clone https://github.com/ovsh/skillbox && cd skillbox</div>
         <div>./scripts/install_app.sh</div>
       </div>
-      <p class="fineprint">Signed with a Developer ID and notarized by Apple,
-      so Gatekeeper opens it without ceremony. Requires macOS 14. The app
-      updates itself from <a href="https://github.com/ovsh/skillbox/releases">GitHub
-      Releases</a>.</p>
+      <p class="fineprint">Signed with a Developer ID and notarized by Apple.
+      Requires macOS 14. Updates itself from
+      <a href="https://github.com/ovsh/skillbox/releases">GitHub Releases</a>.</p>
     </div>
   </section>
 </main>
@@ -503,38 +435,12 @@ applies as you read.
     <span>Loadout</span>
     <a href="https://github.com/ovsh/skillbox">source, MIT</a>
     <a href="https://ovsh.github.io/">more from ovsh</a>
-    <span>built with the app you're looking at</span>
   </div>
 </footer>
 
 <script>
-  // One-time odometer: the version's middle digit rolls 4 -> 5 on load,
-  // the previous patch giving way to this one.
-  const col = document.getElementById("rollCol");
+  // Change entries apply as they scroll in. Without JS they render applied.
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!reduced) {
-    const prev = document.createElement("span");
-    prev.textContent = "4";
-    prev.setAttribute("aria-hidden", "true");
-    col.insertBefore(prev, document.getElementById("rollDigit"));
-    const finish = () => {
-      if (!prev.parentElement) return;
-      prev.remove();
-      col.style.transition = "none";
-      col.style.transform = "translateY(0)";
-    };
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        col.style.transition = "transform .8s cubic-bezier(.16,1,.3,1) .45s";
-        col.style.transform = "translateY(-1em)";
-        col.addEventListener("transitionend", finish, { once: true });
-        setTimeout(finish, 1800);
-      });
-    });
-  }
-
-  // Entries apply as they enter the viewport. Without JS (or without
-  // IntersectionObserver) they simply render in their final applied state.
   if ("IntersectionObserver" in window && !reduced) {
     const entries = document.querySelectorAll(".entry");
     entries.forEach(e => e.classList.add("pending"));
