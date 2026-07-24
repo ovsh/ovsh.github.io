@@ -1,0 +1,546 @@
+<!doctype html>
+<!--
+DIRECTION CONTRACT (impeccable, seed f7b02b17, assigned index 6, user-confirmed)
+
+THESIS: The page is a game balance patch applied to your agents. It refuses
+the category default: dark gradient hero, feature card grid.
+
+OWN-WORLD: Bone dispatch-document ground, near-black embedded client windows,
+Archivo variable (expanded black display numerals, plain body), mono metadata,
+diff inks as the only saturated color: buff green +, nerf red -, deploy
+terracotta for the one primary action. Heavy 3px ink rules; HUD corner
+brackets mark exactly one equipped thing per viewport.
+
+STORY: A developer lands, reads "PATCH 0.5.0" and one plain sentence, sees
+the real menu bar and the real library window, reads the changes as buff
+entries, trusts the dev commentary, downloads.
+
+FIRST VIEWPORT: Patch masthead: wordmark row, giant version numerals with a
+one-time 4-to-5 odometer roll, date + platform in mono, one offer sentence,
+DEPLOY button + build-from-source link, then the real menu bar strip with a
+bracket callout on the Loadout item.
+
+FORM: Patch-notes dispatch, candidate 6 of the loadout-world list (roll
+assigned). Staging: single-column document, entries apply on scroll. Dealt
+challengers (drum-machine step row et al.) weighed and declined: weaker
+audience identification than the patch grammar. Motion narrative: the patch
+applies as you read.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loadout, the skill manager for AI coding tools on your Mac</title>
+<meta name="description" content="Loadout is a menu-bar Mac app that shows every skill your AI tools have installed and lets you equip or bench each one. Claude Code, Cursor, OpenCode.">
+<link rel="icon" type="image/png" href="assets/appicon.png">
+<style>
+  @font-face {
+    font-family: "Archivo";
+    src: url("assets/fonts/archivo-var.woff2") format("woff2");
+    font-weight: 100 900;
+    font-stretch: 62% 125%;
+    font-display: swap;
+  }
+  :root {
+    --bone: #F4F2EC;
+    --sheet: #FBFAF7;
+    --ink: #17181A;
+    --mute: #5D6167;
+    --faint: #9A9DA2;
+    --hairline: rgba(23, 24, 26, .14);
+    --buff: #2E7D46;
+    --nerf: #BE4934;
+    --deploy: #C2593A;
+    --client: #101012;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bone);
+    color: var(--ink);
+    font-family: "Archivo", system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  img { max-width: 100%; height: auto; display: block; }
+  .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- masthead ---------- */
+  .topbar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 18px 0 14px;
+    border-bottom: 3px solid var(--ink);
+  }
+  .topbar img { width: 28px; height: 28px; }
+  .topbar .word {
+    font-weight: 800; font-stretch: 118%; letter-spacing: .06em;
+    font-size: 15px;
+  }
+  .topbar nav { margin-left: auto; display: flex; gap: 22px; }
+  .topbar nav a {
+    font-family: var(--mono); font-size: 12.5px; text-decoration: none;
+    color: var(--mute);
+  }
+  .topbar nav a:hover { color: var(--ink); }
+
+  .masthead { padding: 56px 0 0; }
+  .kicker {
+    font-family: var(--mono); font-size: 13px; color: var(--buff);
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .patchline {
+    display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 28px;
+    margin-top: 10px;
+  }
+  h1.version {
+    font-weight: 850; font-stretch: 125%;
+    font-size: clamp(30px, 9vw, 118px);
+    line-height: .96; letter-spacing: -0.015em;
+    display: flex; align-items: baseline;
+  }
+  .digitwin {
+    display: inline-block; height: 1em; overflow: hidden; line-height: 1;
+    vertical-align: baseline;
+  }
+  .digitcol {
+    display: flex; flex-direction: column; line-height: 1;
+  }
+  .patchmeta {
+    font-family: var(--mono); font-size: 13.5px; color: var(--mute);
+    display: grid; gap: 3px;
+  }
+  .offer {
+    max-width: 62ch; margin-top: 26px;
+    font-size: clamp(19px, 2.6vw, 24px); line-height: 1.45; font-weight: 500;
+  }
+  .offer .equip { color: var(--buff); }
+  .offer .bench { color: var(--nerf); }
+  .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 26px; margin: 30px 0 8px; }
+  .deploy {
+    position: relative;
+    background: var(--deploy); color: #FFF7F2; text-decoration: none;
+    font-weight: 750; font-stretch: 112%; letter-spacing: .1em; font-size: 15px;
+    padding: 15px 30px; display: inline-flex; align-items: center; gap: 12px;
+    transition: background .18s ease;
+  }
+  .deploy:hover { background: #AD4C30; }
+  .deploy .brk { position: absolute; width: 12px; height: 12px; opacity: 0; transition: opacity .18s ease; }
+  .deploy .brk::before { content: ""; position: absolute; inset: 0; border: 2.5px solid var(--ink); }
+  .deploy .tl { top: -7px; left: -7px; } .deploy .tl::before { border-right: 0; border-bottom: 0; }
+  .deploy .tr { top: -7px; right: -7px; } .deploy .tr::before { border-left: 0; border-bottom: 0; }
+  .deploy .bl { bottom: -7px; left: -7px; } .deploy .bl::before { border-right: 0; border-top: 0; }
+  .deploy .br { bottom: -7px; right: -7px; } .deploy .br::before { border-left: 0; border-top: 0; }
+  .deploy:hover .brk { opacity: 1; }
+  .altaction { font-family: var(--mono); font-size: 13.5px; color: var(--mute); }
+  .altaction a { color: var(--ink); }
+  .subnote { font-family: var(--mono); font-size: 12.5px; color: var(--faint); margin-bottom: 34px; }
+
+  /* menu bar strip */
+  .stripzone { border-top: 1px solid var(--hairline); padding: 26px 0 60px; }
+  .striplabel { font-family: var(--mono); font-size: 12.5px; color: var(--mute); margin-bottom: 14px; }
+  .striplabel b { color: var(--buff); font-weight: 600; }
+  .stripframe { position: relative; display: inline-block; max-width: 100%; }
+  .stripframe img {
+    width: 460px; max-width: 100%; border-radius: 6px;
+    box-shadow: 0 10px 28px rgba(23, 24, 26, .18);
+  }
+  .callout {
+    position: absolute; top: -5px; left: 0.8%; width: 10.4%; height: calc(100% + 10px);
+    pointer-events: none;
+  }
+  .callout i { position: absolute; width: 9px; height: 9px; }
+  .callout i::before { content: ""; position: absolute; inset: 0; border: 2px solid var(--buff); }
+  .callout .tl { top: 0; left: 0; } .callout .tl::before { border-right: 0; border-bottom: 0; }
+  .callout .tr { top: 0; right: 0; } .callout .tr::before { border-left: 0; border-bottom: 0; }
+  .callout .bl { bottom: 0; left: 0; } .callout .bl::before { border-right: 0; border-top: 0; }
+  .callout .br { bottom: 0; right: 0; } .callout .br::before { border-left: 0; border-top: 0; }
+
+  /* ---------- sections ---------- */
+  section { padding: 64px 0 0; }
+  .rule { border-top: 3px solid var(--ink); padding-top: 18px; }
+  h2 {
+    font-weight: 800; font-stretch: 120%;
+    font-size: clamp(28px, 4.4vw, 44px); line-height: 1.08;
+    letter-spacing: -0.01em; max-width: 24ch;
+  }
+  .secmeta { font-family: var(--mono); font-size: 13px; color: var(--mute); margin-top: 8px; }
+
+  /* client window (screenshot) */
+  .clientframe {
+    margin-top: 34px; background: var(--client);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 24px 60px rgba(23, 24, 26, .28);
+  }
+  .clientcap {
+    display: flex; flex-wrap: wrap; gap: 4px 18px; align-items: baseline;
+    font-family: var(--mono); font-size: 12.5px; color: var(--mute);
+    margin-top: 14px;
+  }
+  .clientcap .live { color: var(--buff); }
+
+  /* change entries */
+  .entry {
+    display: grid; grid-template-columns: 56px 1fr; gap: 0 22px;
+    padding: 34px 0 38px; border-bottom: 1px solid var(--hairline);
+  }
+  .entry:last-of-type { border-bottom: 0; }
+  .marker {
+    font-family: var(--mono); font-weight: 700; font-size: 30px; line-height: 1;
+    color: var(--buff); padding-top: 4px;
+  }
+  /* With JS, entries start pending and apply on scroll; without JS they
+     render applied. */
+  .pending .marker { opacity: 0; transform: scale(.6); }
+  .applied .marker {
+    opacity: 1; transform: scale(1);
+    transition: opacity .4s ease, transform .45s cubic-bezier(.16, 1, .3, 1);
+  }
+  .entry h3 {
+    font-weight: 750; font-stretch: 114%; font-size: 23px; line-height: 1.2;
+    position: relative; display: inline-block; padding-bottom: 6px;
+  }
+  .entry h3::after {
+    content: ""; position: absolute; left: 0; bottom: 0; height: 3px;
+    width: 100%; background: var(--buff);
+    transform-origin: left;
+  }
+  .pending h3::after { transform: scaleX(0); }
+  .applied h3::after {
+    transform: scaleX(1);
+    transition: transform .6s cubic-bezier(.16, 1, .3, 1) .15s;
+  }
+  .entry p { max-width: 68ch; margin-top: 12px; color: var(--ink); }
+  .entry p + p { margin-top: 10px; }
+  .entry .devnote {
+    font-size: 15px; color: var(--mute); font-style: italic; margin-top: 12px;
+  }
+  code {
+    font-family: var(--mono); font-size: .86em;
+    background: rgba(23, 24, 26, .06);
+    border: 1px solid var(--hairline);
+    border-radius: 4px; padding: 1px 5px;
+    white-space: nowrap;
+  }
+  .entry .shots {
+    margin-top: 20px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start;
+  }
+  .entry .shots figure { margin: 0; }
+  .entry .shots img {
+    border-radius: 10px;
+    box-shadow: 0 14px 34px rgba(23, 24, 26, .2);
+  }
+  .entry .shots figcaption {
+    font-family: var(--mono); font-size: 12px; color: var(--faint); margin-top: 10px;
+  }
+
+  /* dev commentary */
+  .commentary { margin-top: 30px; display: grid; gap: 26px; }
+  .commentary blockquote {
+    border-left: 1px solid var(--ink);
+    padding: 2px 0 2px 24px; max-width: 70ch;
+  }
+  .commentary blockquote p { font-size: 18px; line-height: 1.55; }
+  .commentary blockquote footer {
+    font-family: var(--mono); font-size: 12.5px; color: var(--mute); margin-top: 10px;
+  }
+
+  /* deploy section */
+  .deployzone {
+    margin-top: 70px; background: var(--ink); color: var(--bone);
+    padding: 58px 0 62px;
+  }
+  .deployzone h2 { color: var(--bone); }
+  .deployzone .secmeta { color: rgba(244, 242, 236, .55); }
+  .deployzone .actions { margin-top: 30px; }
+  .deployzone .deploy .brk::before { border-color: var(--bone); }
+  .deployzone .altaction { color: rgba(244, 242, 236, .6); }
+  .deployzone .altaction a { color: var(--bone); }
+  .buildblock {
+    margin-top: 30px; font-family: var(--mono); font-size: 13.5px;
+    background: #1D1D22; border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 8px; padding: 18px 20px; max-width: 560px;
+    color: #C8CAD0; overflow-x: auto;
+  }
+  .buildblock .c { color: #6E7280; }
+  .deployzone .fineprint {
+    font-family: var(--mono); font-size: 12.5px;
+    color: rgba(244, 242, 236, .55); margin-top: 26px; max-width: 66ch;
+  }
+  .deployzone .fineprint a { color: rgba(244, 242, 236, .8); }
+
+  footer.site {
+    background: var(--ink); color: rgba(244, 242, 236, .55);
+    padding: 0 0 40px;
+  }
+  footer.site .wrap {
+    border-top: 1px solid rgba(244, 242, 236, .16); padding-top: 22px;
+    display: flex; flex-wrap: wrap; gap: 8px 26px;
+    font-family: var(--mono); font-size: 12.5px;
+  }
+  footer.site a { color: rgba(244, 242, 236, .8); text-decoration: none; }
+  footer.site a:hover { color: var(--bone); }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    .entry { grid-template-columns: 34px 1fr; gap: 0 14px; }
+    .marker { font-size: 22px; }
+    .patchline { gap: 4px 18px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .digitcol span { transform: translateY(0) !important; transition: none !important; }
+    .marker, .applied .marker { opacity: 1 !important; transform: none !important; transition: none !important; }
+    .entry h3::after, .applied h3::after { transform: scaleX(1) !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap topbar">
+  <img src="assets/appicon.png" alt="Loadout app icon: a dark tile with a grid of gear slots, one equipped in green">
+  <span class="word">LOADOUT</span>
+  <nav>
+    <a href="#changes">changes</a>
+    <a href="#commentary">notes</a>
+    <a href="https://github.com/ovsh/skillbox">github</a>
+    <a href="#deploy">install</a>
+  </nav>
+</header>
+
+<main>
+  <div class="wrap masthead">
+    <p class="kicker">Balance update for your agents</p>
+    <div class="patchline">
+      <h1 class="version" id="version" aria-label="Patch 0.5.0">
+        <span>PATCH&nbsp;0.</span><span class="digitwin"><span class="digitcol" id="rollCol"><span id="rollDigit">5</span></span></span><span>.0</span>
+      </h1>
+      <div class="patchmeta">
+        <span>2026-07-24 · macOS 14+</span>
+        <span>formerly shipped as Skillbox</span>
+      </div>
+    </div>
+
+    <p class="offer">Loadout is a menu-bar Mac app that shows every skill your
+    AI tools have installed and lets you <span class="equip">equip</span> or
+    <span class="bench">bench</span> each one. A loadout is the gear you take
+    into a match. This is where you kit out Claude Code before the work
+    starts.</p>
+
+    <div class="actions">
+      <!-- REPLACE: verify this asset URL resolves once the v0.5.0 GitHub release is published -->
+      <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
+        <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
+        DEPLOY TO MENU BAR
+      </a>
+      <span class="altaction">or <a href="https://github.com/ovsh/skillbox">build from source</a></span>
+    </div>
+    <p class="subnote" id="dmgnote">Signed and notarized DMG · free · MIT</p>
+  </div>
+
+  <div class="wrap stripzone">
+    <p class="striplabel">It lives next to your other tools. <b>The bracketed
+    one</b> is Loadout, captured from the menu bar of the Mac it was built
+    on.</p>
+    <span class="stripframe">
+      <img src="assets/menubar.png" width="460" alt="A real macOS menu bar strip. The leftmost icon, a small backpack, is Loadout, marked with green corner brackets.">
+      <span class="callout" aria-hidden="true"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></span>
+    </span>
+  </div>
+
+  <section class="wrap" id="library">
+    <div class="rule">
+      <h2>The library. Every skill, every tool, one window.</h2>
+      <p class="secmeta">~/.claude/skills · ~/.agents/skills · ~/.cursor/skills · ~/.config/opencode/skills</p>
+    </div>
+    <div class="clientframe">
+      <img src="assets/library.png" alt="The Loadout library window. A sidebar lists system prompts and skills, the middle column lists 43 skills with green status dots, and the detail pane shows the architect skill with an On, Name, Manual, Off control and its rendered documentation.">
+    </div>
+    <p class="clientcap">
+      <span class="live">● 43 of 43 active</span>
+      <span>the developer's real machine, not a mockup</span>
+      <span>green dot = Claude can use it right now</span>
+    </p>
+  </section>
+
+  <section class="wrap" id="changes">
+    <div class="rule">
+      <h2>Changes</h2>
+      <p class="secmeta">what equipping actually does, mechanism by mechanism</p>
+    </div>
+
+    <article class="entry">
+      <div class="marker" aria-hidden="true">+</div>
+      <div>
+        <h3>One switch per skill for Claude Code</h3>
+        <p>The switch writes Claude Code's own per-skill control, the
+        <code>skillOverrides</code> map in <code>~/.claude/settings.json</code>.
+        Claude Code watches that file, so flipping a skill applies to live
+        sessions without a restart. The skill's folder never moves.</p>
+        <p>The detail pane exposes all four states Claude Code understands:
+        on, name-only, manual-only, off.</p>
+        <p class="devnote">Dev note: we researched what each tool actually
+        respects instead of inventing a mechanism. This is the documented one,
+        and the built-in /skills picker writes the same key.</p>
+        <div class="shots">
+          <figure>
+            <img src="assets/popover.png" width="315" alt="The Loadout menu bar popover: 43 of 43 active, five recently touched skills with green dots and switches, Open Loadout and Quit actions.">
+            <figcaption>the popover: flip gear without leaving the menu bar</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="marker" aria-hidden="true">+</div>
+      <div>
+        <h3>Benching for tools without an off switch</h3>
+        <p>Cursor, the agents directory, and OpenCode have no override map, so
+        Loadout shelves the skill folder instead: a same-volume move to its own
+        shelf, restored byte-identical when you re-equip. Nothing is copied,
+        nothing is rewritten.</p>
+        <p>Symlinked skills are never moved. If a skill is linked between
+        tools, Loadout refuses to shelve it rather than break the link.</p>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="marker" aria-hidden="true">+</div>
+      <div>
+        <h3>Bulk balance passes</h3>
+        <p>Select all, or ⌘-click a set, then turn the whole selection on or
+        off at once. Delete moves folders to the Trash. Loadout never runs
+        <code>rm</code> on your skills.</p>
+        <div class="shots">
+          <figure>
+            <img src="assets/bulk.png" width="640" alt="The library window with all 43 skills checked. The detail pane reads 43 skills selected and offers Turn On, Turn Off, and Delete actions.">
+            <figcaption>43 selected: one click to turn the whole kit on or off</figcaption>
+          </figure>
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="marker" aria-hidden="true">+</div>
+      <div>
+        <h3>Your global prompts, editable in place</h3>
+        <p><code>~/.claude/CLAUDE.md</code> and <code>~/.codex/AGENTS.md</code>
+        are what your agents are actually told before every session. Loadout
+        shows them in the sidebar and lets you edit them inline, with autosave
+        that refuses to overwrite changes another program made on disk.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="wrap" id="commentary">
+    <div class="rule">
+      <h2>Developer commentary</h2>
+      <p class="secmeta">the safety posture, stated as facts</p>
+    </div>
+    <div class="commentary">
+      <blockquote>
+        <p>Loadout backs up <code>settings.json</code> once, before the first
+        write it ever makes, and from then on patches exactly one key:
+        <code>skillOverrides</code>. Your permissions, hooks, and everything
+        else in that file round-trip untouched.</p>
+        <footer>on touching a file you also hand-edit</footer>
+      </blockquote>
+      <blockquote>
+        <p>Every action is reversible. Off is a settings entry, benching is a
+        move that moves back, delete goes to the Trash. There is no code path
+        that destroys a skill's files.</p>
+        <footer>on being trustable at 2am</footer>
+      </blockquote>
+      <blockquote>
+        <p>The whole app is MIT-licensed Swift. The engine that touches your
+        files is a separate library covered by its own test suite, and you can
+        read every line before you let it near your setup.</p>
+        <footer>on <a href="https://github.com/ovsh/skillbox">reading the source</a></footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <section class="deployzone" id="deploy">
+    <div class="wrap">
+      <div>
+        <h2>Deploy it</h2>
+        <p class="secmeta">one DMG, or two commands from source</p>
+      </div>
+      <div class="actions">
+        <!-- REPLACE: verify this asset URL resolves once the v0.5.0 GitHub release is published -->
+        <a class="deploy" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">
+          <i class="brk tl"></i><i class="brk tr"></i><i class="brk bl"></i><i class="brk br"></i>
+          DOWNLOAD FOR MACOS
+        </a>
+        <span class="altaction"><a href="https://github.com/ovsh/skillbox/releases">all releases</a></span>
+      </div>
+      <div class="buildblock">
+        <div class="c"># or build it yourself (Xcode 16+, macOS 14+)</div>
+        <div>git clone https://github.com/ovsh/skillbox && cd skillbox</div>
+        <div>./scripts/install_app.sh</div>
+      </div>
+      <p class="fineprint">Signed with a Developer ID and notarized by Apple,
+      so Gatekeeper opens it without ceremony. Requires macOS 14. The app
+      updates itself from <a href="https://github.com/ovsh/skillbox/releases">GitHub
+      Releases</a>.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span>Loadout</span>
+    <a href="https://github.com/ovsh/skillbox">source, MIT</a>
+    <a href="https://ovsh.github.io/">more from ovsh</a>
+    <span>built with the app you're looking at</span>
+  </div>
+</footer>
+
+<script>
+  // One-time odometer: the version's middle digit rolls 4 -> 5 on load,
+  // the previous patch giving way to this one.
+  const col = document.getElementById("rollCol");
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduced) {
+    const prev = document.createElement("span");
+    prev.textContent = "4";
+    prev.setAttribute("aria-hidden", "true");
+    col.insertBefore(prev, document.getElementById("rollDigit"));
+    const finish = () => {
+      if (!prev.parentElement) return;
+      prev.remove();
+      col.style.transition = "none";
+      col.style.transform = "translateY(0)";
+    };
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        col.style.transition = "transform .8s cubic-bezier(.16,1,.3,1) .45s";
+        col.style.transform = "translateY(-1em)";
+        col.addEventListener("transitionend", finish, { once: true });
+        setTimeout(finish, 1800);
+      });
+    });
+  }
+
+  // Entries apply as they enter the viewport. Without JS (or without
+  // IntersectionObserver) they simply render in their final applied state.
+  if ("IntersectionObserver" in window && !reduced) {
+    const entries = document.querySelectorAll(".entry");
+    entries.forEach(e => e.classList.add("pending"));
+    const io = new IntersectionObserver((hits) => {
+      hits.forEach(h => {
+        if (h.isIntersecting) {
+          h.target.classList.remove("pending");
+          h.target.classList.add("applied");
+          io.unobserve(h.target);
+        }
+      });
+    }, { threshold: 0.25 });
+    entries.forEach(e => io.observe(e));
+  }
+</script>
+</body>
+</html>
