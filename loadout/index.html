@@ -7,15 +7,16 @@ it takes over the viewport.)
 
 THESIS: One idea that says the whole product: switch agent skills and
 edit your system prompt in a tap. The real window is the entire
-argument, and it moves: it plays the three things the app does (switch
-a skill down a state, switch it off, edit a global prompt) using real
+argument, and it moves: three acts, played slow — flip a skill off and
+back on, batch-clean old skills, edit CLAUDE.md/AGENTS.md — using real
 captures of the running app, and scroll hands it the whole screen.
 
-REAL ASSETS RULE: every pixel inside the window frame is a screenshot of
-Loadout taken at a fixed window geometry (1290x791 logical, retina). The
-beats are the SAME window in different states, so state changes are
-composited from pixel-aligned crops of those captures, never drawn in
-CSS. The only synthetic elements are the pointer ring, the click ring,
+REAL ASSETS RULE: every pixel inside the window frame is a screenshot
+of Loadout. Each act's beats are the SAME window in different states,
+so state changes are composited from pixel-aligned crops of those
+captures, never drawn in CSS. The batch frame is a larger capture
+(2580x1582) with the same aspect; its beat zooms 1.216x so type renders
+at the size of the other frames. The only synthetic elements are the pointer ring, the click ring,
 and the caption tooltip, which are clearly not product chrome.
 
 OWN-WORLD: Near-black instrument ground (#0A0B0D), Archivo at normal
@@ -264,7 +265,7 @@ screenshot on its own.
     position: absolute;
     inset: 0;
     transform-origin: 0 0;
-    transition: transform 1.05s cubic-bezier(.36, .04, .1, 1);
+    transition: transform 1.3s cubic-bezier(.36, .04, .1, 1);
     will-change: transform;
   }
   .film img {
@@ -277,12 +278,12 @@ screenshot on its own.
   /* The two full frames stack and cross-fade. */
   .frame { left: 0; top: 0; width: 100%; height: 100%; }
   html.js .frame.b { opacity: 0; }
-  html.js .frame { transition: opacity .4s ease; }
+  html.js .frame { transition: opacity .55s ease; }
   html.js .frame.on { opacity: 1; }
   /* State patches: pixel-aligned crops of the same window in another state.
      They wait for the pointer to land before fading in. */
   .patch { opacity: 0; height: auto; }
-  html.js .patch { transition: opacity .2s ease .42s; }
+  html.js .patch { transition: opacity .2s ease .55s; }
   html.js .patch.on { opacity: 1; }
   html:not(.js) .frame.b, html:not(.js) .patch { display: none; }
 
@@ -302,7 +303,7 @@ screenshot on its own.
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .5), 0 2px 10px rgba(0, 0, 0, .55);
     opacity: 0;
     pointer-events: none;
-    transition: left .5s cubic-bezier(.5, 0, .15, 1), top .5s cubic-bezier(.5, 0, .15, 1), opacity .3s ease;
+    transition: left .65s cubic-bezier(.5, 0, .15, 1), top .65s cubic-bezier(.5, 0, .15, 1), opacity .3s ease;
   }
   html:not(.js) .ptr { display: none; }
   .ptr.show { opacity: 1; }
@@ -314,7 +315,7 @@ screenshot on its own.
     border: 2px solid rgba(255, 255, 255, .8);
     opacity: 0;
   }
-  .ptr.tap::after { animation: tap .5s cubic-bezier(.2, .7, .3, 1) .42s; }
+  .ptr.tap::after { animation: tap .5s cubic-bezier(.2, .7, .3, 1) .55s; }
   @keyframes tap {
     from { transform: scale(.7); opacity: .9; }
     to { transform: scale(2.9); opacity: 0; }
@@ -342,7 +343,7 @@ screenshot on its own.
     color: #C9CDD2;
     pointer-events: none;
     transform: translate(16px, 14px);
-    transition: left .5s cubic-bezier(.5, 0, .15, 1), top .5s cubic-bezier(.5, 0, .15, 1), opacity .2s ease;
+    transition: left .65s cubic-bezier(.5, 0, .15, 1), top .65s cubic-bezier(.5, 0, .15, 1), opacity .2s ease;
   }
   .tip.fx { transform: translate(calc(-100% - 16px), 14px); }
   .tip.fy { transform: translate(16px, calc(-100% - 14px)); }
@@ -477,8 +478,8 @@ screenshot on its own.
         <img class="frame a on" id="fLib" src="assets/sim/sim-lib.webp" width="2120" height="1300" fetchpriority="high"
              alt="The Loadout window. A sidebar lists the system prompts CLAUDE.md and AGENTS.md above 44 skills grouped by tool. The middle column lists every skill with a green dot when it is active. The skill called how is open on the right with its On, Name, Manual and Off controls, and the status bar reads 43 of 44 active.">
         <img class="frame b" id="fPrompt" src="assets/sim/sim-prompt.webp" width="2120" height="1300" alt="" aria-hidden="true" loading="lazy" decoding="async">
+        <img class="frame b" id="fBulk" src="assets/sim/sim-bulk.webp" width="2580" height="1582" alt="" aria-hidden="true" loading="lazy" decoding="async">
 
-        <img class="patch" id="pName"   src="assets/sim/ov-name.webp"       alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:40.0943%;top:6%;width:52.3585%">
         <img class="patch" id="pOff"    src="assets/sim/ov-off.webp"        alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:40.0943%;top:6%;width:52.3585%">
         <img class="patch" id="pRow"    src="assets/sim/ov-off-row.webp"    alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:18.8679%;top:58.1538%;width:18.4906%">
         <img class="patch" id="pCount"  src="assets/sim/ov-off-count.webp"  alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:1.6981%;top:95.6923%;width:8.2075%">
@@ -516,27 +517,23 @@ screenshot on its own.
   // view: which full frame is underneath. patch: which state crops are on.
   // z/fx/fy: zoom and the point of the window (0..1) to centre on.
   // cx/cy: pointer target. tap: fire the click ring when the beat starts.
+  // Three acts, played slow: toggle a skill off and back on, batch-clean
+  // old skills, edit the global prompts. One gentle zoom per act at most.
   var BEATS = [
-    { s: 1.7, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .30,  cy: .55,   tap: 0,
+    { s: 2.6, view: "lib",    patch: [],                          z: 1,     fx: .5,  fy: .5,  cx: .30,  cy: .55,   tap: 0,
       cap: "Every skill on your Mac, in one list." },
-    { s: 1.9, view: "prompt", patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .062, cy: .136,  tap: 1,
-      cap: "Your global prompts open in the same window." },
-    { s: 2.3, view: "prompt", patch: ["pEdit", "pChars"],         z: 1.7,  fx: .30, fy: .34,  cx: .675, cy: .324,  tap: 1,
-      cap: "Type a line into CLAUDE.md or AGENTS.md." },
-    { s: 1.8, view: "prompt", patch: ["pEdit", "pChars"],         z: 1.25, fx: .585, fy: .14, cx: .675, cy: .324,  tap: 0,
-      cap: "It saves itself, and never clobbers an edit made somewhere else." },
-    { s: 1.3, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .780, cy: .0955, tap: 0,
-      cap: "Back in the library, every skill gets one switch." },
-    { s: 1.9, view: "lib",    patch: ["pName"],                   z: 1.6,  fx: .85, fy: .10,  cx: .815, cy: .0955, tap: 1,
-      cap: "Name only: you can still call it, but the model won't reach for it." },
-    { s: 1.9, view: "lib",    patch: ["pOff", "pRow", "pCount"],  z: 1.6,  fx: .85, fy: .10,  cx: .898, cy: .0955, tap: 1,
-      cap: "Off, and Claude stops seeing the skill." },
-    { s: 2.4, view: "lib",    patch: ["pOff", "pRow", "pCount"],  z: 1.5,  fx: .22, fy: .78,  cx: .898, cy: .0955, tap: 0,
-      cap: "The row dims, the count drops. The folder never moves." },
-    { s: 1.8, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .780, cy: .0955, tap: 1,
-      cap: "Switch it back. Claude Code picks it up mid-session." }
+    { s: 3.2, view: "lib",    patch: ["pOff", "pRow", "pCount"],  z: 1,     fx: .5,  fy: .5,  cx: .898, cy: .0955, tap: 1,
+      cap: "Flip one off. The row dims, the count drops, Claude stops seeing it." },
+    { s: 2.8, view: "lib",    patch: [],                          z: 1,     fx: .5,  fy: .5,  cx: .780, cy: .0955, tap: 1,
+      cap: "Back on in a tap. Claude Code picks it up mid-session." },
+    { s: 3.4, view: "bulk",   patch: [],                          z: 1.216, fx: .70, fy: .35, cx: .887, cy: .554,  tap: 1,
+      cap: "Old skills piling up? Search, select all, turn off or delete in one go." },
+    { s: 2.8, view: "prompt", patch: [],                          z: 1,     fx: .5,  fy: .5,  cx: .062, cy: .136,  tap: 1,
+      cap: "CLAUDE.md and AGENTS.md live here too." },
+    { s: 3.4, view: "prompt", patch: ["pEdit", "pChars"],         z: 1.35,  fx: .32, fy: .30, cx: .675, cy: .324,  tap: 1, tipUp: 1,
+      cap: "Edit once, it saves itself. One window for your whole stack." }
   ];
-  var PATCHES = ["pName", "pOff", "pRow", "pCount", "pEdit", "pChars"];
+  var PATCHES = ["pOff", "pRow", "pCount", "pEdit", "pChars"];
 
   var TOTAL = BEATS.reduce(function (a, b) { return a + b.s; }, 0);
   var STARTS = [];
@@ -553,6 +550,7 @@ screenshot on its own.
   var film = document.getElementById("film");
   var fLib = document.getElementById("fLib");
   var fPrompt = document.getElementById("fPrompt");
+  var fBulk = document.getElementById("fBulk");
   var ptr = document.getElementById("ptr");
   var tip = document.getElementById("tip");
   var seek = document.getElementById("seek");
@@ -585,7 +583,9 @@ screenshot on its own.
     tip.style.left = (px * 100).toFixed(2) + "%";
     tip.style.top = (py * 100).toFixed(2) + "%";
     tip.classList.toggle("fx", px > .56);
-    tip.classList.toggle("fy", py > .55);
+    /* tipUp: beats where the default below-anchor spot would cover the
+       very thing the caption describes (e.g. the freshly typed line). */
+    tip.classList.toggle("fy", py > .55 || !!b.tipUp);
   }
 
   var shown = -1;
@@ -594,6 +594,7 @@ screenshot on its own.
     film.style.transform = frameTransform(b.z, b.fx, b.fy);
     fLib.classList.toggle("on", b.view === "lib");
     fPrompt.classList.toggle("on", b.view === "prompt");
+    fBulk.classList.toggle("on", b.view === "bulk");
     PATCHES.forEach(function (id) { el[id].classList.toggle("on", b.patch.indexOf(id) > -1); });
     ptr.classList.add("show");
     if (animate && b.tap) {
