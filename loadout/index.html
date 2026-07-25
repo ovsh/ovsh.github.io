@@ -1,46 +1,58 @@
 <!doctype html>
 <!--
 DIRECTION CONTRACT (canon standing preference, user-chosen 2026-07-24;
-recorded in PRODUCT.md Brand Commitments. Revised same day by user
-direction: the long-scroll page was "too convoluted". This surface is now
-a SINGLE VIEWPORT, no scrolling.)
+recorded in PRODUCT.md Brand Commitments. Revised twice the same day by
+user direction: the long-scroll page was "too convoluted", so this is a
+SINGLE VIEWPORT with no scrolling; then the static hero capture was
+replaced by a SIMULATION of the real app.)
 
-THESIS: One screen that says the whole product: manage your AI skills.
-See what's active, see your system prompts, switch skills off. The real
-library window is the entire argument; no sections, no mechanism panels,
-no feature grid. Everything a visitor needs sits above the fold because
-there is no below-the-fold.
+THESIS: One screen that says the whole product: skills are annoying to
+find and annoying to change, and this makes that one thing easy. The
+real window is the entire argument, and now it moves: it plays the three
+things the app does (switch a skill down a state, switch it off, edit a
+global prompt) using real captures of the running app.
+
+REAL ASSETS RULE: every pixel inside the window frame is a screenshot of
+Loadout taken at a fixed window geometry (1290x791 logical, retina). The
+beats are the SAME window in different states, so state changes are
+composited from pixel-aligned crops of those captures, never drawn in
+CSS. The only synthetic elements are the pointer dot and the click ring,
+which are clearly not product chrome.
 
 OWN-WORLD: Near-black instrument ground (#0A0B0D), Archivo at normal
-width, mono reserved for the fact line, one off-white glowing CTA. The
-green lives inside the screenshot (the app's own switches).
+width, mono reserved for the fact line and the beat caption, one
+off-white glowing CTA. The green lives inside the screenshot (the app's
+own switches).
 
-STORY: A developer lands, reads one plain line, sees the real window with
-switches and prompt files, downloads. Ten seconds, no scroll.
+STORY: A developer lands, reads one plain line, watches the real window
+do the three things, downloads. No scroll.
 
-FIRST VIEWPORT: The only viewport. Slim bar (brand left, GitHub right);
-centered statement, one supporting sentence, Download for Mac +
-build-from-source, mono fact line; the real library window rising from
-the bottom edge, cropped by the fold like a window still on the desk.
+FORM: Slim bar (brand left, GitHub right); centered statement, one
+supporting paragraph, Download for Mac + build-from-source, mono fact
+line; then the window, FULLY VISIBLE (the old fold-crop is gone: the
+"42 of 44 active" counter at the window's bottom edge is a beat, so it
+cannot be cropped away). Caption and scrubber sit under the window.
 
-FORM: Category canon at full fidelity, compressed to one screen. Motion
-is the entrance only: children rise once, the window settles. Nothing
-else moves.
+MOTION: Entrance rise once, then the beat timeline. Autoplay, pause on
+hover of the control, scrubber is a real range input. Reduced motion and
+no-JS both fall back to the first frame, which is a complete, honest
+product screenshot on its own.
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Loadout: skill manager for Claude Code, Cursor, and OpenCode</title>
-<meta name="description" content="Manage your AI skills. A free Mac menu-bar app: see every skill Claude Code, Cursor, and OpenCode have installed, switch any of them off, and edit your global prompts. Open source, signed and notarized.">
+<title>Loadout: switch your AI coding skills on and off</title>
+<meta name="description" content="Skills are hard to find and harder to switch off. Loadout is a free Mac menu-bar app that puts every skill on your Mac in one window with a switch on each, and keeps CLAUDE.md and AGENTS.md a click away. Open source, signed and notarized.">
 <link rel="icon" type="image/png" href="assets/appicon.png">
 <script>document.documentElement.classList.add("js");</script>
-<meta property="og:title" content="Loadout: skill manager for Claude Code, Cursor, and OpenCode">
-<meta property="og:description" content="Manage your AI skills. See what's active, switch skills off, edit your global prompts. Free Mac menu-bar app, open source, signed and notarized.">
-<meta property="og:image" content="https://ovsh.github.io/loadout/assets/library.png">
+<meta property="og:title" content="Loadout: switch your AI coding skills on and off">
+<meta property="og:description" content="Every skill on your Mac in one window, with a switch on each. Your CLAUDE.md and AGENTS.md a click away. Free Mac menu-bar app, open source, signed and notarized.">
+<meta property="og:image" content="https://ovsh.github.io/loadout/assets/og.jpg">
 <meta property="og:url" content="https://ovsh.github.io/loadout/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="preload" as="image" href="assets/sim/sim-lib.webp" fetchpriority="high">
 <style>
   @font-face {
     font-family: "Archivo";
@@ -58,6 +70,7 @@ else moves.
     --line-strong: rgba(255, 255, 255, .16);
     --cta: #E9EAEC;
     --cta-text: #17181B;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { height: 100%; overflow: hidden; }
@@ -78,16 +91,15 @@ else moves.
   ::selection { background: rgba(233, 234, 236, .18); }
 
   /* Ground atmosphere: green bloom under the window, spotlight over the
-     statement, a hairline grid that dissolves outward, film grain. All CSS,
-     all static, zero requests. */
+     statement, film grain. All CSS, all static, zero requests. */
   .bg {
     position: fixed;
     inset: 0;
     z-index: -1;
     pointer-events: none;
     background:
-      radial-gradient(ellipse 72% 28% at 50% 50%, rgba(108, 171, 130, .26), transparent 58%),
-      radial-gradient(ellipse 120% 85% at 50% 118%, rgba(108, 171, 130, .14), transparent 68%),
+      radial-gradient(ellipse 72% 28% at 50% 52%, rgba(108, 171, 130, .24), transparent 58%),
+      radial-gradient(ellipse 120% 85% at 50% 118%, rgba(108, 171, 130, .13), transparent 68%),
       radial-gradient(ellipse 70% 45% at 50% -14%, rgba(233, 234, 236, .07), transparent 62%),
       var(--bg);
   }
@@ -99,7 +111,7 @@ else moves.
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   a { color: inherit; text-decoration: none; }
-  a:focus-visible, button:focus-visible {
+  a:focus-visible, button:focus-visible, input:focus-visible {
     outline: 2px solid var(--cta);
     outline-offset: 3px;
     border-radius: 4px;
@@ -111,7 +123,7 @@ else moves.
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 22px clamp(20px, 4vw, 44px);
+    padding: clamp(12px, 1.8vh, 20px) clamp(20px, 4vw, 44px);
   }
   .brand {
     display: flex;
@@ -141,26 +153,27 @@ else moves.
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: clamp(16px, 4.5vh, 56px) 20px 0;
+    padding: clamp(4px, 1.4vh, 28px) 20px clamp(12px, 2vh, 22px);
   }
   h1 {
-    font-size: clamp(40px, 6.2vw, 72px);
+    font-size: clamp(32px, 3.4vw, 50px);
     font-weight: 640;
     letter-spacing: -0.03em;
-    line-height: 1.03;
+    line-height: 1.05;
     text-wrap: balance;
+    max-width: 22ch;
   }
   .sub {
-    margin-top: clamp(14px, 2.2vh, 22px);
-    max-width: 68ch;
-    font-size: clamp(15.5px, 1.9vh, 17.5px);
-    line-height: 1.6;
+    margin-top: clamp(10px, 1.5vh, 16px);
+    max-width: 88ch;
+    font-size: clamp(14px, 1.7vh, 16px);
+    line-height: 1.55;
     font-weight: 420;
     color: var(--mute);
-    text-wrap: balance;
+    text-wrap: pretty;
   }
   .actions {
-    margin-top: clamp(18px, 3vh, 30px);
+    margin-top: clamp(12px, 2vh, 22px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -202,39 +215,190 @@ else moves.
   }
   .ghost:hover { color: var(--fg); }
   .facts {
-    margin-top: clamp(14px, 2.4vh, 24px);
+    margin-top: clamp(9px, 1.4vh, 16px);
     display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
-    font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
-    font-size: 12.5px;
+    font-family: var(--mono);
+    font-size: 12px;
     color: #8A9098;
     letter-spacing: 0.01em;
   }
   .facts span + span::before { content: "·"; margin-right: 10px; }
 
-  /* The window, cropped by the fold */
-  .shot {
+  /* ---- The simulation ---- */
+  .sim {
     flex: 1;
-    min-height: 140px;
+    min-height: 0;
     width: 100%;
-    margin-top: clamp(20px, 4.5vh, 52px);
+    margin-top: clamp(12px, 2.4vh, 28px);
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    overflow: hidden;
-    /* The fold crop fades into the ground instead of slicing text mid-line */
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 78%, transparent 100%);
-    mask-image: linear-gradient(to bottom, black 0%, black 78%, transparent 100%);
+    flex-direction: column;
+    align-items: center;
   }
-  .shot img {
-    width: min(1060px, 92vw);
-    height: auto;
-    display: block;
+  .stage {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+    width: auto;
+    max-height: min(628px, calc(94vw * 0.6132));
+    aspect-ratio: 2120 / 1300;
+    position: relative;
+    overflow: hidden;
     border-radius: 12px;
     border: 1px solid var(--line-strong);
     box-shadow: 0 24px 80px rgba(0, 0, 0, .55);
+    background: #0d0e10;
+  }
+  /* Everything inside moves as one: the pan/zoom lives on .film. */
+  .film {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    transition: transform 1.05s cubic-bezier(.36, .04, .1, 1);
+    will-change: transform;
+  }
+  .film img {
+    position: absolute;
+    display: block;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  /* The two full frames stack and cross-fade. */
+  .frame { left: 0; top: 0; width: 100%; height: 100%; }
+  html.js .frame.b { opacity: 0; }
+  html.js .frame { transition: opacity .4s ease; }
+  html.js .frame.on { opacity: 1; }
+  /* State patches: pixel-aligned crops of the same window in another state.
+     They wait for the pointer to land before fading in. */
+  .patch { opacity: 0; height: auto; }
+  html.js .patch { transition: opacity .2s ease .42s; }
+  html.js .patch.on { opacity: 1; }
+  html:not(.js) .frame.b, html:not(.js) .patch { display: none; }
+
+  /* Pointer. Not product chrome: a plain dot, counter-scaled so it keeps
+     its size when the film zooms. */
+  .ptr {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border-radius: 50%;
+    /* Hollow, so the control label underneath stays readable. */
+    background: rgba(255, 255, 255, .16);
+    border: 2px solid rgba(255, 255, 255, .95);
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .5), 0 2px 10px rgba(0, 0, 0, .55);
+    opacity: 0;
+    pointer-events: none;
+    transition: left .5s cubic-bezier(.5, 0, .15, 1), top .5s cubic-bezier(.5, 0, .15, 1), opacity .3s ease;
+  }
+  html:not(.js) .ptr { display: none; }
+  .ptr.show { opacity: 1; }
+  .ptr::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, .8);
+    opacity: 0;
+  }
+  .ptr.tap::after { animation: tap .5s cubic-bezier(.2, .7, .3, 1) .42s; }
+  @keyframes tap {
+    from { transform: scale(.7); opacity: .9; }
+    to { transform: scale(2.9); opacity: 0; }
+  }
+
+  /* Caption + scrubber */
+  .track {
+    flex: none;
+    width: min(1024px, 94vw);
+    margin-top: clamp(8px, 1.3vh, 14px);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .play {
+    flex: none;
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--mute);
+    cursor: pointer;
+    transition: color .18s ease, border-color .18s ease;
+  }
+  .play:hover { color: var(--fg); border-color: rgba(255, 255, 255, .3); }
+  .play svg { display: block; }
+  .play .ico-pause { display: none; }
+  .play[data-playing="1"] .ico-pause { display: block; }
+  .play[data-playing="1"] .ico-play { display: none; }
+  .cap {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: #8A9098;
+    transition: opacity .2s ease;
+  }
+  .cap.fade { opacity: 0; }
+  .seek {
+    flex: none;
+    width: clamp(120px, 22vw, 260px);
+    height: 18px;
+    margin: 0;
+    background: transparent;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+  }
+  .seek::-webkit-slider-runnable-track {
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #8A9098 var(--p, 0%), rgba(255, 255, 255, .12) var(--p, 0%));
+  }
+  .seek::-moz-range-track { height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .12); }
+  .seek::-moz-range-progress { height: 3px; border-radius: 3px; background: #8A9098; }
+  .seek::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 10px;
+    height: 10px;
+    margin-top: -3.5px;
+    border-radius: 50%;
+    background: var(--fg);
+    border: none;
+  }
+  .seek::-moz-range-thumb { width: 10px; height: 10px; border: none; border-radius: 50%; background: var(--fg); }
+  html:not(.js) .track { display: none; }
+
+  /* Small screens: stack, shrink, keep the whole window visible */
+  @media (max-width: 620px) {
+    .bar { padding: 16px 20px; }
+    .actions { gap: 16px; }
+    .sub { max-width: 40ch; }
+    .facts { font-size: 11.5px; gap: 8px; }
+    .facts span + span::before { margin-right: 8px; }
+    .track { flex-wrap: wrap; gap: 10px; }
+    .cap { order: 3; flex-basis: 100%; font-size: 11.5px; }
+    .seek { flex: 1; width: auto; }
+  }
+  /* Short or very small windows: let the page scroll rather than crush the app */
+  @media (max-height: 620px), (max-width: 420px) {
+    html { overflow: auto; }
+    body { height: auto; min-height: 100svh; overflow: auto; }
+    /* safe: centers the spare room on a tall phone, but never clips the
+       headline off the top when the content is taller than the viewport. */
+    main { justify-content: safe center; }
+    .sim { flex: none; }
+    .stage { flex: none; height: auto; width: min(560px, 96vw); max-height: none; }
   }
 
   /* Entrance (JS-gated; everything visible without JS or with reduced motion) */
@@ -247,27 +411,13 @@ else moves.
   html.js .rv.d3 { transition-delay: .16s; }
   html.js .rv.d4 { transition-delay: .24s; }
   html.js .rv.d5 { transition-delay: .32s; }
-  html.js .shot.rv { transform: translateY(18px) scale(.985); }
+  /* :not(.in) so this outranks .in — without it the stage never lands. */
+  html.js .sim.rv:not(.in) { transform: translateY(18px) scale(.985); }
   html.js .in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     html.js .rv { opacity: 1; transform: none; transition: none; }
-  }
-
-  /* Small screens */
-  @media (max-width: 560px) {
-    .bar { padding: 18px 20px; }
-    .actions { gap: 16px; }
-    .sub { max-width: 34ch; }
-    .facts { font-size: 11.5px; gap: 8px; }
-    .facts span + span::before { margin-right: 8px; }
-    /* The full window fits on a phone: center it, no fold crop to fade */
-    .shot { align-items: center; -webkit-mask-image: none; mask-image: none; }
-  }
-  /* Short windows: let it scroll rather than clip text */
-  @media (max-height: 600px) {
-    html { overflow: auto; }
-    body { height: auto; min-height: 100svh; overflow: auto; }
-    .shot { min-height: 200px; max-height: 320px; }
+    .film, .ptr, .frame, .patch { transition: none !important; }
+    .ptr.tap::after { animation: none; }
   }
 </style>
 </head>
@@ -283,26 +433,194 @@ else moves.
 </header>
 
 <main>
-  <h1 class="rv">Manage your AI skills.</h1>
-  <p class="sub rv d2">Skills and system prompts for all your agents, one click away. See what's active in Claude Code, Cursor, and OpenCode, switch anything off, edit your prompts.</p>
+  <h1 class="rv">Skills are hard to find and harder to switch off.</h1>
+  <p class="sub rv d2">They sit in folders you have to remember, and every new model wants a different setup. Loadout puts them all in one window with a switch on each, and keeps CLAUDE.md and AGENTS.md a click away. That's all it does.</p>
   <div class="actions rv d3">
-    <a class="btn" href="https://github.com/ovsh/skillbox/releases/download/v0.5.0/Loadout-MacOS.dmg">Download for Mac</a>
+    <a class="btn" href="https://github.com/ovsh/skillbox/releases/latest/download/Loadout-MacOS.dmg">Download for Mac</a>
     <a class="ghost" href="https://github.com/ovsh/skillbox#building-from-source" target="_blank" rel="noopener">Build from source
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3.5 1.5h7v7M10.5 1.5 1.5 10.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
   <p class="facts rv d4"><span>Free, MIT</span><span>Signed and notarized</span><span>macOS 14+</span></p>
-  <div class="shot rv d5">
-    <img src="assets/library.png" alt="The Loadout library window: system prompts CLAUDE.md and AGENTS.md in the sidebar, 44 skills listed with green rails marking the active ones, and the architect skill open with its On, Name, Manual, and Off controls." width="1290" height="790" fetchpriority="high">
+
+  <div class="sim rv d5">
+    <div class="stage" id="stage">
+      <div class="film" id="film">
+        <img class="frame a on" id="fLib" src="assets/sim/sim-lib.webp" width="2120" height="1300" fetchpriority="high"
+             alt="The Loadout window. A sidebar lists the system prompts CLAUDE.md and AGENTS.md above 44 skills grouped by tool. The middle column lists every skill with a green dot when it is active. The skill called how is open on the right with its On, Name, Manual and Off controls, and the status bar reads 43 of 44 active.">
+        <img class="frame b" id="fPrompt" src="assets/sim/sim-prompt.webp" width="2120" height="1300" alt="" aria-hidden="true" loading="lazy" decoding="async">
+
+        <img class="patch" id="pName"   src="assets/sim/ov-name.webp"       alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:40.0943%;top:6%;width:52.3585%">
+        <img class="patch" id="pOff"    src="assets/sim/ov-off.webp"        alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:40.0943%;top:6%;width:52.3585%">
+        <img class="patch" id="pRow"    src="assets/sim/ov-off-row.webp"    alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:18.8679%;top:58.1538%;width:18.4906%">
+        <img class="patch" id="pCount"  src="assets/sim/ov-off-count.webp"  alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:1.6981%;top:95.6923%;width:8.2075%">
+        <img class="patch" id="pEdit"   src="assets/sim/ov-edit.webp"       alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:19.3396%;top:32.9231%;width:78.7736%">
+        <img class="patch" id="pChars"  src="assets/sim/ov-edit-chars.webp" alt="" aria-hidden="true" loading="lazy" decoding="async" style="left:82.5472%;top:7.5385%;width:12.2642%">
+
+        <span class="ptr" id="ptr" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="track">
+      <button class="play" id="play" type="button" data-playing="1" aria-label="Pause the walkthrough">
+        <svg class="ico-pause" width="9" height="10" viewBox="0 0 9 10" aria-hidden="true"><rect x="0" y="0" width="3" height="10" rx="1" fill="currentColor"/><rect x="6" y="0" width="3" height="10" rx="1" fill="currentColor"/></svg>
+        <svg class="ico-play" width="9" height="10" viewBox="0 0 9 10" aria-hidden="true"><path d="M1 .8 8.2 5 1 9.2Z" fill="currentColor"/></svg>
+      </button>
+      <p class="cap" id="cap" aria-live="polite">Every skill on your Mac, in one list.</p>
+      <input class="seek" id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub the walkthrough">
+    </div>
   </div>
 </main>
 
 <script>
+(function () {
+  var root = document.documentElement;
   addEventListener("load", function () {
     setTimeout(function () {
       document.querySelectorAll(".rv").forEach(function (el) { el.classList.add("in"); });
     }, 60);
   });
+
+  // ---- Beat timeline -------------------------------------------------
+  // view: which full frame is underneath. patch: which state crops are on.
+  // z/fx/fy: zoom and the point of the window (0..1) to centre on.
+  // cx/cy: pointer target. tap: fire the click ring when the beat starts.
+  var BEATS = [
+    { s: 1.7, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .30,  cy: .55,   tap: 0,
+      cap: "Every skill on your Mac, in one list." },
+    { s: 1.9, view: "prompt", patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .062, cy: .136,  tap: 1,
+      cap: "Your global prompts open in the same window." },
+    { s: 2.3, view: "prompt", patch: ["pEdit", "pChars"],         z: 1.7,  fx: .30, fy: .34,  cx: .675, cy: .324,  tap: 1,
+      cap: "Type a line into CLAUDE.md or AGENTS.md." },
+    { s: 1.8, view: "prompt", patch: ["pEdit", "pChars"],         z: 1.25, fx: .585, fy: .14, cx: .675, cy: .324,  tap: 0,
+      cap: "It saves itself, and never clobbers an edit made somewhere else." },
+    { s: 1.3, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .780, cy: .0955, tap: 0,
+      cap: "Back in the library, every skill gets one switch." },
+    { s: 1.9, view: "lib",    patch: ["pName"],                   z: 1.6,  fx: .85, fy: .10,  cx: .815, cy: .0955, tap: 1,
+      cap: "Name only: you can still call it, but the model won't reach for it." },
+    { s: 1.9, view: "lib",    patch: ["pOff", "pRow", "pCount"],  z: 1.6,  fx: .85, fy: .10,  cx: .898, cy: .0955, tap: 1,
+      cap: "Off, and Claude stops seeing the skill." },
+    { s: 2.4, view: "lib",    patch: ["pOff", "pRow", "pCount"],  z: 1.5,  fx: .22, fy: .78,  cx: .898, cy: .0955, tap: 0,
+      cap: "The row dims, the count drops. The folder never moves." },
+    { s: 1.8, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .780, cy: .0955, tap: 1,
+      cap: "Switch it back. Sessions already running pick it up." }
+  ];
+  var PATCHES = ["pName", "pOff", "pRow", "pCount", "pEdit", "pChars"];
+
+  var TOTAL = BEATS.reduce(function (a, b) { return a + b.s; }, 0);
+  var STARTS = [];
+  (function () {
+    var t = 0;
+    for (var i = 0; i < BEATS.length; i++) { STARTS.push(t / TOTAL); t += BEATS[i].s; }
+  })();
+  function beatAt(p) {
+    var b = 0;
+    for (var i = 1; i < STARTS.length; i++) if (p >= STARTS[i]) b = i;
+    return b;
+  }
+
+  var film = document.getElementById("film");
+  var fLib = document.getElementById("fLib");
+  var fPrompt = document.getElementById("fPrompt");
+  var ptr = document.getElementById("ptr");
+  var cap = document.getElementById("cap");
+  var seek = document.getElementById("seek");
+  var play = document.getElementById("play");
+  var stage = document.getElementById("stage");
+  var el = {};
+  PATCHES.forEach(function (id) { el[id] = document.getElementById(id); });
+
+  // Place the film so window point (fx, fy) sits at the stage centre at zoom z,
+  // clamped so the frame always covers the stage.
+  function frameTransform(z, fx, fy) {
+    var tx = Math.max(1 - z, Math.min(0, .5 - z * fx));
+    var ty = Math.max(1 - z, Math.min(0, .5 - z * fy));
+    return "translate(" + (tx * 100).toFixed(3) + "%," + (ty * 100).toFixed(3) + "%) scale(" + z + ")";
+  }
+
+  var shown = -1;
+  function showBeat(i, animate) {
+    var b = BEATS[i];
+    film.style.transform = frameTransform(b.z, b.fx, b.fy);
+    fLib.classList.toggle("on", b.view === "lib");
+    fPrompt.classList.toggle("on", b.view === "prompt");
+    PATCHES.forEach(function (id) { el[id].classList.toggle("on", b.patch.indexOf(id) > -1); });
+    ptr.classList.add("show");
+    if (animate && b.tap) {
+      ptr.classList.remove("tap");
+      void ptr.offsetWidth;
+      ptr.classList.add("tap");
+    } else if (!animate) {
+      ptr.classList.remove("tap");
+    }
+    if (cap.textContent !== b.cap) {
+      cap.classList.add("fade");
+      setTimeout(function () { cap.textContent = b.cap; cap.classList.remove("fade"); }, animate ? 160 : 0);
+    }
+    shown = i;
+  }
+
+  // The pointer heads for the next beat's target before that beat lands, so
+  // the click ring fires where the pointer already is.
+  var ptrAt = -1;
+  function movePointer(i, within) {
+    var target = (within > .72 && i + 1 < BEATS.length) ? i + 1 : i;
+    if (target === ptrAt) return;
+    ptrAt = target;
+    ptr.style.left = (BEATS[target].cx * 100) + "%";
+    ptr.style.top = (BEATS[target].cy * 100) + "%";
+  }
+
+  // Keep the pointer the same size on screen however far the film is zoomed.
+  function scalePointer(z) { ptr.style.transform = "scale(" + (1 / z).toFixed(4) + ")"; }
+
+  function apply(p, animate) {
+    var i = beatAt(p);
+    var within = (p - STARTS[i]) / (BEATS[i].s / TOTAL);
+    if (i !== shown) { showBeat(i, animate); scalePointer(BEATS[i].z); }
+    movePointer(i, within);
+    seek.value = Math.round(p * 1000);
+    seek.style.setProperty("--p", (p * 100).toFixed(2) + "%");
+  }
+
+  // ---- Clock ---------------------------------------------------------
+  var t = 0, playing = false, scrubbing = false, visible = true, last = 0;
+  var reduced = matchMedia("(prefers-reduced-motion: reduce)");
+
+  function tick(now) {
+    requestAnimationFrame(tick);
+    var dt = last ? Math.min(.1, (now - last) / 1000) : 0;
+    last = now;
+    if (!playing || scrubbing || !visible) return;
+    t = (t + dt / TOTAL) % 1;
+    apply(t, true);
+  }
+
+  function setPlaying(on) {
+    playing = on;
+    play.dataset.playing = on ? "1" : "0";
+    play.setAttribute("aria-label", on ? "Pause the walkthrough" : "Play the walkthrough");
+  }
+
+  play.addEventListener("click", function () { setPlaying(!playing); });
+  seek.addEventListener("pointerdown", function () { scrubbing = true; });
+  addEventListener("pointerup", function () { scrubbing = false; });
+  seek.addEventListener("input", function () {
+    t = seek.value / 1000;
+    apply(t, false);
+  });
+  seek.addEventListener("keydown", function () { setPlaying(false); });
+  document.addEventListener("visibilitychange", function () { visible = !document.hidden; });
+  if (window.IntersectionObserver) {
+    new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+    }, { threshold: 0 }).observe(stage);
+  }
+
+  apply(0, false);
+  if (!reduced.matches) { setPlaying(true); } else { setPlaying(false); }
+  requestAnimationFrame(tick);
+})();
 </script>
 
 </body>
