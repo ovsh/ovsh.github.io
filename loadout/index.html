@@ -1,42 +1,44 @@
 <!doctype html>
 <!--
-DIRECTION CONTRACT (canon standing preference, user-chosen 2026-07-24;
-recorded in PRODUCT.md Brand Commitments. Revised twice the same day by
-user direction: the long-scroll page was "too convoluted", so this is a
-SINGLE VIEWPORT with no scrolling; then the static hero capture was
-replaced by a SIMULATION of the real app.)
+DIRECTION CONTRACT (canon standing preference, user-chosen 2026-07-24,
+revised 2026-07-25 by user direction: the hero is a SIMULATION of the
+real app, the page scrolls again, and scrolling grows the window until
+it takes over the viewport.)
 
-THESIS: One screen that says the whole product: skills are annoying to
-find and annoying to change, and this makes that one thing easy. The
-real window is the entire argument, and now it moves: it plays the three
-things the app does (switch a skill down a state, switch it off, edit a
-global prompt) using real captures of the running app.
+THESIS: One idea that says the whole product: switch agent skills and
+edit your system prompt in a tap. The real window is the entire
+argument, and it moves: it plays the three things the app does (switch
+a skill down a state, switch it off, edit a global prompt) using real
+captures of the running app, and scroll hands it the whole screen.
 
 REAL ASSETS RULE: every pixel inside the window frame is a screenshot of
 Loadout taken at a fixed window geometry (1290x791 logical, retina). The
 beats are the SAME window in different states, so state changes are
 composited from pixel-aligned crops of those captures, never drawn in
-CSS. The only synthetic elements are the pointer dot and the click ring,
-which are clearly not product chrome.
+CSS. The only synthetic elements are the pointer ring, the click ring,
+and the caption tooltip, which are clearly not product chrome.
 
 OWN-WORLD: Near-black instrument ground (#0A0B0D), Archivo at normal
-width, mono reserved for the fact line and the beat caption, one
-off-white glowing CTA. The green lives inside the screenshot (the app's
-own switches).
+width, mono reserved for the fact line and the tooltip, one off-white
+glowing CTA. The green lives inside the screenshot (the app's own
+switches).
 
 STORY: A developer lands, reads one plain line, watches the real window
-do the three things, downloads. No scroll.
+do the three things, scrolls it to full screen, downloads.
 
 FORM: Slim bar (brand left, GitHub right); centered statement, one
-supporting paragraph, Download for Mac + build-from-source, mono fact
-line; then the window, FULLY VISIBLE (the old fold-crop is gone: the
-"42 of 44 active" counter at the window's bottom edge is a beat, so it
-cannot be cropped away). Caption and scrubber sit under the window.
+supporting sentence, Download for Mac + build-from-source, mono fact
+line; the window peeking under the hero at min(1120px, 92vw). A 280vh
+sticky runway grows it to near-fullscreen as the page scrolls (eased,
+reversible). Captions ride the pointer as a tooltip so the eye is on
+the control being clicked; only play/pause + scrubber sit under the
+window.
 
-MOTION: Entrance rise once, then the beat timeline. Autoplay, pause on
-hover of the control, scrubber is a real range input. Reduced motion and
-no-JS both fall back to the first frame, which is a complete, honest
-product screenshot on its own.
+MOTION: Entrance rise once, then the beat timeline; scroll drives only
+the takeover. Autoplay, scrubber is a real range input. Reduced motion
+and no-JS both fall back to the first frame at rest size with normal
+page scrolling; the first frame is a complete, honest product
+screenshot on its own.
 -->
 <html lang="en">
 <head>
@@ -427,13 +429,22 @@ product screenshot on its own.
   html.js .rv.d3 { transition-delay: .16s; }
   html.js .rv.d4 { transition-delay: .24s; }
   html.js .rv.d5 { transition-delay: .32s; }
-  /* :not(.in) so this outranks .in — without it the stage never lands. */
-  html.js .sim.rv:not(.in) { transform: translateY(18px) scale(.985); }
+  /* The stage carries the settle, not .sim: a transform on .sim (the
+     sticky .hold's ancestor) is a sticky-positioning breakage vector.
+     :not(.in) so this outranks .in — without it the stage never lands. */
+  html.js .sim.rv { transform: none; }
+  html.js .stage { transition: transform .7s cubic-bezier(.19, 1, .22, 1) .32s; }
+  html.js .sim.rv:not(.in) .stage { transform: translateY(18px) scale(.985); }
   html.js .in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     html.js .rv { opacity: 1; transform: none; transition: none; }
-    .film, .ptr, .frame, .patch { transition: none !important; }
+    .film, .ptr, .frame, .patch, html.js .stage { transition: none !important; }
+    html.js .sim.rv:not(.in) .stage { transform: none; }
     .ptr.tap::after { animation: none; }
+    /* No scroll takeover: collapse the runway, let the page scroll past
+       a static window at rest size. JS skips sizeStage() to match. */
+    html.js .sim { height: auto; }
+    html.js .hold { position: static; height: auto; padding: 24px 0 56px; }
   }
 </style>
 </head>
@@ -450,7 +461,7 @@ product screenshot on its own.
 
 <main>
   <h1 class="rv">Switch agent skills and edit your system prompt in a tap.</h1>
-  <p class="sub rv d2">Every skill from Claude Code, Cursor, and OpenCode in one window. Flip one and running sessions pick it up live.</p>
+  <p class="sub rv d2">Every skill from Claude Code, Cursor, and OpenCode in one window. Flip one and Claude Code picks it up mid-session.</p>
   <div class="actions rv d3">
     <a class="btn" href="https://github.com/ovsh/skillbox/releases/latest/download/Loadout-MacOS.dmg">Download for Mac</a>
     <a class="ghost" href="https://github.com/ovsh/skillbox#building-from-source" target="_blank" rel="noopener">Build from source
@@ -476,7 +487,9 @@ product screenshot on its own.
 
         <span class="ptr" id="ptr" aria-hidden="true"></span>
       </div>
-      <p class="tip" id="tip" aria-live="polite">Every skill on your Mac, in one list.</p>
+      <!-- Decorative caption for the visual walkthrough; the lib frame's
+           alt text is the screen-reader description, so no live region. -->
+      <p class="tip" id="tip" aria-hidden="true">Every skill on your Mac, in one list.</p>
     </div>
 
     <div class="track">
@@ -521,7 +534,7 @@ product screenshot on its own.
     { s: 2.4, view: "lib",    patch: ["pOff", "pRow", "pCount"],  z: 1.5,  fx: .22, fy: .78,  cx: .898, cy: .0955, tap: 0,
       cap: "The row dims, the count drops. The folder never moves." },
     { s: 1.8, view: "lib",    patch: [],                          z: 1,    fx: .5,  fy: .5,   cx: .780, cy: .0955, tap: 1,
-      cap: "Switch it back. Sessions already running pick it up." }
+      cap: "Switch it back. Claude Code picks it up mid-session." }
   ];
   var PATCHES = ["pName", "pOff", "pRow", "pCount", "pEdit", "pChars"];
 
@@ -669,6 +682,7 @@ product screenshot on its own.
   var ASPECT = 1300 / 2120;
   function smooth(x) { return x * x * (3 - 2 * x); }
   function sizeStage() {
+    if (reduced.matches) return; // CSS collapses the runway instead
     var vh = innerHeight, vw = innerWidth;
     var r = sim.getBoundingClientRect();
     var runway = r.height - vh;
