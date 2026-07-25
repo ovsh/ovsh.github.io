@@ -43,11 +43,11 @@ product screenshot on its own.
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Loadout: switch your AI coding skills on and off</title>
-<meta name="description" content="Skills are hard to find and harder to switch off. Loadout is a free Mac menu-bar app that puts every skill on your Mac in one window with a switch on each, and keeps CLAUDE.md and AGENTS.md a click away. Open source, signed and notarized.">
+<meta name="description" content="Switch agent skills and edit your system prompt in a tap. Every skill from Claude Code, Cursor, and OpenCode in one window. Free Mac menu-bar app, open source, signed and notarized.">
 <link rel="icon" type="image/png" href="assets/appicon.png">
 <script>document.documentElement.classList.add("js");</script>
 <meta property="og:title" content="Loadout: switch your AI coding skills on and off">
-<meta property="og:description" content="Every skill on your Mac in one window, with a switch on each. Your CLAUDE.md and AGENTS.md a click away. Free Mac menu-bar app, open source, signed and notarized.">
+<meta property="og:description" content="Switch agent skills and edit your system prompt in a tap. Every skill from Claude Code, Cursor, and OpenCode in one window. Free Mac menu-bar app, open source, signed and notarized.">
 <meta property="og:image" content="https://ovsh.github.io/loadout/assets/og.jpg">
 <meta property="og:url" content="https://ovsh.github.io/loadout/">
 <meta property="og:type" content="website">
@@ -73,10 +73,9 @@ product screenshot on its own.
     --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { height: 100%; overflow: hidden; }
+  html { height: 100%; }
   body {
-    height: 100%;
-    overflow: hidden;
+    min-height: 100svh;
     display: flex;
     flex-direction: column;
     background: var(--bg);
@@ -148,25 +147,24 @@ product screenshot on its own.
   /* Hero */
   main {
     flex: 1;
-    min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: clamp(4px, 1.4vh, 28px) 20px clamp(12px, 2vh, 22px);
+    padding: clamp(8px, 2.5vh, 40px) 20px 0;
   }
   h1 {
-    font-size: clamp(32px, 3.4vw, 50px);
+    font-size: clamp(34px, 3.8vw, 56px);
     font-weight: 640;
     letter-spacing: -0.03em;
     line-height: 1.05;
     text-wrap: balance;
-    max-width: 22ch;
+    max-width: 24ch;
   }
   .sub {
     margin-top: clamp(10px, 1.5vh, 16px);
-    max-width: 88ch;
-    font-size: clamp(14px, 1.7vh, 16px);
+    max-width: 60ch;
+    font-size: clamp(14.5px, 1.8vh, 16.5px);
     line-height: 1.55;
     font-weight: 420;
     color: var(--mute);
@@ -227,22 +225,30 @@ product screenshot on its own.
   }
   .facts span + span::before { content: "·"; margin-right: 10px; }
 
-  /* ---- The simulation ---- */
+  /* ---- The simulation ----
+     A scroll runway: .hold sticks to the viewport while the page scrolls
+     past .sim, and the window grows from hero-size to the full screen. */
   .sim {
-    flex: 1;
-    min-height: 0;
     width: 100%;
-    margin-top: clamp(12px, 2.4vh, 28px);
+    margin-top: clamp(14px, 3vh, 32px);
+  }
+  html.js .sim { height: 280vh; }
+  .hold {
+    position: sticky;
+    top: 0;
+    height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* JS eases padding-top from snug-under-the-hero to vertically centered
+       as the takeover progresses; 18px is the pre-JS resting state. */
+    justify-content: flex-start;
+    padding-top: 18px;
   }
+  html:not(.js) .hold { position: static; height: auto; padding: 0 0 48px; }
   .stage {
-    flex: 1;
-    min-height: 0;
-    height: 100%;
-    width: auto;
-    max-height: min(628px, calc(94vw * 0.6132));
+    flex: none;
+    width: min(1120px, 92vw);
     aspect-ratio: 2120 / 1300;
     position: relative;
     overflow: hidden;
@@ -312,11 +318,41 @@ product screenshot on its own.
     to { transform: scale(2.9); opacity: 0; }
   }
 
-  /* Caption + scrubber */
+  /* The caption rides with the pointer as a tooltip, so the eye is already
+     on the control the words describe. Positioned in stage space by JS. */
+  .tip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    /* max-content: an absolutely positioned box otherwise shrinks to the
+       space left of its offset, collapsing to one word per line at edges. */
+    width: max-content;
+    max-width: min(250px, 62%);
+    padding: 7px 11px;
+    border-radius: 8px;
+    background: rgba(10, 11, 13, .93);
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, .5);
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: left;
+    color: #C9CDD2;
+    pointer-events: none;
+    transform: translate(16px, 14px);
+    transition: left .5s cubic-bezier(.5, 0, .15, 1), top .5s cubic-bezier(.5, 0, .15, 1), opacity .2s ease;
+  }
+  .tip.fx { transform: translate(calc(-100% - 16px), 14px); }
+  .tip.fy { transform: translate(16px, calc(-100% - 14px)); }
+  .tip.fx.fy { transform: translate(calc(-100% - 16px), calc(-100% - 14px)); }
+  .tip.fade { opacity: 0; }
+  html:not(.js) .tip { display: none; }
+
+  /* Scrubber */
   .track {
     flex: none;
-    width: min(1024px, 94vw);
-    margin-top: clamp(8px, 1.3vh, 14px);
+    width: min(560px, 92vw);
+    margin-top: clamp(10px, 1.6vh, 16px);
     display: flex;
     align-items: center;
     gap: 14px;
@@ -339,20 +375,9 @@ product screenshot on its own.
   .play .ico-pause { display: none; }
   .play[data-playing="1"] .ico-pause { display: block; }
   .play[data-playing="1"] .ico-play { display: none; }
-  .cap {
+  .seek {
     flex: 1;
     min-width: 0;
-    text-align: left;
-    font-family: var(--mono);
-    font-size: 12.5px;
-    line-height: 1.4;
-    color: #8A9098;
-    transition: opacity .2s ease;
-  }
-  .cap.fade { opacity: 0; }
-  .seek {
-    flex: none;
-    width: clamp(120px, 22vw, 260px);
     height: 18px;
     margin: 0;
     background: transparent;
@@ -379,26 +404,17 @@ product screenshot on its own.
   .seek::-moz-range-thumb { width: 10px; height: 10px; border: none; border-radius: 50%; background: var(--fg); }
   html:not(.js) .track { display: none; }
 
-  /* Small screens: stack, shrink, keep the whole window visible */
+  /* Small screens */
   @media (max-width: 620px) {
     .bar { padding: 16px 20px; }
     .actions { gap: 16px; }
-    .sub { max-width: 40ch; }
+    /* vw-capped so even the pre-font-swap fallback face can't overflow */
+    h1 { font-size: clamp(24px, 8.4vw, 34px); }
+    .sub { max-width: 40ch; font-size: 14.5px; }
     .facts { font-size: 11.5px; gap: 8px; }
     .facts span + span::before { margin-right: 8px; }
-    .track { flex-wrap: wrap; gap: 10px; }
-    .cap { order: 3; flex-basis: 100%; font-size: 11.5px; }
-    .seek { flex: 1; width: auto; }
-  }
-  /* Short or very small windows: let the page scroll rather than crush the app */
-  @media (max-height: 620px), (max-width: 420px) {
-    html { overflow: auto; }
-    body { height: auto; min-height: 100svh; overflow: auto; }
-    /* safe: centers the spare room on a tall phone, but never clips the
-       headline off the top when the content is taller than the viewport. */
-    main { justify-content: safe center; }
-    .sim { flex: none; }
-    .stage { flex: none; height: auto; width: min(560px, 96vw); max-height: none; }
+    .stage { width: 94vw; }
+    .tip { font-size: 11px; max-width: min(210px, 66%); }
   }
 
   /* Entrance (JS-gated; everything visible without JS or with reduced motion) */
@@ -433,8 +449,8 @@ product screenshot on its own.
 </header>
 
 <main>
-  <h1 class="rv">Skills are hard to find and harder to switch off.</h1>
-  <p class="sub rv d2">They sit in folders you have to remember, and every new model wants a different setup. Loadout puts them all in one window with a switch on each, and keeps CLAUDE.md and AGENTS.md a click away. That's all it does.</p>
+  <h1 class="rv">Switch agent skills and edit your system prompt in a tap.</h1>
+  <p class="sub rv d2">Every skill from Claude Code, Cursor, and OpenCode in one window. Flip one and running sessions pick it up live.</p>
   <div class="actions rv d3">
     <a class="btn" href="https://github.com/ovsh/skillbox/releases/latest/download/Loadout-MacOS.dmg">Download for Mac</a>
     <a class="ghost" href="https://github.com/ovsh/skillbox#building-from-source" target="_blank" rel="noopener">Build from source
@@ -444,6 +460,7 @@ product screenshot on its own.
   <p class="facts rv d4"><span>Free, MIT</span><span>Signed and notarized</span><span>macOS 14+</span></p>
 
   <div class="sim rv d5">
+    <div class="hold">
     <div class="stage" id="stage">
       <div class="film" id="film">
         <img class="frame a on" id="fLib" src="assets/sim/sim-lib.webp" width="2120" height="1300" fetchpriority="high"
@@ -459,6 +476,7 @@ product screenshot on its own.
 
         <span class="ptr" id="ptr" aria-hidden="true"></span>
       </div>
+      <p class="tip" id="tip" aria-live="polite">Every skill on your Mac, in one list.</p>
     </div>
 
     <div class="track">
@@ -466,8 +484,8 @@ product screenshot on its own.
         <svg class="ico-pause" width="9" height="10" viewBox="0 0 9 10" aria-hidden="true"><rect x="0" y="0" width="3" height="10" rx="1" fill="currentColor"/><rect x="6" y="0" width="3" height="10" rx="1" fill="currentColor"/></svg>
         <svg class="ico-play" width="9" height="10" viewBox="0 0 9 10" aria-hidden="true"><path d="M1 .8 8.2 5 1 9.2Z" fill="currentColor"/></svg>
       </button>
-      <p class="cap" id="cap" aria-live="polite">Every skill on your Mac, in one list.</p>
       <input class="seek" id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub the walkthrough">
+    </div>
     </div>
   </div>
 </main>
@@ -523,7 +541,7 @@ product screenshot on its own.
   var fLib = document.getElementById("fLib");
   var fPrompt = document.getElementById("fPrompt");
   var ptr = document.getElementById("ptr");
-  var cap = document.getElementById("cap");
+  var tip = document.getElementById("tip");
   var seek = document.getElementById("seek");
   var play = document.getElementById("play");
   var stage = document.getElementById("stage");
@@ -532,10 +550,29 @@ product screenshot on its own.
 
   // Place the film so window point (fx, fy) sits at the stage centre at zoom z,
   // clamped so the frame always covers the stage.
+  function camera(z, fx, fy) {
+    return {
+      tx: Math.max(1 - z, Math.min(0, .5 - z * fx)),
+      ty: Math.max(1 - z, Math.min(0, .5 - z * fy))
+    };
+  }
   function frameTransform(z, fx, fy) {
-    var tx = Math.max(1 - z, Math.min(0, .5 - z * fx));
-    var ty = Math.max(1 - z, Math.min(0, .5 - z * fy));
-    return "translate(" + (tx * 100).toFixed(3) + "%," + (ty * 100).toFixed(3) + "%) scale(" + z + ")";
+    var c = camera(z, fx, fy);
+    return "translate(" + (c.tx * 100).toFixed(3) + "%," + (c.ty * 100).toFixed(3) + "%) scale(" + z + ")";
+  }
+
+  // The tooltip lives in stage space, anchored to where the pointer lands on
+  // screen: film point (cx, cy) seen through beat i's camera. It flips away
+  // from whichever edges it is close to.
+  function placeTip(i, cx, cy) {
+    var b = BEATS[i];
+    var c = camera(b.z, b.fx, b.fy);
+    var px = Math.min(.97, Math.max(.03, c.tx + b.z * cx));
+    var py = Math.min(.96, Math.max(.04, c.ty + b.z * cy));
+    tip.style.left = (px * 100).toFixed(2) + "%";
+    tip.style.top = (py * 100).toFixed(2) + "%";
+    tip.classList.toggle("fx", px > .56);
+    tip.classList.toggle("fy", py > .55);
   }
 
   var shown = -1;
@@ -553,15 +590,21 @@ product screenshot on its own.
     } else if (!animate) {
       ptr.classList.remove("tap");
     }
-    if (cap.textContent !== b.cap) {
-      cap.classList.add("fade");
-      setTimeout(function () { cap.textContent = b.cap; cap.classList.remove("fade"); }, animate ? 160 : 0);
+    if (tip.textContent !== b.cap) {
+      if (animate) {
+        tip.classList.add("fade");
+        setTimeout(function () { tip.textContent = BEATS[shown].cap; tip.classList.remove("fade"); }, 160);
+      } else {
+        tip.textContent = b.cap;
+        tip.classList.remove("fade");
+      }
     }
     shown = i;
+    if (ptrAt > -1) placeTip(i, BEATS[ptrAt].cx, BEATS[ptrAt].cy);
   }
 
   // The pointer heads for the next beat's target before that beat lands, so
-  // the click ring fires where the pointer already is.
+  // the click ring fires where the pointer already is. The tooltip rides along.
   var ptrAt = -1;
   function movePointer(i, within) {
     var target = (within > .72 && i + 1 < BEATS.length) ? i + 1 : i;
@@ -569,6 +612,7 @@ product screenshot on its own.
     ptrAt = target;
     ptr.style.left = (BEATS[target].cx * 100) + "%";
     ptr.style.top = (BEATS[target].cy * 100) + "%";
+    placeTip(i, BEATS[target].cx, BEATS[target].cy);
   }
 
   // Keep the pointer the same size on screen however far the film is zoomed.
@@ -616,6 +660,33 @@ product screenshot on its own.
       visible = entries[0].isIntersecting;
     }, { threshold: 0 }).observe(stage);
   }
+
+  // ---- Scroll takeover ----------------------------------------------
+  // The page scrolls through .sim's runway while .hold stays stuck; the
+  // window grows from hero-size until it fills the viewport.
+  var sim = document.querySelector(".sim");
+  var hold = document.querySelector(".hold");
+  var ASPECT = 1300 / 2120;
+  function smooth(x) { return x * x * (3 - 2 * x); }
+  function sizeStage() {
+    var vh = innerHeight, vw = innerWidth;
+    var r = sim.getBoundingClientRect();
+    var runway = r.height - vh;
+    var p = smooth(runway > 0 ? Math.min(1, Math.max(0, -r.top / runway)) : 1);
+    var trackRoom = 26 + clamp10_16() + 16;
+    var wFit = (vh - trackRoom - 14) / ASPECT;
+    var w1 = Math.min(vw * .975, wFit);
+    var w0 = Math.min(1120, vw * (vw <= 620 ? .94 : .92), w1);
+    var w = w0 + (w1 - w0) * p;
+    stage.style.width = w.toFixed(1) + "px";
+    // Snug under the hero at rest, centered once the window owns the screen.
+    var pad1 = Math.max(0, (vh - w * ASPECT - trackRoom) / 2);
+    hold.style.paddingTop = (18 + (pad1 - 18) * p).toFixed(1) + "px";
+  }
+  function clamp10_16() { return Math.min(16, Math.max(10, innerHeight * .016)); }
+  addEventListener("scroll", sizeStage, { passive: true });
+  addEventListener("resize", sizeStage);
+  sizeStage();
 
   apply(0, false);
   if (!reduced.matches) { setPlaying(true); } else { setPlaying(false); }
