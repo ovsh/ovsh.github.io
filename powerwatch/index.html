@@ -327,8 +327,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
       long you have left. Real wording, real thresholds.</p>
     </div>
     <div class="reveal">
-      <div class="media"><div class="art tall"><img src="assets/report-trace.png" width="2560" height="820"
-        alt="Battery and power trace chart with experiment markers"></div></div>
+      <div class="media"><div class="art tall"><img src="assets/report-trace.png" width="2560" height="1080"
+        alt="The draw profile with experiment markers and a benchmark card reading plus 40.3 watts"></div></div>
       <h3>Know the fix actually worked</h3>
       <p>Mark the timeline, change one thing, and see the before and after.
       Or hand the logs to an AI. That's how the story below ended.</p>
@@ -338,10 +338,10 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
 
 <section class="wrap">
   <h2 class="reveal">The whole story in one report</h2>
-  <p class="lead reveal">Findings ranked by severity, the power trace over
-  time, and every app's share of the energy.</p>
-  <div class="shot reveal"><img src="assets/report-top.png" width="2560" height="1930"
-    alt="The PowerWatch report: a survey sheet averaging 24.4 watts on battery, with findings naming BetterDisplay as the top drain" fetchpriority="high"></div>
+  <p class="lead reveal">Every app's share of the energy, findings ranked by
+  severity, and the power trace over time.</p>
+  <div class="shot reveal"><img src="assets/report-top.png" width="2560" height="2290"
+    alt="The PowerWatch report: a survey sheet headed 'Your Mac averaged 24.4 W on battery', with BetterDisplay top of the consumers table and named as the number one drain" fetchpriority="high"></div>
   <p class="cap">The report exactly as PowerWatch renders it. Demonstration
   data, reconstructing the investigation below.</p>
 </section>
@@ -359,7 +359,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
       there it was: a bug in an outdated BetterDisplay was holding the
       display pipeline in EDR mode, quietly burning 50 watts.</p>
     </div>
-    <div class="shot reveal"><img src="assets/report-trace.png" width="2560" height="820"
+    <div class="shot reveal"><img src="assets/report-trace.png" width="2560" height="1080"
       alt="The power trace: draw falls from about 50 watts to 7 when BetterDisplay is quit, returns when relaunched, stays low after the update"></div>
     <p class="cap">The proof, reconstructed with demonstration data. Quit it
     and the draw fell to 7 watts. Relaunched it and the drain came back.
