@@ -327,7 +327,7 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
       long you have left. Real wording, real thresholds.</p>
     </div>
     <div class="reveal">
-      <div class="media"><div class="art tall"><img src="assets/report-trace.png" width="2560" height="760"
+      <div class="media"><div class="art tall"><img src="assets/report-trace.png" width="2560" height="820"
         alt="Battery and power trace chart with experiment markers"></div></div>
       <h3>Know the fix actually worked</h3>
       <p>Mark the timeline, change one thing, and see the before and after.
@@ -340,8 +340,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
   <h2 class="reveal">The whole story in one report</h2>
   <p class="lead reveal">Findings ranked by severity, the power trace over
   time, and every app's share of the energy.</p>
-  <div class="shot reveal"><img src="assets/report-top.png" width="2560" height="1720"
-    alt="The PowerWatch report: live draw 6.4 watts, findings naming BetterDisplay as the top drain" fetchpriority="high"></div>
+  <div class="shot reveal"><img src="assets/report-top.png" width="2560" height="1930"
+    alt="The PowerWatch report: a survey sheet averaging 24.4 watts on battery, with findings naming BetterDisplay as the top drain" fetchpriority="high"></div>
   <p class="cap">The report exactly as PowerWatch renders it. Demonstration
   data, reconstructing the investigation below.</p>
 </section>
@@ -359,8 +359,8 @@ footer{border-top:1px solid var(--line);padding:20px 0 48px;font-size:13px;
       there it was: a bug in an outdated BetterDisplay was holding the
       display pipeline in EDR mode, quietly burning 50 watts.</p>
     </div>
-    <div class="shot reveal"><img src="assets/report-trace.png" width="2560" height="760"
-      alt="The power trace: draw falls from 53 to 7 watts when BetterDisplay is quit, returns when relaunched, stays low after the update"></div>
+    <div class="shot reveal"><img src="assets/report-trace.png" width="2560" height="820"
+      alt="The power trace: draw falls from about 50 watts to 7 when BetterDisplay is quit, returns when relaunched, stays low after the update"></div>
     <p class="cap">The proof, reconstructed with demonstration data. Quit it
     and the draw fell to 7 watts. Relaunched it and the drain came back.
     Updated it, fixed for good.</p>
