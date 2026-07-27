@@ -109,6 +109,7 @@
       width: 100%;
       aspect-ratio: 16 / 9;
       background: #edebe7;
+      border: 0;
     }
 
     figcaption {
@@ -187,11 +188,11 @@
           </figcaption>
         </figure>
         <figure class="show">
-          <!-- TODO: real trailer file + a real poster frame -->
-          <video class="trailer" controls preload="none" playsinline aria-label="The Fourth Shade trailer"
-                 poster="data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%201280%20720'%3E%3Crect%20width='1280'%20height='720'%20fill='%23e8eaed'/%3E%3Cpolygon%20points='612,326%20612,394%20670,360'%20fill='%23171717'/%3E%3Ctext%20x='640'%20y='452'%20font-family='Georgia,%20serif'%20font-size='30'%20fill='%23666'%20text-anchor='middle'%3ETrailer%20placeholder%3C/text%3E%3C/svg%3E">
-            <source src="assets/fourth-shade-trailer.mp4" type="video/mp4">
-          </video>
+          <iframe class="trailer" title="The Fourth Shade trailer" loading="lazy"
+                  src="https://www.youtube-nocookie.com/embed/nPhi6ZaeFdQ"
+                  srcdoc="<style>*{margin:0}a{display:block;height:100vh;position:relative}img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}span{position:absolute;inset:0;display:grid;place-items:center;font:48px/1 sans-serif;color:#fff;text-shadow:0 0 .5em rgba(0,0,0,.6)}</style><a href='https://www.youtube-nocookie.com/embed/nPhi6ZaeFdQ?autoplay=1'><img src='https://i.ytimg.com/vi/nPhi6ZaeFdQ/maxresdefault.jpg' alt='Play: The Fourth Shade trailer'><span>&#9654;</span></a>"
+                  allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                  allowfullscreen></iframe>
           <figcaption>
             <h3><a href="https://www.youtube.com/watch?v=nPhi6ZaeFdQ">The Fourth Shade</a></h3>
             Made for me, a fantasy geek. Three great Houses rule with the power of the Shades. Now a whisper travels the world, speaking of a fourth.
@@ -242,7 +243,7 @@
   </main>
 
   <footer>
-    <p>No analytics, no cookies, no JavaScript.</p>
+    <p>No analytics, no cookies, no JavaScript. Trailers stream from YouTube when you press play.</p>
   </footer>
 </body>
 </html>
