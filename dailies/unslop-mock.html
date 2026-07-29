@@ -1,27 +1,18 @@
 <!doctype html>
 <!--
+UNSLOP MOCK of dailies/index.html — same design, ~one tenth of the prose.
 DIRECTION CONTRACT (Impeccable, seed ea177cc2, assigned index 4, user-confirmed 2026-07-23)
 THESIS: The page IS a Media Composer bin. Editors live in bins; Dailies is "your bin,
-but you can talk to it." Refuses the dark neon "video AI" hero and the white SaaS card grid.
-OWN-WORLD: Pre-dark-era MC steel gray. Desktop #9ea4a9, chrome #c7cbce with platinum
-bevels (1px hi/lo), paper rows #f4f5f6, ink #17191b, Avid clip-color chips as the only
-saturation, red locator #c94038 reserved for the Download marker. Archivo display,
-Fragment Mono for TC and data. Radii <=2px. Recognizable with all content removed.
-STORY: An editor lands, recognizes the bin, watches a sift find real moments in real
-footage, sees the actual app do the same, learns the local-first split, downloads.
-FIRST VIEWPORT: One bin window: title bar, tagline headline, sift field pre-typing a
-real question, six real clip rows collapsing to the hits, red DOWNLOAD locator top right.
-FORM: Grounded direction 4 of 7 (Avid bin tradition); staging: single-column window
-stack on the MC desktop; the metered-reserve challenger staging was weighed and declined.
+but you can talk to it."
 -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dailies. Chat with your footage.</title>
-<meta name="description" content="A local-first Mac app for documentary and reality editors. On-device Whisper transcription, semantic search over Avid media in place, markers and EDL back to Media Composer.">
+<meta name="description" content="Local-first search for Avid media. Ask a question, get the timecode, send markers back to Media Composer.">
 <meta property="og:title" content="Dailies. Chat with your footage.">
-<meta property="og:description" content="Ask your footage a question, get the moment with its source timecode, send markers or an EDL back to Avid. Local-first, Apple Silicon.">
+<meta property="og:description" content="Ask a question, get the moment and its timecode, send markers back to Avid. Local-first, Apple Silicon.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c7cbce'/%3E%3Cellipse cx='16' cy='16' rx='9' ry='7' fill='%23c94038'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,7 +164,6 @@ a { color: var(--blue); }
   padding: 6px 12px; cursor: pointer; color: var(--ink);
 }
 .sift-again:active { box-shadow: var(--bevel-in); }
-.provenance { font: 12px/1.6 var(--mono); color: var(--ink-2); margin-top: 16px; max-width: 72ch; }
 
 /* ---------- screenshots ---------- */
 .shot-wrap { background: #303338; border: 1px solid var(--chrome-lo); box-shadow: var(--bevel-in); padding: 10px; }
@@ -236,11 +226,11 @@ footer .win-body p { max-width: none; }
     <div class="hero-top">
       <div class="hero-copy">
         <h1 id="hero-h">Chat with your footage.</h1>
-        <p class="lede">Dailies transcribes and indexes your Avid media on your own Mac, in place. Ask in plain language, get the exact moment with its source timecode, and send markers or an EDL back to Media Composer.</p>
+        <p class="lede">Ask a question, get the moment with its source timecode, send markers back to Media Composer.</p>
       </div>
       <div class="hero-cta">
-        <a class="marker" id="dl-top" href="https://github.com/ovsh/dailies/releases/download/v0.4.0/Dailies-0.4.0-arm64.dmg">Download for Mac</a>
-        <span class="cta-note">Free. Apple Silicon, macOS 14+. Notarized DMG.</span>
+        <a class="marker" id="dl-top" href="https://github.com/ovsh/dailies/releases/download/v0.3.3/Dailies-0.3.3-arm64.dmg">Download for Mac</a>
+        <span class="cta-note">Free · Apple Silicon · macOS 14+</span>
         <a href="https://github.com/ovsh/dailies">Source on GitHub</a>
       </div>
     </div>
@@ -270,7 +260,6 @@ footer .win-body p { max-width: none; }
       <span id="sift-status">8 rows</span>
       <button class="sift-again" id="sift-again" hidden>Sift again</button>
     </div>
-    <p class="provenance">This table is live HTML, not a screenshot, but nothing in it is invented: the clip names, start timecodes, durations, and quotes come from a real shoot that Dailies indexed on my Mac. Timecodes are source TC at the 30 fps fallback the app labels for audio-only MXF.</p>
   </div>
 </section>
 
@@ -287,15 +276,13 @@ footer .win-body p { max-width: none; }
   </div>
   <div class="win-body">
     <h2 id="see-h">Click a moment, land on the moment.</h2>
-    <p class="lede" style="margin-bottom:22px">Every hit opens the clip at that timecode, with the transcript synced beside the player. No exports, no relinking, no hunting.</p>
-    <div class="two-shots">
+    <div class="two-shots" style="margin-top:22px">
       <figure>
-        <div class="shot-wrap"><img src="assets/clip-view.png" alt="The Dailies clip view: an audio clip named 06252025/05 at source TC 11:51:48:00, with a synced transcript on the right reading real dialogue from the shoot." width="2880" height="1800" loading="eager"></div>
-        <figcaption class="shot-cap">The real app, a real clip. Source TC 11:51:48:00, transcript synced to the second. This shoot's MXF atoms are audio-only, so the player shows the audio source card.</figcaption>
+        <div class="shot-wrap"><img src="assets/clip-view.png" alt="Dailies clip view: clip 06252025/05 at source TC 11:51:48:00 with a synced transcript beside the player." width="2880" height="1800" loading="eager"></div>
       </figure>
       <figure>
-        <div class="shot-wrap"><img src="assets/library.png" alt="The Dailies library: eight clip cards with real Avid clip names, start timecodes and durations. Two corrupt files show ERROR cards with a retry button." width="2880" height="1800" loading="lazy"></div>
-        <figcaption class="shot-cap">The library after a scan. One file in this shoot is genuinely corrupt, and since it sits in two watched folders it earns two error cards, each with a retry button. Broken media is surfaced, never silently skipped.</figcaption>
+        <div class="shot-wrap"><img src="assets/library.png" alt="Dailies library: clip cards with real Avid names and timecodes. Two corrupt files show error cards with retry buttons." width="2880" height="1800" loading="lazy"></div>
+        <figcaption class="shot-cap">Corrupt files get error cards, not silence.</figcaption>
       </figure>
     </div>
   </div>
@@ -317,15 +304,15 @@ footer .win-body p { max-width: none; }
     <div class="bin-scroll"><table class="bin">
       <thead><tr><th scope="col">Stage</th><th scope="col">What happens</th><th scope="col" style="width:220px">Runs</th></tr></thead>
       <tbody>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Watch</td><td>Point Dailies at any folder, including an Avid MediaFiles folder. OP-Atom MXF atoms group back into clips under their real Avid clip names. Nothing is moved or copied.</td><td class="runs-local mono">on your Mac</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Probe</td><td>Duration and source timecode for every clip. Frame accurate, drop-frame aware.</td><td class="runs-local mono">on your Mac</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Transcribe</td><td>Whisper runs on the Metal GPU. The engine ships inside the app; the speech model is a one-time download. Your audio never leaves the machine.</td><td class="runs-local mono">on your Mac</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--blue)"></span>Index</td><td>Keyword and semantic indexes over every spoken line, plus imported producer notes, scripts and stringouts.</td><td class="runs-cloud mono">text excerpts to OpenRouter</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--blue)"></span>Ask</td><td>Chat answers with clip cards: clip name, timecode, what was said, and a confidence dot. Click a card to land on the moment.</td><td class="runs-cloud mono">questions to OpenRouter</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Export</td><td>Markers import into Media Composer as colored locators with the agent's notes. The EDL is CMX3600, ready as a selects sequence.</td><td class="runs-local mono">on your Mac</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Watch</td><td>Groups MXF atoms back into clips. Nothing moves.</td><td class="runs-local mono">on your Mac</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Probe</td><td>Reads frame-accurate duration and source TC.</td><td class="runs-local mono">on your Mac</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Transcribe</td><td>Runs Whisper on the Metal GPU.</td><td class="runs-local mono">on your Mac</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--blue)"></span>Index</td><td>Indexes every spoken line, plus your notes.</td><td class="runs-cloud mono">excerpts to OpenRouter</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--blue)"></span>Ask</td><td>Answers with clip cards: name, TC, quote.</td><td class="runs-cloud mono">questions to OpenRouter</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Export</td><td>Writes colored locators and a CMX3600 EDL.</td><td class="runs-local mono">on your Mac</td></tr>
       </tbody>
     </table></div>
-    <p class="overnight"><strong>About ten minutes per hour of footage</strong> on an M-series Mac, mostly transcription. Drop a shoot day in a watched folder in the evening. It's searchable in the morning.</p>
+    <p class="overnight"><strong>About ten minutes per hour of footage.</strong> Drop a shoot day at night; search it in the morning.</p>
   </div>
 </section>
 
@@ -341,18 +328,14 @@ footer .win-body p { max-width: none; }
     <span class="tab">Brief</span><span class="tab">Text</span><span class="tab">Frame</span><span class="tab on">Script</span>
   </div>
   <div class="win-body">
-    <h2 id="proof-h">Your media stays put. Here is exactly what moves.</h2>
+    <h2 id="proof-h">Your media stays put.</h2>
     <div class="truth">
-      <div class="truth-row"><span class="truth-key">Never leaves your Mac</span><span class="truth-val">The footage, the audio, the proxies, the index database. Files are read in place; the index lives in Application Support and can be deleted and rebuilt any time.</span></div>
-      <div class="truth-row"><span class="truth-key">Sent to OpenRouter</span><span class="truth-val">Transcript excerpts and embedding inputs, plus your questions. One API key powers everything, and it's stored in the macOS Keychain, not in a config file.</span></div>
-      <div class="truth-row"><span class="truth-key">Honest answers</span><span class="truth-val">Every clip card is backed by the index. When nothing matches, the agent says it found nothing instead of inventing a hit.</span></div>
-      <div class="truth-row"><span class="truth-key">Honest failures</span><span class="truth-val">A corrupt file becomes a visible error card with a retry button. Timecode that had to fall back to 30 fps is labeled as such in every export.</span></div>
+      <div class="truth-row"><span class="truth-key">Never leaves your Mac</span><span class="truth-val">Footage, audio, proxies, the index.</span></div>
+      <div class="truth-row"><span class="truth-key">Sent to OpenRouter</span><span class="truth-val">Transcript excerpts and your questions. The API key stays in the Keychain.</span></div>
     </div>
     <div class="script-block">
       <p class="script-tc">00:00:04:00</p>
-      <p class="script-line">A friend of mine cuts reality TV. When a producer asks "where does anyone mention the bear," he scrubs through shoot days by hand. It takes him hours, every time.</p>
-      <p class="script-tc">00:00:19:00</p>
-      <p class="script-line">That's the whole reason Dailies exists. It watches the footage folder, transcribes overnight on the Mac itself, and answers the question in the morning. I hope it saves you the same hours.</p>
+      <p class="script-line">A friend of mine cuts reality TV. "Where does anyone mention the bear?" used to mean hours of scrubbing. Dailies is the fix.</p>
       <p class="sig">Miki</p>
     </div>
   </div>
@@ -371,15 +354,14 @@ footer .win-body p { max-width: none; }
       <div>
         <h2 id="dl-h">Take it to your cutting room.</h2>
         <ul class="req">
-          <li>Apple Silicon Mac, macOS 14 or newer</li>
-          <li>An OpenRouter API key. Free to create, powers chat and search</li>
-          <li>Speech model: one-time 1.6 GB download, fetched inside the app</li>
-          <li>Signed and notarized. Drag to Applications and open</li>
+          <li>Apple Silicon Mac, macOS 14+</li>
+          <li>OpenRouter API key</li>
+          <li>1.6 GB speech model, fetched in-app</li>
         </ul>
       </div>
       <div class="hero-cta">
-        <a class="marker" id="dl-bottom" href="https://github.com/ovsh/dailies/releases/download/v0.4.0/Dailies-0.4.0-arm64.dmg">Download for Mac</a>
-        <span class="cta-note">Free. v0.3.3, notarized DMG.</span>
+        <a class="marker" id="dl-bottom" href="https://github.com/ovsh/dailies/releases/download/v0.3.3/Dailies-0.3.3-arm64.dmg">Download for Mac</a>
+        <span class="cta-note">Free. Signed and notarized.</span>
       </div>
     </div>
   </div>
@@ -392,7 +374,7 @@ footer .win-body p { max-width: none; }
     <span class="win-stripes" aria-hidden="true"></span>
   </div>
   <div class="win-body">
-    <p>A personal project by <a href="https://ovsh.github.io">Miki</a>. Every screenshot on this page is the real app on my own Mac, showing a real test shoot. <a href="https://github.com/ovsh/dailies">github.com/ovsh/dailies</a></p>
+    <p>A personal project by <a href="https://ovsh.github.io">Miki</a>. Nothing on this page is invented. <a href="https://github.com/ovsh/dailies">github.com/ovsh/dailies</a></p>
   </div>
 </footer>
 
