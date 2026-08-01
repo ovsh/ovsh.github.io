@@ -19,9 +19,9 @@ stack on the MC desktop; the metered-reserve challenger staging was weighed and 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Dailies. Chat with your footage.</title>
-<meta name="description" content="A local-first Mac app for documentary and reality editors. On-device Whisper transcription, semantic search over Avid media in place, markers and EDL back to Media Composer.">
+<meta name="description" content="A local-first Mac and Windows app for documentary and reality editors. On-device Whisper transcription, semantic search over Avid media in place, markers and EDL back to Media Composer.">
 <meta property="og:title" content="Dailies. Chat with your footage.">
-<meta property="og:description" content="Ask your footage a question, get the moment with its source timecode, send markers or an EDL back to Avid. Local-first, Apple Silicon.">
+<meta property="og:description" content="Ask your footage a question, get the moment with its source timecode, and send markers or an EDL back to Avid. Available for Apple Silicon and Windows x64.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c7cbce'/%3E%3Cellipse cx='16' cy='16' rx='9' ry='7' fill='%23c94038'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,6 +118,8 @@ a { color: var(--blue); }
 .hero-copy { max-width: 560px; }
 .hero-copy .lede { margin-top: 14px; }
 .hero-cta { display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+.download-options { display: flex; flex-wrap: wrap; gap: 16px; max-width: 100%; }
+.download-option { display: flex; flex-direction: column; gap: 8px; min-width: 0; max-width: 100%; }
 
 .marker {
   display: inline-block;
@@ -128,6 +130,8 @@ a { color: var(--blue); }
   border: 1px solid var(--red-dn);
   box-shadow: inset 1px 2px 0 rgba(255,255,255,.28), inset -1px -2px 0 rgba(0,0,0,.22), 2px 3px 0 rgba(23,25,27,.3);
   text-decoration: none;
+  text-align: center;
+  max-width: 100%;
   transition: transform 120ms steps(2, end);
 }
 .marker:hover { transform: translate(1px, 1px); box-shadow: inset 1px 2px 0 rgba(255,255,255,.28), inset -1px -2px 0 rgba(0,0,0,.22), 1px 1px 0 rgba(23,25,27,.3); }
@@ -214,6 +218,9 @@ footer .win-body p { max-width: none; }
   .bin { min-width: 540px; }
   .truth-row { grid-template-columns: 1fr; gap: 4px; }
   .win-meta { display: none; }
+  .marker { padding: 14px 18px 13px; font-size: 13px; }
+  .download-options { width: 100%; }
+  .download-option { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -236,11 +243,19 @@ footer .win-body p { max-width: none; }
     <div class="hero-top">
       <div class="hero-copy">
         <h1 id="hero-h">Chat with your footage.</h1>
-        <p class="lede">Dailies transcribes and indexes your Avid media on your own Mac, in place. Ask in plain language, get the exact moment with its source timecode, and send markers or an EDL back to Media Composer.</p>
+        <p class="lede">Dailies transcribes and indexes your Avid media on your own computer, in place. Ask in plain language, get the exact moment with its source timecode, and send markers or an EDL back to Media Composer.</p>
       </div>
       <div class="hero-cta">
-        <a class="marker" id="dl-top" href="https://github.com/ovsh/dailies/releases/download/v0.5.3/Dailies-0.5.3-arm64.dmg">Download for Mac</a>
-        <span class="cta-note">Free. Apple Silicon, macOS 14+. Notarized DMG.</span>
+        <div class="download-options">
+          <div class="download-option">
+            <a class="marker" id="dl-top" href="https://github.com/ovsh/dailies/releases/download/v0.5.4/Dailies-0.5.4-arm64.dmg">Download for Mac</a>
+            <span class="cta-note">Free. Apple Silicon, macOS 14+. Notarized DMG.</span>
+          </div>
+          <div class="download-option">
+            <a class="marker" id="dl-top-win" href="https://github.com/ovsh/dailies/releases/download/v0.5.4/Dailies-0.5.4-Setup-x64.exe">Download Windows beta</a>
+            <span class="cta-note">Free. Windows 10 or 11, 64-bit. Unsigned beta.</span>
+          </div>
+        </div>
         <a href="https://github.com/ovsh/dailies">Source on GitHub</a>
       </div>
     </div>
@@ -317,12 +332,12 @@ footer .win-body p { max-width: none; }
     <div class="bin-scroll"><table class="bin">
       <thead><tr><th scope="col">Stage</th><th scope="col">What happens</th><th scope="col" style="width:220px">Runs</th></tr></thead>
       <tbody>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Watch</td><td>Point Dailies at any folder, including an Avid MediaFiles folder. OP-Atom MXF atoms group back into clips under their real Avid clip names. Nothing is moved or copied.</td><td class="runs-local mono">on your Mac</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Probe</td><td>Duration and source timecode for every clip. Frame accurate, drop-frame aware.</td><td class="runs-local mono">on your Mac</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Transcribe</td><td>Whisper runs on the Metal GPU. The engine ships inside the app; the speech model is a one-time download. Your audio never leaves the machine.</td><td class="runs-local mono">on your Mac</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Watch</td><td>Point Dailies at any folder, including an Avid MediaFiles folder. OP-Atom MXF atoms group back into clips under their real Avid clip names. Nothing is moved or copied.</td><td class="runs-local mono">on your computer</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Probe</td><td>Duration and source timecode for every clip. Frame accurate, drop-frame aware.</td><td class="runs-local mono">on your computer</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Transcribe</td><td>Whisper runs locally. Apple Silicon uses Metal; Windows uses the local CPU. The engine ships inside the app, and the speech model is a one-time download.</td><td class="runs-local mono">on your computer</td></tr>
         <tr><td class="stage-name"><span class="chip" style="background:var(--blue)"></span>Index</td><td>Keyword and semantic indexes over every spoken line, plus imported producer notes, scripts and stringouts.</td><td class="runs-cloud mono">text excerpts to OpenRouter</td></tr>
         <tr><td class="stage-name"><span class="chip" style="background:var(--blue)"></span>Ask</td><td>Chat answers with clip cards: clip name, timecode, what was said, and a confidence dot. Click a card to land on the moment.</td><td class="runs-cloud mono">questions to OpenRouter</td></tr>
-        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Export</td><td>Markers import into Media Composer as colored locators with the agent's notes. The EDL is CMX3600, ready as a selects sequence.</td><td class="runs-local mono">on your Mac</td></tr>
+        <tr><td class="stage-name"><span class="chip" style="background:var(--green)"></span>Export</td><td>Markers import into Media Composer as colored locators with the agent's notes. The EDL is CMX3600, ready as a selects sequence.</td><td class="runs-local mono">on your computer</td></tr>
       </tbody>
     </table></div>
     <p class="overnight"><strong>About ten minutes per hour of footage</strong> on an M-series Mac, mostly transcription. Drop a shoot day in a watched folder in the evening. It's searchable in the morning.</p>
@@ -343,8 +358,8 @@ footer .win-body p { max-width: none; }
   <div class="win-body">
     <h2 id="proof-h">Your media stays put. Here is exactly what moves.</h2>
     <div class="truth">
-      <div class="truth-row"><span class="truth-key">Never leaves your Mac</span><span class="truth-val">The footage, the audio, the proxies, the index database. Files are read in place; the index lives in Application Support and can be deleted and rebuilt any time.</span></div>
-      <div class="truth-row"><span class="truth-key">Sent to OpenRouter</span><span class="truth-val">Transcript excerpts and embedding inputs, plus your questions. One API key powers everything, and it's stored in the macOS Keychain, not in a config file.</span></div>
+      <div class="truth-row"><span class="truth-key">Stays on your computer</span><span class="truth-val">The footage, audio, proxies, and index database. Files are read in place; the index lives in your operating system's app-data folder and can be deleted and rebuilt at any time.</span></div>
+      <div class="truth-row"><span class="truth-key">Sent to OpenRouter</span><span class="truth-val">Transcript excerpts and embedding inputs, plus your questions. One API key powers everything. Electron protects it with Keychain on macOS or DPAPI on Windows when secure storage is available.</span></div>
       <div class="truth-row"><span class="truth-key">Honest answers</span><span class="truth-val">Every clip card is backed by the index. When nothing matches, the agent says it found nothing instead of inventing a hit.</span></div>
       <div class="truth-row"><span class="truth-key">Honest failures</span><span class="truth-val">A corrupt file becomes a visible error card with a retry button. Timecode that had to fall back to 30 fps is labeled as such in every export.</span></div>
     </div>
@@ -352,7 +367,7 @@ footer .win-body p { max-width: none; }
       <p class="script-tc">00:00:04:00</p>
       <p class="script-line">A friend of mine cuts reality TV. When a producer asks "where does anyone mention the bear," he scrubs through shoot days by hand. It takes him hours, every time.</p>
       <p class="script-tc">00:00:19:00</p>
-      <p class="script-line">That's the whole reason Dailies exists. It watches the footage folder, transcribes overnight on the Mac itself, and answers the question in the morning. I hope it saves you the same hours.</p>
+      <p class="script-line">That's the whole reason Dailies exists. It watches the footage folder, transcribes on your computer, and answers the question from the finished index. I hope it saves you the same hours.</p>
       <p class="sig">Miki</p>
     </div>
   </div>
@@ -364,22 +379,30 @@ footer .win-body p { max-width: none; }
     <span class="win-close" aria-hidden="true"></span>
     <span class="win-title">Download</span>
     <span class="win-stripes" aria-hidden="true"></span>
-    <span class="win-meta">v0.5.3</span>
+    <span class="win-meta">v0.5.4</span>
   </div>
   <div class="win-body">
     <div class="dl-grid">
       <div>
         <h2 id="dl-h">Take it to your cutting room.</h2>
         <ul class="req">
-          <li>Apple Silicon Mac, macOS 14 or newer</li>
+          <li>Apple Silicon Mac with macOS 14+, or 64-bit Windows 10/11</li>
           <li>An OpenRouter API key. Free to create, powers chat and search</li>
           <li>Speech model: one-time 0.9 GB download, fetched inside the app</li>
-          <li>Signed and notarized. Drag to Applications and open</li>
+          <li>The Mac build is signed and notarized. The Windows beta is unsigned</li>
         </ul>
       </div>
       <div class="hero-cta">
-        <a class="marker" id="dl-bottom" href="https://github.com/ovsh/dailies/releases/download/v0.5.3/Dailies-0.5.3-arm64.dmg">Download for Mac</a>
-        <span class="cta-note">Free. v0.5.3, notarized DMG.</span>
+        <div class="download-options">
+          <div class="download-option">
+            <a class="marker" id="dl-bottom" href="https://github.com/ovsh/dailies/releases/download/v0.5.4/Dailies-0.5.4-arm64.dmg">Download for Mac</a>
+            <span class="cta-note">Free. v0.5.4, notarized DMG.</span>
+          </div>
+          <div class="download-option">
+            <a class="marker" id="dl-bottom-win" href="https://github.com/ovsh/dailies/releases/download/v0.5.4/Dailies-0.5.4-Setup-x64.exe">Download Windows beta</a>
+            <span class="cta-note">Free. v0.5.4, unsigned x64 beta.</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
