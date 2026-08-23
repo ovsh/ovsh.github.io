@@ -136,6 +136,11 @@ html.rm .world.tr .scenegrp{transition:none}
 .heroWrap{position:absolute;left:0;top:0;width:0;height:0;overflow:visible;pointer-events:none}
 .hero{position:absolute;overflow:visible;left:0;top:0}
 .hero g{transform-box:view-box}
+/* the picture house name, slid back along its own canopy when the stage
+   is the narrow band a phone gets. The units are world units, because a
+   transform on a node inside the sheet svg is read in the user space of
+   that svg and every sheet is cut in world units. */
+.lb .mqt{transform-box:view-box;transform:translateX(-215px)}
 .hero .rig  {transform:translate(0,var(--by,0px)) rotate(var(--rr,0deg))}
 .hero .torso{transform:rotate(var(--ta,0deg))}
 .hero .head {transform:rotate(var(--ha,0deg))}
@@ -364,6 +369,10 @@ html.rm .plain{display:inline-block}
    placed low in the frame, under the height any caption ever reaches.
    ===================================================================== */
 .arts{position:absolute;inset:0;transform:translate3d(0,0,0)}
+/* the lit sheets hang in front of the dusk wash, so this layer covers
+   the whole box. It must stay transparent to the mouse or it would
+   take the clicks meant for the clippings behind it. */
+.arts.lit{pointer-events:none}
 .art{position:absolute;display:block;text-decoration:none;color:inherit;
   cursor:pointer;rotate:var(--tilt,0deg);pointer-events:auto;
   transition:translate .2s cubic-bezier(.2,.7,.3,1)}
@@ -832,30 +841,28 @@ var COPY = {
   potatoBody: "Bootstrapped a hyper-local temp-jobs marketplace to acquisition.",
   potatoBeat: ["Acquired."],
 
-  uberChip:   "After Potato",
-  uberHead:   ["I joined Uber to", "launch UberX Share."],
-  uberBody:   "Zero to one, and $200M+ in incremental billings in six months. " +
-              "By 2022 it had replaced every legacy shared-rides product Uber " +
-              "ran, worldwide.",
-  uber2Chip:  "Then at Uber Eats",
-  uber2Head:  ["I built loyalty", "from scratch."],
-  uber2Body:  "Restaurant-funded rewards. Average order value up 15%, live in " +
-              "180+ cities in four months.",
-
   kid1Chip:   "In 2019",
   kid1Head:   ["Our first kid was born."],
 
+  /* the loyalty work came first, in the year the first kid was born. The
+     shared-rides revival landed later in 2020, so it is the second beat
+     and it stands on the far side of the Uber building. */
+  uberChip:   "That same year",
+  uberHead:   ["I joined Uber to build", "restaurant loyalty", "from scratch."],
+  uberBody:   "Restaurant-funded rewards for Uber Eats. Average order value " +
+              "up 15%, live in 180+ cities in four months.",
+  uber2Chip:  "Then",
+  uber2Head:  ["I launched", "UberX Share."],
+
   ddChip:     "In 2020",
   ddHead:     ["I led new verticals", "at DoorDash."],
-  ddBody:     "Four product teams, 3 PMs and 22 engineers: Pickup, Dine-In, " +
-              "Alcohol and Cannabis.",
   dd2Chip:    "By 2022",
   dd2Head:    ["Pickup was #1 in", "the US."],
   dd2Body:    "Up 40 points of market share, and growing twice as fast as " +
               "Delivery. Alcohol passed $1B in GMV, doubling year over year.",
 
   affirmChip: "In April 2022",
-  affirmHead: ["The CEO hired me", "to run Affirm's", "0-to-1 incubator."],
+  affirmHead: ["Affirm's CEO hired me", "to run their", "0-to-1 incubator."],
   affirmBeat: ["Out of it came", "Affirm Card."],
   affirmBody: "$0 to $10B in four years, and now the engine of the company's growth.",
   affirm2Chip:"Since then",
@@ -863,41 +870,33 @@ var COPY = {
   affirm2Body:"Today I am the consumer lead, 5 PMs and 50+ engineers, and " +
               "Director of Product since March 2026.",
 
-  nightChip:  "In 2023",
-  nightHead:  ["I got back to building."],
-  nightBody:  "This time in AI. The day job by day, my own things by night.",
+  nightChip:  "All this time",
+  nightHead:  ["I was also building", "at night."],
 
   kdmChip:    "That winter",
   kdmHead:    ["I built Kids Drawing", "Magic for my kids."],
   kdmBody:    "Their scribbles came back as finished drawings. Shipped the week " +
-              "ControlNet came out, went viral on Reddit, now retired.",
+              "ControlNet came out, went viral on Reddit.",
 
   kid2Chip:   "In 2024",
   kid2Head:   ["Our second kid was born."],
 
-  nowChip:    "So here we are",
-  nowHead:    ["Now I make my", "own tools."],
+  nowChip:    "And then",
+  nowHead:    ["I continued building."],
 
-  aiChip:     "In 2025",
-  aiHead:     ["I made AI Native."],
-  aiBody:     "Hands-on lessons in AI fluency that play like a game.",
-  loChip:     "Also in 2025",
-  loHead:     ["I made Loadout."],
-  loBody:     "A Mac menu-bar manager for coding-agent skills and prompts.",
-  pwChip:     "And PowerWatch,",
-  pwHead:     ["which reads your", "Mac's power draw."],
-  pwBody:     "It measures the real watts and names the app responsible.",
-  hmChip:     "In 2026",
+  /* the tool beats carry no chip and no year. The signs on the street
+     already say the names, so the words only say what the thing is. */
+  aiChip:     null,
+  aiHead:     ["I made an AI-native game."],
+  aiBody:     "Hands-on lessons in AI fluency.",
+  loChip:     null,
+  loHead:     ["I made a skill manager", "for coding agents."],
+  hmChip:     null,
   hmHead:     ["I made Hypermark."],
-  hmBody:     "An agent that makes video with you: story, script, visuals, " +
-              "editing. Characters and voices stay consistent.",
-  dlChip:     "Also in 2026",
-  dlHead:     ["I made Dailies."],
-  dlBody:     "Built for an Emmy-nominated editor: chat with thousands of hours " +
-              "of production footage. The media never leaves the machine.",
-  cnChip:     "And then",
-  cnHead:     ["we made a film", "with it."],
-  cnBody:     "The Fourth Shade, an original animated series, made with Hypermark.",
+  hmBody:     "An agent that makes video with you.",
+  cnChip:     "Recently",
+  cnHead:     ["I made a trailer", "for a fantasy film."],
+  cnBody:     "The Fourth Shade, made with Hypermark.",
 
   endHead:    ["Make simple things", "for real people."],
   endLinks: [
@@ -908,24 +907,22 @@ var COPY = {
     {t:"Read the plain version", h:"../"}
   ],
 
-  /* signage for the six tool scenes, in the order they are walked */
+  /* signage for the three tool scenes, in the order they are walked.
+     Names and one line of what the thing is. No years: the street is
+     not a timeline. */
   tools: [
-    {n:"AI Native",  s:"Learn AI by doing",         y:"2025"},
-    {n:"Loadout",    s:"Skills and prompts, managed", y:"2025"},
-    {n:"PowerWatch", s:"Battery truth, live",       y:"2025"},
-    {n:"Hypermark",  s:"AI video making",           y:"2026"},
-    {n:"Dailies",    s:"Chat with your footage",    y:"2026"}
+    {n:"AI Native",  s:"Learn AI by doing"},
+    {n:"Loadout",    s:"Skills and prompts, managed"},
+    {n:"Hypermark",  s:"AI video making"}
   ],
   cinema:     "The Fourth Shade",
-  cinemaSub:  "an original animated series",
+  cinemaSub:  "a fantasy film",
   playTag:    "Play the trailer",
   cinemaAlt:  "The Fourth Shade trailer",
 
   /* Real work, at its real address. Nothing in this block is invented:
      every link, masthead and headline is quoted exactly as published. */
   urls: {
-    dailies:    "https://ovsh.github.io/dailies/",
-    powerwatch: "https://ovsh.github.io/powerwatch/",
     loadout:    "https://ovsh.github.io/loadout/",
     hypermark:  "https://hypermark.ai",
     cinema:     "https://www.youtube.com/watch?v=nPhi6ZaeFdQ",
@@ -934,11 +931,6 @@ var COPY = {
     cinemaPlay: "https://www.youtube-nocookie.com/embed/nPhi6ZaeFdQ?autoplay=1"
   },
   news: {
-    affirmCards: {
-      m:"Payments Dive",
-      h:"Affirm boasts 2 million debit cards",
-      u:"https://www.paymentsdive.com/news/affirm-boasts-2-million-debit-cards/750399/"
-    },
     affirmQ2: {
       m:"Investing.com",
       h:"Affirm Q2 2026 slides reveal 30% revenue growth, Card business surges 159%",
@@ -1247,67 +1239,21 @@ var TIMELINE = [
      back to 525, the point where the word "Acquired." takes the frame
      from the founding words. Any earlier and the glass tells the ending
      while the reader is still being told the beginning. */
-  arts:[{x:652,y:500,w:110,h:86,kind:"prop",draw:"sold",tilt:-2.2,rev:525}],
+  /* on a phone the frame at the word "Acquired." starts one placard
+     width into the shop, and the S of SOLD was cut off by the left
+     edge. mx moves the card 24 units along the glass, and only in
+     letterbox, so the desktop framing of the window is untouched. The
+     card then laps 5 units past the mullion onto the cream front,
+     which at phone scale is four pixels of paper. */
+  arts:[{x:652,y:500,w:110,h:86,kind:"prop",draw:"sold",tilt:-2.2,mx:24,rev:525}],
   hero:[{x:0,form:"adult",gait:"walk"}]
 },
 
 {
-  /* Two beats: the launch, then the second product. The whole first
-     third of the beat is empty ground, and the press stands in it. */
-  id:"uber", span:1100, season:"summer",
-  light:[[0,0.92],[0.55,0.90],[1,0.66]], indoor:[],
-  layers:{
-    sky:[{t:"cloud",x:120,y:148,s:1.0,seed:511,rail:1},
-         {t:"cloud",x:620,y:118,s:0.85,seed:512,rail:2}],
-    far:[{t:"rooftops",band:{from:0,to:1100},seed:521}],
-    mid:[{t:"treeline",band:{from:0,to:1100},top:540,seed:531},
-         {t:"tree",x:110,h:140,s:0.9,seed:532}],
-    near:[{t:"bush",x:1040,s:0.95,seed:541}],
-    ground:[{t:"surface",from:-20,to:1120,kind:"street",seed:550},
-            {t:"officeblock",x:580,w:330,name:"Uber",fill:"f-blue3",trim:"f-blue4",seed:551},
-            {t:"streetlamp",x:480,seed:552},
-            {t:"bench",x:940,seed:553}],
-    fg:[]
-  },
-  glows:[],
-  rate:[[0,200,0.85,40],[300,1020,1.12,50]],
-  caps:[{x:230,chip:COPY.uberChip,head:COPY.uberHead,col:"left",row:"top",mw:640,tilt:-1},
-        /* the numbers are their own note, pinned low and to the right,
-           so the headline never has to share a band with them */
-        {x:620,body:COPY.uberBody,col:"right",row:"low",mw:500,bw:460,tilt:0.9},
-        {x:960,chip:COPY.uber2Chip,head:COPY.uber2Head,body:COPY.uber2Body,
-         col:"right",row:"upper",mw:600,bw:460,tilt:-0.8}],
-  /* Both Uber clippings stand together on the first beat, in the band
-     the street keeps clear at x 20..440. There is nowhere else on this
-     road: the tower face runs 580..910 and carries the company name, the
-     bench takes 941..1032, and the second beat frames the tower, so a
-     board set beside the Eats words would either be laid over the name
-     or come up out of the bench. Two boards read as a press wall for the
-     whole street, which is what they are.
-     They live between 50 and 425, which is beat one: from the hand-over
-     out of "Acquired." to the hand-over into the numbers. Both ends earn
-     their keep. Without the first, an Uber headline stands in the frame
-     that says the shop was sold. Without the second, the widest frame is
-     1129 units and the numbers settle only 390 along, so the pair cannot
-     clear the left edge in time and the second board holds the frame
-     with its masthead cut off. They come and go with beat one's words,
-     on the same fade, because they are part of the same beat.
-     160 wide, not 200: the phone holds 522 units of road and the badge
-     stands at 460, which leaves 373 units of clear band for the pair.
-     On the phone both are nudged 35 along, so the first one is whole
-     rather than cut by the left edge of a narrower frame. */
-  arts:[{x:30,y:406,w:160,h:118,kind:"clip",tilt:-2.1,leg:1,mx:35,rev:50,gone:425,
-         mast:COPY.news.uberShare.m,head:COPY.news.uberShare.h,href:COPY.news.uberShare.u},
-        {x:212,y:404,w:160,h:120,kind:"clip",tilt:1.7,leg:1,mx:35,rev:50,gone:425,
-         mast:COPY.news.uberEats.m,head:COPY.news.uberEats.h,href:COPY.news.uberEats.u},
-        /* the day job, hung on the lamp pole and clear of the press */
-        {x:460,y:424,w:92,h:122,kind:"prop",draw:"badge",tilt:-2.6}],
-  hero:[{x:0,form:"adult",gait:"walk"}]
-},
-
-{
+  /* The birth comes before the Uber street, because the kid was born in
+     2019 and the loyalty work started that same year. */
   id:"kid2019", span:300, season:"summer",
-  light:[[0,0.66],[0.45,0.82],[1,0.90]], indoor:[],
+  light:[[0,0.93],[1,0.91]], indoor:[],
   layers:{
     sky:[{t:"cloud",x:80,y:140,s:0.95,seed:811,rail:1}],
     far:[{t:"rooftops",band:{from:0,to:300},seed:821}],
@@ -1322,6 +1268,56 @@ var TIMELINE = [
   caps:[{x:170,chip:COPY.kid1Chip,head:COPY.kid1Head,col:"right",row:"mid",mw:520,tilt:-0.9}],
   hero:[{x:0,form:"adult",gait:"walk",pal:1},
         {x:150,form:"parent",gait:"walk",pal:1}]
+},
+
+{
+  /* Three beats and one building, and the building is the hinge. The
+     loyalty work came first, so its words and its clipping stand in the
+     open ground before the tower. UberX Share came later, so its words
+     and its clipping stand past the tower: further along the street is
+     further along the year. */
+  id:"uber", span:1400, season:"summer",
+  light:[[0,0.92],[1,0.91]], indoor:[],
+  layers:{
+    sky:[{t:"cloud",x:120,y:148,s:1.0,seed:511,rail:1},
+         {t:"cloud",x:820,y:118,s:0.85,seed:512,rail:2}],
+    far:[{t:"rooftops",band:{from:0,to:1400},seed:521}],
+    mid:[{t:"treeline",band:{from:0,to:1400},top:540,seed:531},
+         {t:"tree",x:110,h:140,s:0.9,seed:532}],
+    near:[{t:"bush",x:1240,s:0.95,seed:541}],
+    ground:[{t:"surface",from:-20,to:1420,kind:"street",seed:550},
+            {t:"officeblock",x:500,w:330,name:"Uber",fill:"f-blue3",trim:"f-blue4",seed:551},
+            {t:"streetlamp",x:380,seed:552},
+            {t:"bench",x:1300,seed:553}],
+    fg:[]
+  },
+  glows:[],
+  rate:[[0,200,0.85,40],[300,1320,1.12,50]],
+  caps:[{x:230,chip:COPY.uberChip,head:COPY.uberHead,col:"left",row:"top",mw:620,tilt:-1},
+        /* the numbers are their own note, pinned low and to the right,
+           so the headline never has to share a band with them */
+        {x:620,body:COPY.uberBody,col:"right",row:"low",mw:500,bw:460,tilt:0.9},
+        {x:1080,chip:COPY.uber2Chip,head:COPY.uber2Head,
+         col:"right",row:"upper",mw:560,tilt:-0.8}],
+  /* One clipping to each beat, on the side of the tower that beat owns.
+     The loyalty board stands at 60..260, in the band the street keeps
+     clear before the tower face at 500..830. It is held to 50..425:
+     from the hand-over out of "our first kid was born", so an Uber
+     headline never stands in the birth frame, to the hand-over into the
+     numbers, because by then it is half off the left edge.
+     The shared-rides board stands at 900..1100, past the tower and
+     before the bench at 1300, and is held back to 850 -- the hand-over
+     into the third beat -- so it is not standing in the frame while the
+     words are still about loyalty. It needs no end: the next beat is a
+     street away and the camera never comes back. */
+  arts:[{x:60,y:402,w:200,h:132,kind:"clip",tilt:-1.9,leg:1,rev:50,gone:425,
+         mast:COPY.news.uberEats.m,head:COPY.news.uberEats.h,href:COPY.news.uberEats.u},
+        {x:900,y:400,w:200,h:130,kind:"clip",tilt:1.6,leg:1,mx:16,rev:850,
+         mast:COPY.news.uberShare.m,head:COPY.news.uberShare.h,href:COPY.news.uberShare.u},
+        /* the day job, hung on the lamp pole and clear of the press. It
+           waits for the street the same way the first board does. */
+        {x:360,y:424,w:92,h:122,kind:"prop",draw:"badge",tilt:-2.6,rev:50,gone:425}],
+  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
 },
 
 {
@@ -1343,17 +1339,17 @@ var TIMELINE = [
   glows:[],
   rate:[[0,200,0.85,40],[300,1000,1.12,50]],
   caps:[{x:230,chip:COPY.ddChip,head:COPY.ddHead,col:"left",row:"top",mw:620,tilt:-1},
-        {x:640,body:COPY.ddBody,col:"right",row:"low",mw:500,bw:460,tilt:0.9},
         {x:990,chip:COPY.dd2Chip,head:COPY.dd2Head,body:COPY.dd2Body,
          col:"right",row:"upper",mw:600,bw:460,tilt:-0.8}],
-  /* the two DoorDash clippings, set the way the Uber pair is set and for
-     the same reasons. They live between 50 and 435, which is beat one.
-     The birth beat reaches 633 into this street and a delivery headline
-     has no business standing beside "our first kid was born"; the
-     numbers beat settles before the pair can clear the left edge. */
-  arts:[{x:30,y:406,w:160,h:118,kind:"clip",tilt:-1.9,leg:1,mx:35,rev:50,gone:435,
+  /* the two DoorDash clippings, set the way the Uber board is set and
+     for the same reason: two boards read as a press wall for the street,
+     which is what they are. They come up at -45, the hand-over out of
+     the UberX Share words, so a DoorDash headline never stands in an
+     Uber frame. They need no end: the numbers beat settles at 990 and
+     the pair is off the left edge by 234 units before it arrives. */
+  arts:[{x:30,y:406,w:160,h:118,kind:"clip",tilt:-1.9,leg:1,mx:35,rev:-45,
          mast:COPY.news.ddPickup.m,head:COPY.news.ddPickup.h,href:COPY.news.ddPickup.u},
-        {x:212,y:404,w:160,h:120,kind:"clip",tilt:1.5,leg:1,mx:35,rev:50,gone:435,
+        {x:212,y:404,w:160,h:120,kind:"clip",tilt:1.5,leg:1,mx:35,rev:-45,
          mast:COPY.news.ddAlcohol.m,head:COPY.news.ddAlcohol.h,href:COPY.news.ddAlcohol.u},
         /* an order ticket on the pole, clear of the press on its left
            and of the tower parapet that starts at x 546 */
@@ -1365,37 +1361,33 @@ var TIMELINE = [
   /* The longest beat on the street, because the road here has to carry
      three things in the order the story tells them: the door, then what
      was written about the card, then the climb.
-     Two of the three boards stand past the tower on purpose. Set in the
-     open ground before it, they fall inside the frame of the last
-     DoorDash beat: the widest frame is 1129 units and the last DoorDash
-     strip settles 677 units short of this beat, so an Affirm headline
-     sat under a DoorDash line. The third board does stand in that open
-     ground, and is held back to 75 so that it is not there until the
-     frame belongs to this street. */
-  id:"affirm", span:1780, season:"fall",
+     Nothing is pinned at the door. Being hired is not a press story and
+     both boards report on the card, so both of them wait until the card
+     has been named and then stand along the climb it paid for. */
+  id:"affirm", span:2000, season:"fall",
   light:[[0,0.90],[0.6,0.86],[1,0.58]], indoor:[],
   layers:{
     sky:[{t:"cloud",x:120,y:150,s:1.05,seed:1011,rail:1},
          {t:"cloud",x:820,y:118,s:0.9,seed:1012,rail:2}],
-    far:[{t:"rooftops",band:{from:0,to:1780},seed:1021}],
-    mid:[{t:"treeline",band:{from:0,to:1780},top:534,seed:1031},
+    far:[{t:"rooftops",band:{from:0,to:2000},seed:1021}],
+    mid:[{t:"treeline",band:{from:0,to:2000},top:534,seed:1031},
          {t:"tree",x:80,h:154,s:1.0,seed:1032},
-         {t:"tree",x:1740,h:140,s:0.9,seed:1033}],
-    near:[{t:"bush",x:1640,s:0.95,seed:1041}],
-    ground:[{t:"surface",from:-20,to:1800,kind:"street",seed:1050},
+         {t:"tree",x:1960,h:140,s:0.9,seed:1033}],
+    near:[{t:"bush",x:1880,s:0.95,seed:1041}],
+    ground:[{t:"surface",from:-20,to:2020,kind:"street",seed:1050},
             /* the tower stands in the first third, so the press boards
                clear its face and the ride still climbs through open sky
                instead of cutting across the company name */
             {t:"officeblock",x:400,w:320,name:"Affirm",fill:"f-plum",trim:"f-blue4",seed:1051},
             {t:"leafpile",x:560,seed:1054},
             /* the hockey stick: a long flat run, then the blade. It
-               starts 70 units past the second board, so the rail is
+               starts 220 units past the second board, so the rail is
                uncovered only once the press is behind the reader. */
-            {t:"growthtrack",x:1300,w:420,y0:596,y1:330,seed:1056}],
+            {t:"growthtrack",x:1460,w:440,y0:596,y1:330,seed:1056}],
     fg:[]
   },
   glows:[],
-  rate:[[0,190,0.82,40],[300,1680,1.1,50]],
+  rate:[[0,190,0.82,40],[300,1900,1.1,50]],
   /* the words take the left third and the stick climbs through the
      right third, so neither one is ever laid over the other */
   caps:[{x:240,chip:COPY.affirmChip,head:COPY.affirmHead,
@@ -1409,35 +1401,29 @@ var TIMELINE = [
         {x:880,head:COPY.affirmBeat,body:COPY.affirmBody,
          col:"right",row:"top",mw:560,bw:440,tilt:0.9},
         /* framed on the crest: any earlier and the $10B plaque comes up
-           under the words at 1440, any later and the ride is half past */
-        {x:1630,chip:COPY.affirm2Chip,head:COPY.affirm2Head,body:COPY.affirm2Body,
+           under the words at 1440, any later and the ride is half past.
+           It also has to settle past 1240, the right edge of the second
+           board, or that board holds the crest frame cut in half. */
+        {x:1830,chip:COPY.affirm2Chip,head:COPY.affirm2Head,body:COPY.affirm2Body,
          col:"right",row:"upper",mw:580,bw:450,tilt:-0.8}],
-  /* two press boards on tall stakes, in the open ground past the tower.
-     They are held in the band between the headline above and the
-     walkers below: at roadside height the man walking past would stand
-     in the middle of the headline, and any lower band on this beat
-     belongs to the rail. The 280 between them is wider than the boards
-     need, so that the first one can stand alone in the frame of the
-     beat before this one instead of the second arriving cut in half. */
-  arts:[/* the third board, on the open ground the reader walks in on.
-           It cannot stand at the climb: the rail runs 1300 to 1720 and
-           the night scene is already half the frame by the time the
-           words about the climb are up, so a board there would either
-           cross the rail or stand in someone else's night. Here it is
-           the first thing on the street, and the words above it are the
-           ones about being hired to build the thing it reports on.
-           Its headline is the long one of the three and runs to four
-           lines, so the sheet is cut to the shorter 118: the type comes
-           down with the paper and the last line ends level with the
-           three-line boards, above the head of the man walking past. */
-        {x:120,y:394,w:200,h:118,kind:"clip",tilt:-1.7,leg:1,rev:75,
+  /* Both press boards on tall stakes, in the open ground past the tower
+     and before the rail. They are held in the band between the headline
+     above and the walkers below: at roadside height the man walking past
+     would stand in the middle of the headline, and any lower band on
+     this beat belongs to the rail.
+     Both wait for 560, the hand-over into the card words, because both
+     of them are about the card and one is dated four years after the
+     hiring. Neither needs an end: the crest settles at 1830 and the
+     pair is off the left edge by 590 units before it arrives.
+     The 260 between them is wider than the boards need, so that the
+     first can stand alone in a narrower frame instead of the second
+     arriving cut in half. */
+  arts:[{x:780,y:402,w:200,h:118,kind:"clip",tilt:-2.1,leg:1,rev:560,
          mast:COPY.news.affirmVolumes.m,head:COPY.news.affirmVolumes.h,
          href:COPY.news.affirmVolumes.u},
-        {x:760,y:402,w:200,h:146,kind:"clip",tilt:-2.1,leg:1,
-         mast:COPY.news.affirmCards.m,head:COPY.news.affirmCards.h,href:COPY.news.affirmCards.u},
         /* the phone band holds only 522 units of road, so the second
            board is pulled in 16 there to keep its right edge whole */
-        {x:1040,y:400,w:200,h:148,kind:"clip",tilt:1.6,leg:1,mx:-16,
+        {x:1040,y:400,w:200,h:148,kind:"clip",tilt:1.6,leg:1,mx:-16,rev:560,
          mast:COPY.news.affirmQ2.m,head:COPY.news.affirmQ2.h,href:COPY.news.affirmQ2.u}],
   hero:[{x:0,form:"parent",gait:"walk",pal:1}]
 },
@@ -1462,11 +1448,16 @@ var TIMELINE = [
   /* the dark panel is 580 and not 620 because the clipping on the next
      wall comes into this frame from the right, and on a 900-tall screen
      it rides 155px higher than it does at 1080 */
-  caps:[{x:280,chip:COPY.nightChip,head:COPY.nightHead,body:COPY.nightBody,
-         tone:"dark",col:"right",row:"upper",mw:580,bw:470,tilt:-1}],
-  hero:[{x:0,form:"adult",gait:"walk"},
+  caps:[{x:280,chip:COPY.nightChip,head:COPY.nightHead,
+         tone:"dark",col:"right",row:"upper",mw:580,tilt:-1}],
+  /* the two walking figures carry the wagon, because the road either
+     side of this room is the same road the family has walked since the
+     first child. The seated one does not: he is inside, at a desk, at
+     night, and the rest of the house is asleep. That is what the beat
+     says, so the walk keeps the family and the room keeps one man. */
+  hero:[{x:0,form:"parent",gait:"walk",pal:1},
         {x:170,form:"adult",gait:"sit",seat:{x:251}},
-        {x:400,form:"adult",gait:"walk"}]
+        {x:400,form:"parent",gait:"walk",pal:1}]
 },
 
 {
@@ -1494,66 +1485,81 @@ var TIMELINE = [
      the kid at the tablet. It has to clear three things at once: the
      frames end at x 388, the window starts at x 604, and the walkers'
      heads reach up to world y 462, so anything hung lower than that is
-     read through a passing shoulder. There is a fourth: on the night
-     beat before this one the wall is already in frame, and x has only
-     the window 308..327 to stand in. Left of 308 the dark panel of the
-     night words comes down on the masthead at 1440; right of 327 the
-     far edge of the clipping is cut at 1920. */
-  /* and it comes down when the winter hands the frame to the second
-     child, or its far corner is left hanging alone on the left edge of
-     that beat, one red tab of a sheet nobody can read any more */
-  arts:[{x:324,y:334,w:248,h:144,kind:"clip",tilt:-1.6,gone:675,
+     read through a passing shoulder.
+     lit: this sheet is the one piece of press in the whole story that
+     hangs in a dark room, and under the night tint it read as faded
+     wall paper instead of as a thing somebody wrote. It is painted
+     above the tint and under the lamps, so the room stays dark and the
+     clipping is lit by the room, at full contrast, tag and all.
+     Being lit, it must not be in the frame while the words still
+     belong to the night desk before it, so it comes up at 120, the
+     hand-over into this room. It needs no end: the second child
+     settles 1000 units along and the sheet is off the left edge by
+     then. */
+  arts:[{x:324,y:334,w:248,h:144,kind:"clip",tilt:-1.6,lit:1,rev:120,
          mast:COPY.news.kdmReddit.m,head:COPY.news.kdmReddit.h,href:COPY.news.kdmReddit.u}],
   hero:[{x:0,form:"parent",gait:"walk",pal:1}]
 },
 
 {
-  id:"kid2024", span:300, season:"winter",
-  light:[[0,0.10],[1,0.24]], indoor:[],
+  /* the beat where the walk stops. The family is not passing through
+     this one, they are in it: the walking figure steps out at 180 and
+     what holds the frame is the four of them in the snow. It is also
+     where the light turns, out of the winter night of the room before
+     it and up into the morning the last act is walked in.
+     The tableau stands in 384..670 because both edges are pinned: on
+     the phone only 522 units of road are in view and the frame starts
+     at 382, and at 1280 the words come down at 666 screen px. That
+     leaves 286 units, which is what the snow is cut to. */
+  id:"kid2024", span:900, season:"winter",
+  light:[[0,0.10],[0.45,0.38],[1,0.48]], indoor:[],
   layers:{
-    sky:[], far:[{t:"rooftops",band:{from:0,to:300},seed:1221}],
-    mid:[{t:"treeline",band:{from:0,to:300},top:534,seed:1231}],
-    near:[{t:"tree",x:250,h:140,s:0.9,seed:1241}],
-    ground:[{t:"streetlamp",x:60,seed:1251}],
+    sky:[], far:[{t:"rooftops",band:{from:0,to:900},seed:1221}],
+    mid:[{t:"treeline",band:{from:0,to:900},top:534,seed:1231}],
+    near:[{t:"tree",x:150,h:140,s:0.9,seed:1241}],
+    ground:[{t:"surface",from:-20,to:920,kind:"snow",seed:1250},
+            {t:"snowplay",x:400,seed:1261},
+            {t:"streetlamp",x:690,seed:1251}],
     fg:[]
   },
-  glows:[{x:107,y:400,r:150,c:"252,208,142",str:0.86,when:"night"}],
+  glows:[{x:737,y:400,r:150,c:"252,208,142",str:0.86,when:"night"},
+         {x:520,y:474,r:250,c:"246,214,150",str:0.62,when:"night"}],
   rate:[],
-  caps:[{x:150,chip:COPY.kid2Chip,head:COPY.kid2Head,tone:"dark",col:"right",row:"mid",mw:520,tilt:-1}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
+  caps:[{x:560,chip:COPY.kid2Chip,head:COPY.kid2Head,tone:"dark",col:"right",row:"mid",mw:520,tilt:-1}],
+  hero:[{x:0,form:"parent",gait:"walk",pal:1},
+        {x:180,form:"none",gait:"idle"}]
 },
 
 {
   /* the threshold into the last act. It holds long enough for the two
-     lines to be read in full before the first workshop scene arrives.
-     The 560 is measured, not chosen: the first workshop settles with its
-     frame starting 354 units before its own beat, and the fingerpost
-     boards below reach to local 148. A shorter threshold left the year
-     boards cut in half against the left edge of the arcade picture. */
-  id:"tools", span:560, season:"spring",
-  light:[[0,0.28],[0.5,0.72],[1,0.90]], indoor:[],
+     lines to be read in full before the first workshop scene arrives. */
+  /* 820 and not 560. The settle frame of this beat reaches 745 units
+     past its own words, and the print on the first workshop front sits
+     150 units into the beat after it. At 560 that print was already in
+     this picture, cut in half by the right edge of the frame, which is
+     the same fault the note below the workshop street was written for.
+     820 puts the front of the first workshop just outside the frame, so
+     the street is announced by the words and only then walked into. */
+  id:"tools", span:820, season:"spring",
+  light:[[0,0.48],[0.5,0.76],[1,0.90]], indoor:[],
   layers:{
     sky:[{t:"cloud",x:120,y:140,s:1.05,seed:1311,rail:2}],
-    far:[{t:"rooftops",band:{from:0,to:560},seed:1321}],
-    mid:[{t:"treeline",band:{from:0,to:560},top:544,seed:1331},
+    far:[{t:"rooftops",band:{from:0,to:820},seed:1321}],
+    mid:[{t:"treeline",band:{from:0,to:820},top:544,seed:1331},
          {t:"tree",x:40,h:130,s:0.85,seed:1332}],
     near:[{t:"bush",x:370,s:0.9,seed:1341}],
-    /* the fingerpost stands well back from the first workshop, because
-       the arcade front reaches 40 units into this beat and would cut
-       the boards in half where they overlap */
     ground:[{t:"surface",from:-30,to:590,kind:"street",seed:1350},
-            {t:"signpost",x:-10,seed:1351},
             {t:"streetlamp",x:330,seed:1357}],
     fg:[]
   },
   glows:[],
   rate:[[60,500,1.8,60]],
   caps:[{x:190,chip:COPY.nowChip,head:COPY.nowHead,col:"left",row:"top",mw:560,tilt:-1}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
+  hero:[{x:0,form:"family",gait:"walk",pal:1}]
 },
 
 /* --- the workshop street --------------------------------------------
-   Six beats, one shape, one workshop to a frame. The words are blocked
+   Three beats, one shape, one workshop to a frame. The words are blocked
    into the top left, the print of the thing is pinned low on the front
    at scene x 150, and the trade sign stands on the right at scene x
    430. The walker settles at scene x 30, so he stands beside the print
@@ -1595,12 +1601,12 @@ var TIMELINE = [
   },
   glows:[{x:120,y:470,r:200,c:"246,214,150",str:0.34,when:"any"}],
   rate:[[40,940,1.05,60]],
-  caps:[{x:30,chip:COPY.aiChip,head:COPY.aiHead,body:COPY.aiBody,
+  caps:[{x:30,head:COPY.aiHead,body:COPY.aiBody,
          col:"left",row:"top",mw:560,bw:430,tilt:-1}],
   /* no address exists for this one, so it is a drawn cutout and not a
      link: a paper game screen, cut like every other sheet here */
   arts:[{x:150,y:410,w:265,h:166,kind:"prop",draw:"ainative",tilt:-1.5,mx:-70}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
+  hero:[{x:0,form:"family",gait:"walk",pal:1}]
 },
 
 {
@@ -1618,37 +1624,10 @@ var TIMELINE = [
   },
   glows:[{x:110,y:400,r:190,c:"200,226,240",str:0.4,when:"any"}],
   rate:[[40,940,1.05,60]],
-  caps:[{x:30,chip:COPY.loChip,head:COPY.loHead,body:COPY.loBody,
-         col:"left",row:"top",mw:440,bw:400,tilt:-1}],
+  caps:[{x:30,head:COPY.loHead,col:"left",row:"top",mw:560,tilt:-1}],
   arts:[{x:195,y:358,w:378,h:237,kind:"shot",src:"assets/loadout-hero.png",
          href:COPY.urls.loadout,tilt:-1.4,mx:-215}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
-},
-
-{
-  id:"powerwatch", span:1000, season:"summer",
-  light:[[0,0.94],[1,0.96]], indoor:[],
-  layers:{
-    sky:[],
-    far:[{t:"pixelsky",band:{from:0,to:1000},seed:1721}],
-    mid:[{t:"pixelhill",band:{from:0,to:1000},seed:1731}],
-    near:[],
-    /* the dial stands a long way back, in the open ground the frame
-       opens on. Any nearer and it is either behind the words or behind
-       the walkers, because this beat has no shop front to hide it. */
-    ground:[{t:"surface",from:-380,to:1060,kind:"grass",seed:1750},
-            {t:"grassrow",x:-380,w:1440,n:23,seed:1751},
-            {t:"meterpost",x:-300,seed:1752},
-            {t:"toolpost",x:430,i:2,seed:1753}],
-    fg:[]
-  },
-  glows:[],
-  rate:[[40,940,1.05,60]],
-  caps:[{x:30,chip:COPY.pwChip,head:COPY.pwHead,body:COPY.pwBody,
-         col:"left",row:"top",mw:440,bw:400,tilt:-1}],
-  arts:[{x:195,y:358,w:378,h:237,kind:"shot",src:"assets/powerwatch-hero.png",
-         href:COPY.urls.powerwatch,tilt:1.3,mx:-215}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
+  hero:[{x:0,form:"family",gait:"walk",pal:1}]
 },
 
 {
@@ -1661,42 +1640,18 @@ var TIMELINE = [
     far:[{t:"rooftops",band:{from:0,to:1000},seed:1821}],
     mid:[{t:"backlot",band:{from:0,to:1000},seed:1831}],
     near:[],
-    /* the road starts where the front does, and not 380 units early as
-       everywhere else on this street: the beat before it is grass, and
-       a road laid over the grass that early put a slab of paving in the
-       bottom corner of the pixel picture. Here the front covers the
-       seam. The grass runs 100 units past it, so there is no hole. */
-    ground:[{t:"surface",from:-40,to:1060,kind:"street",seed:1850},
-            {t:"filmset",x:-40,w:700,i:3,seed:1851}],
+    ground:[{t:"surface",from:-380,to:1060,kind:"street",seed:1850},
+            {t:"filmset",x:-40,w:700,i:2,seed:1851}],
     fg:[]
   },
   glows:[{x:60,y:330,r:230,c:"252,226,166",str:0.9,when:"any"},
          {x:520,y:420,r:180,c:"252,226,166",str:0.6,when:"any"}],
   rate:[[40,940,1.05,60]],
-  caps:[{x:30,chip:COPY.hmChip,head:COPY.hmHead,body:COPY.hmBody,
-         col:"left",row:"top",mw:440,bw:400,tilt:-1}],
+  caps:[{x:30,head:COPY.hmHead,body:COPY.hmBody,
+         col:"left",row:"top",mw:560,bw:400,tilt:-1}],
   arts:[{x:195,y:358,w:378,h:237,kind:"shot",src:"assets/hypermark-hero.png",
          href:COPY.urls.hypermark,tilt:-1.2,mx:-215}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
-},
-
-{
-  id:"dailies", span:1000, season:"summer",
-  light:[[0,0.24],[0.4,0.14],[1,0.12]], indoor:[[-60,760]],
-  layers:{
-    sky:[], far:[], mid:[], near:[],
-    ground:[{t:"surface",from:-380,to:1060,kind:"street",seed:1950},
-            {t:"editbay",x:-40,w:680,i:4,seed:1951}],
-    fg:[]
-  },
-  glows:[{x:110,y:400,r:250,c:"200,226,240",str:0.86,when:"any",crt:1},
-         {x:520,y:300,r:150,c:"246,214,150",str:0.4,when:"any"}],
-  rate:[[40,940,1.05,60]],
-  caps:[{x:30,chip:COPY.dlChip,head:COPY.dlHead,body:COPY.dlBody,
-         tone:"dark",col:"left",row:"top",mw:440,bw:400,tilt:-1}],
-  arts:[{x:195,y:358,w:378,h:237,kind:"shot",src:"assets/dailies-hero.png",
-         href:COPY.urls.dailies,tilt:1.2,mx:-215}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
+  hero:[{x:0,form:"family",gait:"walk",pal:1}]
 },
 
 {
@@ -1704,7 +1659,9 @@ var TIMELINE = [
      front is a facade until it is clicked, and only then is a player
      fetched: nothing is loaded from anyone before the reader asks. */
   id:"cinema", span:1000, season:"summer",
-  light:[[0,0.12],[1,0.10]], indoor:[],
+  /* the set before this one falls to 0.34 by its own end, so the dusk
+     is walked down into rather than cut to */
+  light:[[0,0.30],[0.35,0.12],[1,0.10]], indoor:[],
   layers:{
     sky:[], far:[{t:"rooftops",band:{from:0,to:1000},seed:2021}],
     mid:[{t:"treeline",band:{from:0,to:1000},top:544,seed:2031}],
@@ -1717,20 +1674,27 @@ var TIMELINE = [
   glows:[{x:280,y:220,r:300,c:"250,214,150",str:0.8,when:"any"},
          {x:-200,y:400,r:150,c:"252,208,142",str:0.8,when:"night"}],
   rate:[[40,940,1.1,60]],
+  /* 560 holds "I made a trailer" on one strip. Anything narrower breaks
+     it in two, and the name on the canopy behind is kept clear by moving
+     the name, not by cutting the words down. */
   caps:[{x:30,chip:COPY.cnChip,head:COPY.cnHead,body:COPY.cnBody,
-         tone:"dark",col:"left",row:"top",mw:440,bw:400,tilt:-1}],
+         tone:"dark",col:"left",row:"top",mw:560,bw:400,tilt:-1}],
   /* the window is cut 16:9, the shape of the frame it holds, so the still
      sits in it the way it sits in any player: whole, not cropped, not a
      drawing of one. The picture is the film's own opening frame, asked of
      the video host and of nobody else, and only when the reader is near
-     enough to see it. If that request fails the smaller still stands in. */
-  arts:[{x:195,y:382,w:378,h:213,kind:"video",
+     enough to see it. If that request fails the smaller still stands in.
+     lit: a screen is a light source. Under the dusk tint of this street
+     the still came out dimmed and grey, as if the projector were off,
+     so the window is painted above the tint at full brightness and the
+     street around it stays dark. */
+  arts:[{x:195,y:382,w:378,h:213,kind:"video",lit:1,
          src:"https://i.ytimg.com/vi/nPhi6ZaeFdQ/maxresdefault.jpg",
          src2:"https://i.ytimg.com/vi/nPhi6ZaeFdQ/hqdefault.jpg",
          alt:COPY.cinemaAlt,
          href:COPY.urls.cinema,play:COPY.urls.cinemaPlay,label:COPY.playTag,
          tilt:-0.8,mx:-215}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1}]
+  hero:[{x:0,form:"family",gait:"walk",pal:1}]
 },
 
 {
@@ -1765,8 +1729,8 @@ var TIMELINE = [
   glows:[],
   rate:[[80,520,1.55,60]],
   caps:[{x:520,head:COPY.endHead,links:COPY.endLinks,col:"center",row:"upper",mw:780,tilt:-1}],
-  hero:[{x:0,form:"parent",gait:"walk",pal:1},
-        {x:90,form:"parent",gait:"wave",seat:{x:820},pal:1}]
+  hero:[{x:0,form:"family",gait:"walk",pal:1},
+        {x:90,form:"family",gait:"wave",seat:{x:820},pal:1}]
 }
 ];
 
@@ -1945,6 +1909,109 @@ P.bench = function(p){
     one(cutRect(x + 8, seat + 12, 10, FLOOR - seat - 10, 1.2, p.seed + 2), "f-brown2", 2, 2) +
     one(cutRect(x + 78, seat + 12, 10, FLOOR - seat - 10, 1.2, p.seed + 3), "f-brown2", 2, 2);
 };
+
+/* the four of them out in the snow. This is the only place in the road
+   where the family is not walking: they have stopped, and the second
+   child is the reason. It is one wide tableau rather than four separate
+   props so the spacing between the figures, and who stands in front of
+   whom, can never drift apart. It is cut to sit inside 270 units, which
+   is what a phone can hold in frame at this beat. */
+P.snowplay = function(p){
+  var x = p.x, base = FLOOR + 4, s = p.seed, out = "";
+
+  /* --- the snowman, off to the left ------------------------------- */
+  var mx = x + 20;
+  out += one(cutDisc(mx, base - 26, 25, 1.8, s + 1, 16), "f-snow", 5, 6);
+  out += one(cutDisc(mx, base - 62, 18.5, 1.6, s + 2, 14), "f-snow", 4, 5);
+  out += '<g stroke="#6b4a34" stroke-width="3.4" fill="none" stroke-linecap="round"><path d="' +
+    cutLine(mx - 16, base - 64, mx - 36, base - 80, 1.2, s + 3, 8) + '"/><path d="' +
+    cutLine(mx + 16, base - 64, mx + 35, base - 76, 1.2, s + 4, 8) + '"/></g>';
+  out += one(cutDisc(mx, base - 88, 13, 1.4, s + 5, 12), "f-snow", 3, 4);
+  out += one(cut([[mx - 15, base - 76],[mx + 15, base - 78],[mx + 16, base - 71],[mx - 14, base - 69]], 1.1, s + 6, 5), "f-red2", 3, 3);
+  out += one(cut([[mx + 9, base - 74],[mx + 16, base - 74],[mx + 13, base - 58],[mx + 7, base - 59]], 1, s + 7, 4), "f-red2", 2, 2);
+  out += '<g class="f-ink"><path d="' + cutDisc(mx - 4, base - 91, 2.3, 0.5, s + 8, 8) + '"/>' +
+    '<path d="' + cutDisc(mx + 5, base - 91, 2.3, 0.5, s + 9, 8) + '"/></g>';
+  out += one(cut([[mx + 11, base - 88],[mx + 24, base - 86],[mx + 11, base - 83]], 1, s + 10, 4), "f-gold", 0, 0);
+  out += one(cutRect(mx - 13, base - 105, 26, 7, 1.1, s + 11, 6), "f-brown2", 3, 3);
+  out += one(cutRect(mx - 9, base - 116, 18, 12, 1.1, s + 12, 6), "f-brown2", 2, 2);
+
+  /* --- a pail and a spade left in the snow ------------------------- */
+  out += one(cut([[x + 40, base - 20],[x + 60, base - 20],[x + 57, base - 3],[x + 43, base - 3]], 1.2, s + 90, 6), "f-blue3", 3, 4);
+  out += '<g stroke="#6b4a34" stroke-width="3" fill="none" stroke-linecap="round"><path d="' +
+    cutLine(x + 52, base - 22, x + 44, base - 48, 1.2, s + 91, 8) + '"/></g>';
+  out += one(cut([[x + 37, base - 52],[x + 52, base - 50],[x + 50, base - 42],[x + 38, base - 44]], 1, s + 92, 4), "f-gold", 2, 2);
+
+  /* --- the father, standing, a snowball in the raised hand ---------- */
+  var fx = x + 80;
+  out += one(cutRect(fx - 13, base - 54, 11, 54, 1.2, s + 40, 8), "f-blue4", 4, 5);
+  out += one(cutRect(fx + 3, base - 54, 11, 54, 1.2, s + 41, 8), "f-blue4", 3, 4);
+  out += '<g class="f-ink"><path d="' + cutRect(fx - 16, base - 9, 16, 9, 1, s + 42, 5) + '"/>' +
+    '<path d="' + cutRect(fx + 2, base - 9, 16, 9, 1, s + 43, 5) + '"/></g>';
+  out += one(cut([[fx - 20, base - 48],[fx - 17, base - 98],[fx + 17, base - 98],[fx + 20, base - 48]], 1.7, s + 44, 8), "f-red", 5, 6);
+  out += one(cut([[fx + 14, base - 94],[fx + 36, base - 108],[fx + 40, base - 101],[fx + 18, base - 86]], 1.4, s + 45, 6), "f-red", 3, 3);
+  out += one(cut([[fx - 15, base - 92],[fx - 27, base - 68],[fx - 21, base - 65],[fx - 10, base - 87]], 1.4, s + 46, 6), "f-red", 3, 3);
+  out += '<g class="f-kraft"><path d="' + cutDisc(fx + 42, base - 105, 5.6, 0.8, s + 47, 9) + '"/>' +
+    '<path d="' + cutDisc(fx - 23, base - 61, 5.6, 0.8, s + 48, 9) + '"/>' +
+    '<path d="' + cutDisc(fx + 1, base - 112, 13, 1.4, s + 49, 13) + '"/></g>';
+  out += one(cutDisc(fx + 50, base - 112, 7, 0.9, s + 50, 10), "f-snow", 2, 2);
+  out += '<g class="f-ink"><path d="' + cutDisc(fx + 5, base - 113, 2.3, 0.5, s + 51, 8) + '"/>' +
+    '<path d="' + cutDisc(fx - 4, base - 113, 2.3, 0.5, s + 52, 8) + '"/></g>';
+  out += one(cut([[fx - 14, base - 112],[fx - 11, base - 125],[fx + 6, base - 127],[fx + 14, base - 116],
+                  [fx + 4, base - 119],[fx - 7, base - 117]], 1.4, s + 53, 7), "f-ink", 0, 0);
+
+  /* --- the mother, kneeling behind the sled ------------------------ */
+  var wx = x + 186;
+  out += one(cut([[wx - 27, base],[wx + 21, base],[wx + 17, base - 36],[wx - 23, base - 33]], 1.8, s + 20, 8), "f-blue4", 5, 6);
+  out += '<g class="f-brown2"><path d="' + cut([[wx + 10, base - 104],[wx - 17, base - 100],
+    [wx - 24, base - 78],[wx - 21, base - 54],[wx - 6, base - 56],[wx + 4, base - 82]], 1.6, s + 21, 8) + '"/></g>';
+  out += one(cut([[wx - 21, base - 30],[wx - 17, base - 80],[wx + 15, base - 80],[wx + 19, base - 30]], 1.7, s + 22, 8), "f-plum", 4, 5);
+  out += '<g class="f-kraft"><path d="' + cutDisc(wx - 2, base - 92, 13, 1.4, s + 25, 13) + '"/></g>';
+  out += '<g class="f-ink"><path d="' + cutDisc(wx - 8, base - 93, 2.3, 0.5, s + 26, 8) + '"/>' +
+    '<path d="' + cutDisc(wx + 1, base - 94, 2.3, 0.5, s + 27, 8) + '"/></g>';
+  out += one(cut([[wx - 15, base - 92],[wx - 12, base - 104],[wx + 4, base - 106],[wx + 11, base - 96],
+                  [wx + 2, base - 99],[wx - 8, base - 97]], 1.4, s + 28, 7), "f-brown2", 0, 0);
+
+  /* --- the sled, with the youngest sitting in it -------------------- */
+  var sx = x + 142;
+  out += '<g stroke="#6b4a34" stroke-width="2.6" fill="none" stroke-linecap="round"><path d="' +
+    cutLine(sx - 30, base - 20, fx - 25, base - 59, 1.6, s + 60, 16) + '"/></g>';
+  out += one(cut([[sx - 14, base - 26],[sx - 11, base - 54],[sx + 11, base - 54],[sx + 14, base - 26]], 1.4, s + 61, 7), "f-gold", 4, 5);
+  out += one(cut([[sx - 12, base - 50],[sx - 26, base - 40],[sx - 28, base - 33],[sx - 11, base - 42]], 1.2, s + 62, 5), "f-gold", 2, 2);
+  out += '<g class="f-kraft"><path d="' + cutDisc(sx - 31, base - 32, 4.6, 0.7, s + 63, 9) + '"/>' +
+    '<path d="' + cutDisc(sx - 1, base - 64, 10.5, 1.2, s + 64, 12) + '"/></g>';
+  out += '<g class="f-ink"><path d="' + cutDisc(sx - 5, base - 65, 2, 0.5, s + 65, 8) + '"/>' +
+    '<path d="' + cutDisc(sx + 3, base - 65, 2, 0.5, s + 66, 8) + '"/></g>';
+  out += one(cut([[sx - 12, base - 68],[sx - 9, base - 78],[sx + 9, base - 78],[sx + 12, base - 68]], 1.2, s + 67, 6), "f-blue3", 0, 0);
+  out += one(cutDisc(sx + 1, base - 80, 4.4, 0.7, s + 68, 8), "f-blue3", 0, 0);
+  out += one(cut([[sx - 32, base - 26],[sx + 32, base - 26],[sx + 30, base - 12],[sx - 30, base - 12]], 1.4, s + 69, 8), "f-red2", 4, 5);
+  out += one(cut([[sx - 34, base - 14],[sx + 34, base - 14],[sx + 34, base - 8],[sx - 34, base - 8]], 1, s + 70, 8), "f-brown2", 2, 2);
+  out += one(cut([[sx - 34, base - 26],[sx - 42, base - 34],[sx - 45, base - 27],[sx - 36, base - 18]], 1.2, s + 71, 5), "f-brown2", 2, 2);
+
+  /* her arm is laid down after the sled, so it comes round the front of
+     the child instead of disappearing behind it */
+  out += one(cut([[wx - 14, base - 76],[wx - 42, base - 60],[wx - 45, base - 51],[wx - 13, base - 66]], 1.4, s + 23, 6), "f-plum", 3, 3);
+  out += '<g class="f-kraft"><path d="' + cutDisc(wx - 48, base - 50, 5.6, 0.8, s + 24, 9) + '"/></g>';
+
+  /* --- the older one, crouched in front, reaching for the baby ------ */
+  var kx = x + 240;
+  out += one(cut([[kx - 19, base],[kx + 17, base],[kx + 15, base - 27],[kx - 17, base - 25]], 1.5, s + 80, 7), "f-blue3", 4, 5);
+  out += one(cut([[kx - 15, base - 22],[kx - 12, base - 53],[kx + 13, base - 53],[kx + 16, base - 22]], 1.5, s + 81, 7), "f-teal", 3, 4);
+  out += one(cut([[kx - 11, base - 49],[kx - 33, base - 40],[kx - 35, base - 33],[kx - 10, base - 41]], 1.3, s + 82, 6), "f-teal", 2, 2);
+  out += '<g class="f-kraft"><path d="' + cutDisc(kx - 38, base - 34, 5, 0.7, s + 83, 9) + '"/>' +
+    '<path d="' + cutDisc(kx - 1, base - 64, 11.6, 1.3, s + 84, 12) + '"/></g>';
+  out += '<g class="f-ink"><path d="' + cutDisc(kx - 7, base - 65, 2.1, 0.5, s + 85, 8) + '"/>' +
+    '<path d="' + cutDisc(kx + 1, base - 65, 2.1, 0.5, s + 86, 8) + '"/></g>';
+  out += one(cut([[kx - 13, base - 64],[kx - 10, base - 76],[kx + 6, base - 78],[kx + 13, base - 68],
+                  [kx + 3, base - 71],[kx - 6, base - 69]], 1.3, s + 87, 7), "f-brown2", 0, 0);
+
+  /* --- what the four of them left lying about ---------------------- */
+  out += one(cutDisc(kx + 24, base - 8, 7.5, 0.9, s + 88, 10), "f-red", 2, 3);
+  out += '<g class="f-snow">' +
+    '<path d="' + cutDisc(x + 112, base - 6, 5.5, 0.8, s + 93, 8) + '"/>' +
+    '<path d="' + cutDisc(x + 124, base - 4, 4.4, 0.7, s + 94, 8) + '"/></g>';
+  return out;
+};
+
 
 /* --- the flight: sea, plane, city ---------------------------------- */
 
@@ -2538,23 +2605,22 @@ function fitLabel(x, y, str, size, room, fam, fill){
   return label(x, y, str, size, fam, fill);
 }
 
-/* the trade sign every workshop on this street carries: the name, what
-   the thing does, and the year it was made, on one board on one post */
+/* the trade sign every workshop on this street carries: the name and
+   what the thing does, on one board on one post. No year: this street
+   is a street, not a timeline, and a date under every name turned it
+   back into the CV the whole page exists to not be. The board is cut
+   30 shorter than it once was, which is exactly the plaque that came
+   off it, so the two lines sit centred on the paper and not high on
+   an empty board. */
 function toolSign(x, i, seed){
   var s = COPY.tools[i], top = 214, bw = 150, cx = x + bw * 0.5, out = "";
-  out += one(cutRect(cx - 7, top + 118, 14, FLOOR - top - 112, 1.4, seed, 20), "f-brown2", 4, 5);
-  out += one(cutRect(x - 8, top - 8, bw + 16, 146, 2.4, seed + 1, 20), "f-cream2", 8, 9);
-  out += one(cutRect(x, top, bw, 130, 1.8, seed + 2, 16), "f-cream", 0, 0);
+  out += one(cutRect(cx - 7, top + 88, 14, FLOOR - top - 82, 1.4, seed, 20), "f-brown2", 4, 5);
+  out += one(cutRect(x - 8, top - 8, bw + 16, 116, 2.4, seed + 1, 20), "f-cream2", 8, 9);
+  out += one(cutRect(x, top, bw, 100, 1.8, seed + 2, 16), "f-cream", 0, 0);
   out += fitLabel(cx, top + 46, s.n, 28, bw - 18, "sgn", "#3a2e28");
   out += fitLabel(cx, top + 74, s.s, 15, bw - 20, "sgb", "#4a3524");
-  out += one(cutRect(cx - 34, top + 88, 68, 30, 1.3, seed + 3, 8), "f-kraft", 3, 4);
-  out += label(cx, top + 110, s.y, 19, "sgb", "#4a3524");
   return out;
 }
-
-/* the sign on its own, for the beat that has no building to hang it
-   on: a post in the grass at the same place on the beat as the rest */
-P.toolpost = function(p){ return toolSign(p.x, p.i, p.seed); };
 
 /* bunting over the street: one line, one row of paper triangles */
 P.pennants = function(p){
@@ -2628,54 +2694,6 @@ P.workbench = function(p){
   out += one(cutRect(bx + 6, base - 108, 16, 108, 1.3, p.seed + 61, 10), "f-brown2", 3, 4);
   out += one(cutRect(bx + 168, base - 108, 16, 108, 1.3, p.seed + 62, 10), "f-brown2", 3, 4);
   out += toolSign(x + 470, p.i, p.seed + 70);
-  return out;
-};
-
-/* PowerWatch reads a battery, so its world is drawn in whole squares:
-   a stepped sky and a stepped hill, cut with a rule instead of by eye */
-P.pixelsky = function(p){
-  var x = p.x, w = p.w, r = rng(p.seed), i, j, out = "", g = 26;
-  for(i = 0; i * 190 < w; i++){
-    var cx = x + 30 + i * 190 + r() * 40, cy = 110 + r() * 80, rows = 3, cell = "";
-    for(j = 0; j < 9; j++){
-      var rw = [4, 6, 3][j % 3];
-      cell += '<path d="' + cutRect(cx + (j % 3) * g * 2, cy + Math.floor(j / 3) * g, g * rw * 0.5, g, 0.9, p.seed + i * 20 + j, 4) + '"/>';
-      if(j >= rows * 2) break;
-    }
-    out += '<g class="f-cream">' + cell + "</g>";
-  }
-  return out;
-};
-
-P.pixelhill = function(p){
-  var x = p.x, w = p.w, r = rng(p.seed), i, out = "", g = 30, steps = [];
-  var h = 3;
-  for(i = 0; i * g < w + g; i++){
-    h = clamp(h + (r() < 0.5 ? -1 : 1), 1, 6);
-    steps.push('<path d="' + cutRect(x + i * g, FLOOR - 60 - h * g, g + 2, h * g + 200, 1, p.seed + i, 6) + '"/>');
-  }
-  return '<g class="f-green2">' + steps.join("") + "</g>";
-};
-
-/* the meter on its post: a round paper dial with a needle well over */
-P.meterpost = function(p){
-  var x = p.x, top = 300, cy = top + 78, out = "";
-  out += one(cutRect(x + 62, top + 150, 16, FLOOR - top - 144, 1.5, p.seed, 20), "f-brown2", 4, 5);
-  out += one(cutDisc(x + 70, cy, 84, 2.4, p.seed + 1, 26), "f-cream2", 8, 9);
-  out += one(cutDisc(x + 70, cy, 68, 2, p.seed + 2, 24), "f-cream", 0, 0);
-  var i, tk = "";
-  for(i = 0; i <= 6; i++){
-    var a = Math.PI * (1 + i / 6);
-    tk += '<path d="' + cutLine(x + 70 + Math.cos(a) * 56, cy + Math.sin(a) * 56,
-      x + 70 + Math.cos(a) * 44, cy + Math.sin(a) * 44, 0.8, p.seed + 10 + i, 6) + '"/>';
-  }
-  out += '<g stroke="#6b543f" stroke-width="3" fill="none" style="opacity:.66">' + tk + "</g>";
-  out += one(cut([[x + 66, cy + 6],[x + 74, cy + 6],[x + 116, cy - 34],[x + 108, cy - 44]], 1.2, p.seed + 20, 8), "f-red", 3, 4);
-  out += one(cutDisc(x + 70, cy, 8, 1, p.seed + 21, 10), "f-ink", 2, 2);
-  /* a paper cell under the dial, filled three quarters of the way */
-  out += one(cutRect(x + 20, cy + 96, 100, 46, 1.6, p.seed + 30, 10), "f-cream2", 5, 6);
-  out += one(cutRect(x + 120, cy + 110, 10, 18, 1, p.seed + 31, 4), "f-cream2", 3, 3);
-  out += one(cutRect(x + 27, cy + 103, 66, 32, 1.2, p.seed + 32, 8), "f-green3", 0, 0);
   return out;
 };
 
@@ -2754,60 +2772,6 @@ P.filmset = function(p){
   return out;
 };
 
-/* Dailies: the cutting room. A wall of takes, two strips of timecode
-   and one bright screen, all of it lit from the screen itself. */
-P.editbay = function(p){
-  var x = p.x, w = p.w, base = FLOOR + 6, top = base - 372, i, out = "";
-  out += one(cutRect(x, top, w, base - top, 2.8, p.seed, 36), "f-ink", 10, 11);
-  /* the wall of takes: a grid of small frames, dim, all the same size */
-  var gx = x + 30, gt = top + 34, cells = "";
-  for(i = 0; i < 12; i++){
-    cells += '<path d="' + cutRect(gx + (i % 6) * 62, gt + Math.floor(i / 6) * 50, 52, 38, 1.1, p.seed + 10 + i, 6) + '"/>';
-  }
-  out += '<g class="f-slate">' + cells + "</g>";
-  var lit = "";
-  for(i = 0; i < 4; i++) lit += '<path d="' + cutRect(gx + 4 + [0, 2, 3, 5][i] * 62, gt + (i % 2) * 50, 44, 30, 1, p.seed + 30 + i, 5) + '"/>';
-  out += '<g class="f-blue3" style="opacity:.55">' + lit + "</g>";
-  /* two strips of timecode, one over the print and one under it */
-  var tc = "", tc2 = "";
-  for(i = 0; i * 34 < w - 30; i++){
-    tc += '<path d="' + cutRect(x + 20 + i * 34, top + 148, 22, 14, 0.8, p.seed + 50 + i, 4) + '"/>';
-    tc2 += '<path d="' + cutRect(x + 20 + i * 34, base - 96, 22, 14, 0.8, p.seed + 80 + i, 4) + '"/>';
-  }
-  out += '<g class="f-cream2" style="opacity:.34">' + tc + tc2 + "</g>";
-  /* the desk: a lit panel and a row of keys */
-  var dx = x + 46, dt = base - 258;
-  out += one(cutRect(dx - 8, dt - 8, 172, 122, 2, p.seed + 100, 16), "f-slate", 6, 7);
-  out += one(cutRect(dx, dt, 156, 106, 1.6, p.seed + 101, 14), "f-screen", 0, 0);
-  var bar = "";
-  for(i = 0; i < 5; i++) bar += '<path d="' + cutRect(dx + 12, dt + 14 + i * 19, 34 + i * 26, 11, 0.8, p.seed + 110 + i, 4) + '"/>';
-  out += '<g class="f-blue2" style="opacity:.7">' + bar + "</g>";
-  out += one(cutRect(dx - 16, base - 120, 196, 18, 1.5, p.seed + 120, 16), "f-brown2", 5, 6);
-  var keys = "";
-  for(i = 0; i < 9; i++) keys += '<path d="' + cutRect(dx - 4 + i * 19, base - 116, 14, 10, 0.7, p.seed + 130 + i, 3) + '"/>';
-  out += '<g class="f-cream3" style="opacity:.6">' + keys + "</g>";
-  out += toolSign(x + 470, p.i, p.seed + 150);
-  return out;
-};
-
-/* the fingerpost where the workshop street begins: two boards on one
-   post, both pointing the way the reader is already walking */
-P.signpost = function(p){
-  /* the post starts at 336 and not 306 because the ground line on a 900-tall
-     screen sits 179px higher than it does at 1080 and the headline does not,
-     so at 306 the top arm rose behind the second line of the words and the
-     strip cut the year through the middle. */
-  var x = p.x, top = 336, i, out = "";
-  out += one(cutRect(x, top, 18, FLOOR + 10 - top, 1.6, p.seed, 20), "f-brown2", 5, 6);
-  var yrs = ["2025", "2026"];
-  for(i = 0; i < 2; i++){
-    var by = top + 18 + i * 62;
-    out += one(cut([[x + 6, by],[x + 128, by - 2],[x + 158, by + 22],[x + 128, by + 46],[x + 6, by + 44]], 1.8, p.seed + 1 + i, 12), "f-cream2", 6, 7);
-    out += label(x + 74, by + 32, yrs[i], 26, "sgn", "#4a3524");
-  }
-  return out;
-};
-
 /* the picture house at the end of the street. The name is cut into the
    canopy well above the screen, because the screen is a real frame the
    reader can start, and nothing of ours may sit on top of it. */
@@ -2820,8 +2784,20 @@ P.marquee = function(p){
   var bulbs = "";
   for(i = 0; i * 46 < w + 60; i++) bulbs += '<circle cx="' + f(x - 26 + i * 46) + '" cy="' + f(cb + 2) + '" r="5"/>';
   out += '<g class="f-gold">' + bulbs + "</g>";
-  out += fitLabel(x + w / 2, ct + 46, COPY.cinema, 34, w - 90, "sgn", "#3a2e28");
-  out += fitLabel(x + w / 2, ct + 74, COPY.cinemaSub, 18, w - 90, "sgb", "#6b543f");
+  /* The name of the film is set 40 units right of the middle of the
+     canopy, not on it, and it is cut at 28 and not at 34.
+     At the stop where this beat is read the canopy runs across the top
+     of the frame, and it has to pass between two things: the block of
+     words, which is pinned to the left, and the two paper tabs in the
+     top right corner. On a 1280 stage that lane is only 487 wide, which
+     34 point letters do not fit through. 28 clears both sides at every
+     stage width. On a phone the frame holds only half this front, and
+     40 units the wrong way would push the name off the right edge, so
+     the .lb rule slides the pair back. The canopy itself is one flat
+     sheet and does not care where on it the type sits. */
+  var tg = fitLabel(x + w / 2 + 40, ct + 46, COPY.cinema, 28, w - 90, "sgn", "#3a2e28") +
+           fitLabel(x + w / 2 + 40, ct + 74, COPY.cinemaSub, 18, w - 90, "sgb", "#6b543f");
+  out += '<g class="mqt">' + tg + "</g>";
   /* the ticket booth and the doors, both under the pinned screen */
   var bx = x + w - 176;
   out += one(cutRect(bx, base - 156, 132, 156, 2, p.seed + 10, 18), "f-cream2", 7, 8);
@@ -2944,7 +2920,16 @@ var FORMS = {
   adult:  {sc:0.85, hr:15, tw:16, lw:8.8, aw:7.0, fy:158,
            top:"f-red",   bot:"f-blue4",  hair:"f-ink",    skin:"f-kraft"},
   parent: {sc:0.85, hr:15, tw:16, lw:8.8, aw:7.0, fy:158, stroller:1,
-           top:"f-red",   bot:"f-blue4",  hair:"f-ink",    skin:"f-kraft"}
+           top:"f-red",   bot:"f-blue4",  hair:"f-ink",    skin:"f-kraft"},
+  /* the same walk with a second child in it: the older one on foot
+     between his parents, the younger one still in the wagon. He is the
+     child form shrunk to the height of a five year old standing next
+     to a grown up, and he keeps the child colours so the boy who ran
+     down the first street is recognisably the boy who is walking now. */
+  family: {sc:0.85, hr:15, tw:16, lw:8.8, aw:7.0, fy:158, stroller:1,
+           top:"f-red",   bot:"f-blue4",  hair:"f-ink",    skin:"f-kraft",
+           kid:{ox:-40, k:0.682, hr:17, tw:14, lw:8.0, aw:6.6,
+                top:"f-teal", bot:"f-blue3", hair:"f-brown2", skin:"f-kraft"}}
 };
 
 /* seat and desk heights fall out of the puppet: seated, the hip rests
@@ -2964,64 +2949,80 @@ function org(x, y){ return ' style="transform-origin:' + f(x) + 'px ' + f(y) + '
 
 /* the whole figure, in its own local frame, offset by ox.
    swap flips the limb var assignment so a companion walking beside the
-   hero is out of phase with him instead of marching in lockstep. */
-function puppet(ox, F, swap, seed){
-  var hx = CX + ox, s = seed || 900;
+   hero is out of phase with him instead of marching in lockstep.
+   k shrinks the whole figure about its own feet, so a shorter person
+   can stand on the same ground line as the others. Every joint height,
+   every limb length and every thickness is computed from k rather than
+   wrapped in a scale transform: the poses are CSS rotations with an
+   explicit transform-origin, and a nested scale would move the origins
+   out from under them. At k = 1 the numbers come out at 158 / 126 / 92
+   / 50 / 44 again, so the four figures that were here before are drawn
+   exactly as they were. */
+function puppet(ox, F, swap, seed, k){
+  var hx = CX + ox, s = seed || 900, K = k || 1;
   var A = swap ? ["legF","shF","armF","fArmF"] : ["legB","shB","armB","fArmB"];
   var B = swap ? ["legB","shB","armB","fArmB"] : ["legF","shF","armF","fArmF"];
-  var hy = NECKY - F.hr + 1;
+  /* joints, measured up from the feet */
+  var FT = FOOTY,
+      KN = FOOTY - (FOOTY - KNEEY) * K,
+      HP = FOOTY - (FOOTY - HIPY) * K,
+      SD = FOOTY - (FOOTY - SHY) * K,
+      NK = FOOTY - (FOOTY - NECKY) * K;
+  var TH = THIGH * K, SN = SHIN * K, UA = UARM * K, FA = FARM * K;
+  var hr = F.hr * K, tw = F.tw * K, lw = F.lw * K, aw = F.aw * K;
+  var hy = NK - hr + K;
 
   function leg(cn, sn, sd, cls){
-    return '<g class="' + cn + '"' + org(hx, HIPY) + '>' +
-      seg(hx, HIPY, THIGH, F.lw, sd, cls) +
-      '<g class="' + sn + '"' + org(hx, KNEEY) + '>' +
-        seg(hx, KNEEY, SHIN, F.lw * 0.9, sd + 11, cls) +
-        one(cut([[hx - F.lw, FOOTY - 4],[hx + F.lw * 1.9, FOOTY - 6],
-                 [hx + F.lw * 2.1, FOOTY],[hx - F.lw * 1.1, FOOTY + 1]], 1, sd + 21, 4), "f-ink", 0, 0) +
+    return '<g class="' + cn + '"' + org(hx, HP) + '>' +
+      seg(hx, HP, TH, lw, sd, cls) +
+      '<g class="' + sn + '"' + org(hx, KN) + '>' +
+        seg(hx, KN, SN, lw * 0.9, sd + 11, cls) +
+        one(cut([[hx - lw, FT - 4 * K],[hx + lw * 1.9, FT - 6 * K],
+                 [hx + lw * 2.1, FT],[hx - lw * 1.1, FT + K]], 1, sd + 21, 4), "f-ink", 0, 0) +
       "</g></g>";
   }
   function arm(cn, fn, sd, cls){
-    return '<g class="' + cn + '"' + org(hx, SHY) + '>' +
-      seg(hx, SHY, UARM, F.aw, sd, cls) +
-      '<g class="' + fn + '"' + org(hx, SHY + UARM) + '>' +
-        seg(hx, SHY + UARM, FARM, F.aw * 0.9, sd + 11, cls) +
-        '<g class="' + F.skin + '"><path d="' + cutDisc(hx, SHY + UARM + FARM + 2, F.aw * 1.15, 0.8, sd + 23, 10) + '"/></g>' +
+    return '<g class="' + cn + '"' + org(hx, SD) + '>' +
+      seg(hx, SD, UA, aw, sd, cls) +
+      '<g class="' + fn + '"' + org(hx, SD + UA) + '>' +
+        seg(hx, SD + UA, FA, aw * 0.9, sd + 11, cls) +
+        '<g class="' + F.skin + '"><path d="' + cutDisc(hx, SD + UA + FA + 2 * K, aw * 1.15, 0.8, sd + 23, 10) + '"/></g>' +
       "</g></g>";
   }
 
-  var torso = cut([[hx - F.tw * 0.92, HIPY + 2],[hx - F.tw, SHY + 6],[hx - F.tw * 0.8, SHY - 3],
-                   [hx + F.tw * 0.8, SHY - 3],[hx + F.tw, SHY + 6],[hx + F.tw * 0.92, HIPY + 2]], 1.4, s + 40, 8);
+  var torso = cut([[hx - tw * 0.92, HP + 2 * K],[hx - tw, SD + 6 * K],[hx - tw * 0.8, SD - 3 * K],
+                   [hx + tw * 0.8, SD - 3 * K],[hx + tw, SD + 6 * K],[hx + tw * 0.92, HP + 2 * K]], 1.4, s + 40, 8);
   /* long hair is one sheet cut behind the head and taken down past the
      shoulder. It is laid down BEFORE the face, so the profile, the eyes
      and the smile all stay on top of it and the head still reads at the
      size a cutout figure is actually seen at. */
   var backHair = F.long ? '<g class="' + F.hair + '"><path d="' + cut([
-      [hx + F.hr * 0.46, hy - F.hr * 1.16], [hx - F.hr * 1.02, hy - F.hr * 0.78],
-      [hx - F.hr * 1.36, hy + F.hr * 0.58], [hx - F.hr * 1.24, SHY + 24],
-      [hx - F.hr * 0.30, SHY + 28],         [hx + F.hr * 0.30, hy + F.hr * 0.88],
-      [hx + F.hr * 0.94, hy - F.hr * 0.18]], 1.4, s + 56, 8) + '"/></g>' : "";
-  var head = '<g class="head"' + org(hx, NECKY) + '>' +
-    one(cutRect(hx - F.aw * 0.8, NECKY - 6, F.aw * 1.6, 12, 0.9, s + 50, 3), F.skin, 0, 0) +
+      [hx + hr * 0.46, hy - hr * 1.16], [hx - hr * 1.02, hy - hr * 0.78],
+      [hx - hr * 1.36, hy + hr * 0.58], [hx - hr * 1.24, SD + 24 * K],
+      [hx - hr * 0.30, SD + 28 * K],    [hx + hr * 0.30, hy + hr * 0.88],
+      [hx + hr * 0.94, hy - hr * 0.18]], 1.4, s + 56, 8) + '"/></g>' : "";
+  var head = '<g class="head"' + org(hx, NK) + '>' +
+    one(cutRect(hx - aw * 0.8, NK - 6 * K, aw * 1.6, 12 * K, 0.9, s + 50, 3), F.skin, 0, 0) +
     backHair +
-    '<g class="' + F.skin + '"><path d="' + cutDisc(hx, hy, F.hr, 1.5, s + 51, 14) + '"/></g>' +
+    '<g class="' + F.skin + '"><path d="' + cutDisc(hx, hy, hr, 1.5, s + 51, 14) + '"/></g>' +
     '<g class="' + F.hair + '"><path d="' +
-      cut([[hx - F.hr, hy + 2],[hx - F.hr * 0.9, hy - F.hr * 0.9],[hx, hy - F.hr * 1.16],
-           [hx + F.hr * 0.86, hy - F.hr * 0.78],[hx + F.hr * 0.66, hy - F.hr * 0.2],
-           [hx + F.hr * 0.2, hy - F.hr * 0.5],[hx - F.hr * 0.5, hy - F.hr * 0.3]], 1.3, s + 52, 6) + '"/></g>' +
-    '<g class="f-ink"><path d="' + cutDisc(hx + F.hr * 0.54, hy - 1, 2.5, 0.5, s + 53, 8) + '"/>' +
-      '<path d="' + cutDisc(hx + F.hr * 0.08, hy - 1, 2.5, 0.5, s + 54, 8) + '"/></g>' +
-    '<g class="f-red2" style="opacity:.34"><path d="' + cutDisc(hx + F.hr * 0.76, hy + F.hr * 0.42, F.hr * 0.2, 0.6, s + 55, 8) + '"/></g>' +
-    '<path fill="none" stroke="#7a4a3a" stroke-width="' + f(F.hr * 0.14) + '" stroke-linecap="round" d="M' +
-      f(hx + F.hr * 0.12) + " " + f(hy + F.hr * 0.42) + " q" + f(F.hr * 0.26) + " " + f(F.hr * 0.24) + " " + f(F.hr * 0.5) + " " + f(-F.hr * 0.06) + '"/>' +
+      cut([[hx - hr, hy + 2 * K],[hx - hr * 0.9, hy - hr * 0.9],[hx, hy - hr * 1.16],
+           [hx + hr * 0.86, hy - hr * 0.78],[hx + hr * 0.66, hy - hr * 0.2],
+           [hx + hr * 0.2, hy - hr * 0.5],[hx - hr * 0.5, hy - hr * 0.3]], 1.3, s + 52, 6) + '"/></g>' +
+    '<g class="f-ink"><path d="' + cutDisc(hx + hr * 0.54, hy - K, 2.5 * K, 0.5, s + 53, 8) + '"/>' +
+      '<path d="' + cutDisc(hx + hr * 0.08, hy - K, 2.5 * K, 0.5, s + 54, 8) + '"/></g>' +
+    '<g class="f-red2" style="opacity:.34"><path d="' + cutDisc(hx + hr * 0.76, hy + hr * 0.42, hr * 0.2, 0.6, s + 55, 8) + '"/></g>' +
+    '<path fill="none" stroke="#7a4a3a" stroke-width="' + f(hr * 0.14) + '" stroke-linecap="round" d="M' +
+      f(hx + hr * 0.12) + " " + f(hy + hr * 0.42) + " q" + f(hr * 0.26) + " " + f(hr * 0.24) + " " + f(hr * 0.5) + " " + f(-hr * 0.06) + '"/>' +
     "</g>";
 
-  return '<g class="rig"' + org(hx, FOOTY) + '>' +
+  return '<g class="rig"' + org(hx, FT) + '>' +
     leg(A[0], A[1], s + 100, F.bot) +
-    '<g class="torso"' + org(hx, HIPY) + '>' +
+    '<g class="torso"' + org(hx, HP) + '>' +
       arm(A[2], A[3], s + 200, F.top) +
-      sheet([cutDisc(hx, HIPY, F.tw * 0.92, 1, s + 41, 12), torso], F.top, 0, 0) +
-      one(cut([[hx - F.tw * 0.94, HIPY - 12],[hx + F.tw * 0.94, HIPY - 12],
-               [hx + F.tw * 0.92, HIPY + 3],[hx - F.tw * 0.92, HIPY + 3]], 1.1, s + 42, 5), F.bot, 0, 0) +
+      sheet([cutDisc(hx, HP, tw * 0.92, 1, s + 41, 12), torso], F.top, 0, 0) +
+      one(cut([[hx - tw * 0.94, HP - 12 * K],[hx + tw * 0.94, HP - 12 * K],
+               [hx + tw * 0.92, HP + 3 * K],[hx - tw * 0.92, HP + 3 * K]], 1.1, s + 42, 5), F.bot, 0, 0) +
       head +
       arm(B[2], B[3], s + 300, F.top) +
     "</g>" +
@@ -3037,6 +3038,13 @@ function stroller(F){
     '<path d="' + cutDisc(x + 52, base - 9, 10, 1.1, s + 1, 12) + '"/></g>';
   out += one(cut([[x - 4, base - 62],[x + 58, base - 70],[x + 60, base - 34],[x + 8, base - 26]], 1.6, s + 2, 8), "f-red2", 5, 6);
   out += one(cut([[x + 2, base - 74],[x + 44, base - 82],[x + 46, base - 60],[x + 4, base - 54]], 1.5, s + 3, 6), "f-cream2", 4, 4);
+  /* one arm is up over the rim of the wagon and stays up. A baby holds
+     a hand out of a pram at every age, and at the end of the road, when
+     the other three turn and wave, it means the fourth of them is
+     waving too without a rig of its own. */
+  out += '<g class="' + F.skin + '"><path d="' +
+    cut([[x + 15, base - 74],[x + 5, base - 90],[x - 1, base - 88],[x + 9, base - 70]], 1, s + 7, 5) + '"/>' +
+    '<path d="' + cutDisc(x + 1, base - 92, 4.4, 0.7, s + 8, 9) + '"/></g>';
   out += '<g class="' + F.skin + '"><path d="' + cutDisc(x + 24, base - 84, 9, 1, s + 4, 10) + '"/></g>';
   /* the push bar ends at the hands, not in the air above them. Across
      the walk the hand disc travels between x 60 and 86 at y 98 to 101,
@@ -3107,7 +3115,7 @@ var STAND = {by:0, rr:0, ta:0, ha:0, l1:-7, s1:4, l2:9, s2:12,
 
 var heroWrap = null, HERO = {}, heroKey = "";
 function buildHeroes(){
-  var keys = ["baby","child","teen","adult","parent"], n, out = "";
+  var keys = ["baby","child","teen","adult","parent","family"], n, out = "";
   for(n = 0; n < keys.length; n++){
     var k = keys[n], F = FORMS[k], pal;
     for(pal = 0; pal < 2; pal++){
@@ -3121,6 +3129,15 @@ function buildHeroes(){
           cutDisc(CX - 74, F.fy + 3, F.tw * 1.3, 1.4, 1560, 14) + '"/></g>';
         body += puppet(-74, {sc:F.sc, hr:16, tw:15, lw:8.2, aw:6.6, long:1,
           top:"f-plum", bot:"f-blue4", hair:"f-brown2", skin:"f-kraft"}, 1, 1900);
+      }
+      /* the older child walks between the two of them, laid down after
+         his mother and before his father, so the row overlaps the way a
+         row of people actually does. He takes his father's phase, which
+         leaves him out of step with the figure standing next to him. */
+      if(F.kid){
+        body += '<g class="f-ink" style="opacity:.13"><path d="' +
+          cutDisc(CX + F.kid.ox, F.fy + 3, F.kid.tw * F.kid.k * 1.5, 1.3, 1580, 13) + '"/></g>';
+        body += puppet(F.kid.ox, F.kid, 0, 2100, F.kid.k);
       }
       body += sh + puppet(0, F, 0, 900 + n * 7);
       if(F.stroller) body += stroller(F);
@@ -3363,6 +3380,13 @@ for(j = 0; j < TIMELINE.length; j++){
 
 var artLayer = document.createElement("div");
 artLayer.className = "arts";
+/* two sheets carry their own light: the drawing app notice and the
+   picture house poster. Both land in a night scene, and the dusk wash
+   that sells the rest of the set would read them as background wall
+   art. They go on a second layer that hangs in FRONT of the tint, so
+   the paper keeps its full white and the lamps still warm it. */
+var litLayer = document.createElement("div");
+litLayer.className = "arts lit";
 var arts = [];
 for(j = 0; j < TIMELINE.length; j++){
   var arl = TIMELINE[j].arts || [];
@@ -3437,7 +3461,7 @@ for(j = 0; j < TIMELINE.length; j++){
           ' allowfullscreen loading="lazy"></iframe>';
       });
     }
-    artLayer.appendChild(link);
+    (ar.lit ? litLayer : artLayer).appendChild(link);
     arts.push({el:link, x:ar.x + starts[j], y:ar.y, w:ar.w, h:ar.h,
       leg:!!ar.leg, mx:ar.mx || 0,
       rev:ar.rev == null ? null : ar.rev + starts[j],
@@ -3448,6 +3472,8 @@ for(j = 0; j < TIMELINE.length; j++){
    once and the one below stays as small as the number of late sheets */
 var lateArts = arts.filter(function(a){ return a.rev != null || a.gone != null; });
 world.insertBefore(artLayer, heroWrap);
+/* in front of the tint, behind the lamp glows */
+tintEl.parentNode.insertBefore(litLayer, glowLayer);
 var trkRect = document.getElementById("trkRect");
 
 /* --- sun, moon, stars, frame ---------------------------------------- */
@@ -3508,26 +3534,25 @@ var trkRect = document.getElementById("trkRect");
   s += para(COPY.moveChip, COPY.moveHead);
   s += para(COPY.nyChip, COPY.nyHead);
   s += para(COPY.potatoChip, COPY.potatoHead, COPY.potatoBody + " " + COPY.potatoBeat.join(" "));
-  s += para(COPY.uberChip, COPY.uberHead, COPY.uberBody);
-  s += para(COPY.uber2Chip, COPY.uber2Head, COPY.uber2Body);
   s += para(COPY.kid1Chip, COPY.kid1Head);
-  s += para(COPY.ddChip, COPY.ddHead, COPY.ddBody);
+  s += para(COPY.uberChip, COPY.uberHead, COPY.uberBody);
+  s += para(COPY.uber2Chip, COPY.uber2Head);
+  s += para(COPY.ddChip, COPY.ddHead);
   s += para(COPY.dd2Chip, COPY.dd2Head, COPY.dd2Body);
   s += para(COPY.affirmChip, COPY.affirmHead,
     COPY.affirmBeat.join(" ") + " " + COPY.affirmBody);
   s += para(COPY.affirm2Chip, COPY.affirm2Head, COPY.affirm2Body);
-  s += para(COPY.nightChip, COPY.nightHead, COPY.nightBody);
+  s += para(COPY.nightChip, COPY.nightHead);
   s += para(COPY.kdmChip, COPY.kdmHead, COPY.kdmBody);
   s += para(COPY.kid2Chip, COPY.kid2Head);
   s += para(COPY.nowChip, COPY.nowHead);
   /* the workshop street, one line per thing, in the order it is walked */
   var TL = [[COPY.aiChip, COPY.aiHead, COPY.aiBody], [COPY.loChip, COPY.loHead, COPY.loBody],
-            [COPY.pwChip, COPY.pwHead, COPY.pwBody], [COPY.hmChip, COPY.hmHead, COPY.hmBody],
-            [COPY.dlChip, COPY.dlHead, COPY.dlBody], [COPY.cnChip, COPY.cnHead, COPY.cnBody]];
+            [COPY.hmChip, COPY.hmHead, COPY.hmBody], [COPY.cnChip, COPY.cnHead, COPY.cnBody]];
   for(m = 0; m < TL.length; m++) s += para(TL[m][0], TL[m][1], TL[m][2]);
   s += "<ul>";
   for(m = 0; m < COPY.tools.length; m++){
-    s += "<li>" + esc(COPY.tools[m].n) + ", " + esc(COPY.tools[m].s) + ", " + esc(COPY.tools[m].y) + "</li>";
+    s += "<li>" + esc(COPY.tools[m].n) + ", " + esc(COPY.tools[m].s) + "</li>";
   }
   s += "<li>" + esc(COPY.cinema) + ", " + esc(COPY.cinemaSub) + "</li></ul>";
   s += '<p><a href="' + COPY.urls.cinema + '" target="_blank" rel="noopener">' + esc(COPY.playTag) + "</a></p>";
@@ -3751,6 +3776,10 @@ function layout(){
   var vwReal = scrollEl.clientWidth || window.innerWidth;
   vh = scrollEl.clientHeight || window.innerHeight;
   letterbox = vh / vwReal > 1.12;
+  /* the scenery svg is cut once, at load, so a sheet that has to sit in a
+     different place on a narrow stage cannot be re painted. The flag is
+     put on the stage instead and the css moves it. */
+  stage.classList.toggle("lb", letterbox);
   /* Past this width the set stops growing and stands centred on the paper
      backdrop, the same way the tall phone letterband works. A wider stage
      shows more world at once, so on an ultrawide screen the camera starts
@@ -4013,6 +4042,7 @@ function frame(){
     }
   }
   artLayer.style.transform = "translate3d(" + f(-X * u) + "px,0,0)";
+  litLayer.style.transform = artLayer.style.transform;
   /* the ride is drawn as it is ridden: the clip window opens from the
      start marker to a little ahead of the traveller, and never closes */
   if(trkRect && TRK){
@@ -4212,11 +4242,11 @@ else requestAnimationFrame(function(){
 var BED = {
   title:"childhood_day", age6:"childhood_day", age12:"gaming_night",
   flight:"flight", newyork:"new_york", potato:"campus_day",
-  uber:"office_day", kid2019:"childhood_day", doordash:"office_day",
+  kid2019:"childhood_day", uber:"office_day", doordash:"office_day",
   affirm:"office_day", night:"night_build", kdm:"winter",
   kid2024:"winter", tools:"campus_day", ainative:"campus_day",
-  loadout:"campus_day", powerwatch:"campus_day", hypermark:"studio",
-  dailies:"studio", cinema:"theater", end:"end_meadow"
+  loadout:"campus_day", hypermark:"studio",
+  cinema:"theater", end:"end_meadow"
 };
 
 var tag = document.getElementById("sndTag");
