@@ -112,6 +112,34 @@ html.rm .world.tr .scenegrp{transition:none}
 .g-home{opacity:0;transition:opacity 1.6s ease .25s}
 .home .g-home{opacity:calc(var(--night,0) * var(--str,.8))}
 .rm .g-home{transition:none}
+/* the going-to-bed play. Everything below waits for .home and runs on
+   CSS clocks counted from the moment the family steps inside: the
+   windows warm first, the chimney starts to breathe, two small heads
+   climb into the upstairs pane and watch the night for a while, sink
+   away to bed, the upstairs light goes out, and sleep letters drift
+   up past the roof. Scrolling back strips .home and the whole evening
+   rewinds to nothing. Reduced motion keeps the warm windows and skips
+   the play entirely. */
+.kidpeek,.babypeek{transform:translateY(42px)}
+.home .kidpeek{animation:peek 4.6s cubic-bezier(.34,1.3,.4,1) 2.2s both}
+.home .babypeek{animation:peek 4.2s cubic-bezier(.34,1.3,.4,1) 2.9s both}
+@keyframes peek{0%{transform:translateY(42px)}14%{transform:translateY(0)}
+  78%{transform:translateY(0)}100%{transform:translateY(42px)}}
+.home .g-up{animation:lightout 1.6s ease 7.8s both}
+@keyframes lightout{to{opacity:.07}}
+.puff{opacity:0}
+.home .puff{animation:puffup 5.4s linear 1.6s infinite}
+.home .p2{animation-delay:3.4s}
+.home .p3{animation-delay:5.2s}
+@keyframes puffup{0%{opacity:0;transform:translateY(16px)}
+  25%{opacity:.5}65%{opacity:.26}100%{opacity:0;transform:translateY(-26px)}}
+.zz{opacity:0}
+.home .zz{animation:zdrift 3.6s ease-in 9.4s infinite}
+.home .z2{animation-delay:10.1s}
+.home .z3{animation-delay:10.8s}
+@keyframes zdrift{0%{opacity:0;transform:translateY(12px)}
+  30%{opacity:.85}100%{opacity:0;transform:translateY(-26px)}}
+.rm .kidpeek,.rm .babypeek,.rm .puff,.rm .zz,.rm .g-up{animation:none}
 
 /* Night is TWO sheets, not one.
 
@@ -333,6 +361,14 @@ html.rm .plain{display:inline-block}
 .capw{position:absolute;left:0;top:0;width:max-content;max-width:var(--mw,600px);
   opacity:0;visibility:hidden;translate:0 15px;rotate:var(--tilt,-1deg);
   transition:opacity .42s ease,translate .5s cubic-bezier(.2,.7,.3,1),visibility 0s linear .5s}
+/* the closing card must not pop. It rises on a long slow drift while
+   the family is still walking, so the last words arrive the way the
+   evening does: gradually, and from a little further down. This rule
+   sits BEFORE .capw.on so that .on can still zero the delays when the
+   card shows: swap the order and the card hides through its whole
+   fade, then snaps in, which is the pop again. */
+.capw.slow{translate:0 34px;
+  transition:opacity 1.6s ease,translate 1.9s cubic-bezier(.22,.61,.25,1),visibility 0s linear 1.9s}
 .capw.on{opacity:1;visibility:visible;translate:0 0;transition-delay:0s,0s,0s}
 
 .strip{position:relative;display:block;width:max-content;max-width:100%;rotate:var(--rot,0deg)}
@@ -563,8 +599,8 @@ html.rm .capw{transition:none}
   <div class="prog" id="progBar" aria-hidden="true"></div>
 
   <span class="skipsh" aria-hidden="true">Skip to the end</span>
-  <a class="skip" href="../../">Skip to the end</a>
-  <a class="plain" href="../../">Prefer the plain page?</a>
+  <a class="skip" href="../../classic.html">Skip to the end</a>
+  <a class="plain" href="../../classic.html">Prefer the plain page?</a>
 
   <button class="snd" id="sndTag" type="button" aria-pressed="false" aria-label="Ambient sound">
     <span class="snd-sh" aria-hidden="true"></span>
@@ -609,7 +645,7 @@ html.rm .capw{transition:none}
 <pre id="metrics" aria-hidden="true"></pre>
 
 <noscript>
-  <p class="nojs">This story needs JavaScript. <a href="../../">Read the plain version</a>.</p>
+  <p class="nojs">This story needs JavaScript. <a href="../../classic.html">Read the plain version</a>.</p>
 </noscript>
 
 <script>
@@ -986,7 +1022,7 @@ var COPY = {
     {t:"GitHub",   h:"https://github.com/ovsh"},
     {t:"X",        h:"https://x.com/mikiovsh"},
     {t:"LinkedIn", h:"https://linkedin.com/in/mikiov"},
-    {t:"Read the plain version", h:"../../"}
+    {t:"Read the plain version", h:"../../classic.html"}
   ],
 
   /* signage for the three tool scenes, in the order they are walked.
@@ -1074,16 +1110,20 @@ var COPY = {
                  to:"END" means "as far as the world goes", for
                  set pieces that must span scenes (the cardboard base,
                  the walking surface, the ocean).
-     glows       [{ x, y, r, c, str, when }] lamp pools, each under a
-                 lamp. when: night|day|any|home -- home pools light only
-                 once an enter beat has put the family indoors
+     glows       [{ x, y, r, c, str, when, cls }] lamp pools, each under
+                 a lamp. when: night|day|any|home -- home pools light
+                 only once an enter beat has put the family indoors.
+                 cls adds an extra class (g-up is the upstairs window,
+                 so the bedtime play can turn that one light out)
      rate        [[from, to, mult, ease], ...] the scroll rate map.
                  mult > 1 holds the camera (the two computer dwells, the
                  capstone); mult < 1 speeds transit up (the flight, the
                  walks between buildings). ease is the ramp width in
                  world units so a hold arrives and leaves smoothly.
      caps        [{ x, chip, head, body, col, row, ... }] captions, each
-                 anchored in the world and blocked into a screen region
+                 anchored in the world and blocked into a screen region.
+                 slow true swaps the reveal for a long drift (the
+                 closing card, which must not pop)
      arts        [{ x, y, w, h, kind, src|mast+head, href, tilt }]
                  real prints and news clippings pinned into the set,
                  world units, each one a link that opens in a new tab
@@ -1092,7 +1132,10 @@ var COPY = {
                  form: none|baby|child|teen|adult|parent|family
                  gait: toddle|walk|sit|play|idle
                  seat {x} parks the puppet at a world point so it can
-                 reach the chair before the camera pins the desk
+                 reach the chair before the camera pins the desk. A
+                 run of beats stepping seat.x forward in small jumps
+                 walks the puppet in stride with the scroll instead of
+                 one long sprint (the end scene's approach to the door)
                  pal true walks the second figure alongside
                  enter true sends the puppet through the door it is
                  seated at: arrive, step in, gone until scrolled back
@@ -1799,7 +1842,10 @@ var TIMELINE = [
   },
   glows:[{x:280,y:220,r:300,c:"250,214,150",str:0.8,when:"any"},
          {x:-200,y:400,r:150,c:"252,208,142",str:0.8,when:"night"}],
-  rate:[[40,790,1.1,60]],
+  /* the tail of this street is where the last road's dawn is walked
+     into: slowed a little, so the handover to the end is not one flick
+     of the wheel. */
+  rate:[[40,560,1.1,60],[560,850,1.35,70]],
   /* 560 holds "I made a trailer" on one strip. Anything narrower breaks
      it in two, and the name on the canopy behind is kept clear by moving
      the name, not by cutting the words down. */
@@ -1855,9 +1901,12 @@ var TIMELINE = [
             {t:"grassrow",x:0,w:1380,n:22,seed:1451},
             {t:"mailbox",x:640,seed:1453},
             /* the house the whole road was walking to. The door is cut
-               at world 900 and the seat in the hero beat is the same
-               number, so the family stops exactly on the step. */
-            {t:"house",x:772,w:170,win2:1,seed:1454},
+               at world 900 and the last seat in the hero beat chain is
+               the same number, so the family stops exactly on the step.
+               home marks it as the one lived-in house of the story: it
+               gets the second window, the porch, the path, and the
+               going-to-bed play once the family is inside. */
+            {t:"house",x:754,w:200,home:1,seed:1454},
             {t:"bench",x:1040,seed:1452}],
     /* kept short and away from the walking band: a tall blade here
        would cut the family in half as they reach the last frame */
@@ -1865,9 +1914,10 @@ var TIMELINE = [
   },
   /* the two windows warm only once the family is in (when:"home"), and
      only as deep as the night is: the glow class multiplies the same
-     --night the sky is run by. */
-  glows:[{x:828,y:509,r:112,c:"252,208,142",str:0.92,when:"home"},
-         {x:884,y:473,r:70,c:"252,208,142",str:0.8,when:"home"}],
+     --night the sky is run by. The upstairs pool also carries g-up, so
+     the bedtime play can put that one light out on its own. */
+  glows:[{x:815,y:495,r:118,c:"252,208,142",str:0.92,when:"home"},
+         {x:882,y:445,r:70,c:"252,208,142",str:0.8,when:"home",cls:"g-up"}],
   /* the first held stretch is the one a wide screen actually scrolls:
      it is where the dusk comes down, so nightfall is given scroll room
      on every width. The second stretch only exists for narrow screens,
@@ -1878,17 +1928,30 @@ var TIMELINE = [
      writes at and not the size a headline is printed at. The card is
      cut from the night stock: it is read under stars, and a cream card
      at full brightness would put a lamp in the middle of the frame. */
+  /* slow: the closing words are the one card that must not pop. They
+     drift up through the dusk while the family is still on the road. */
   caps:[{x:520,head:COPY.endHead,sign:COPY.endSign,links:COPY.endLinks,
-         tone:"dark",col:"center",row:"upper",mw:780,tilt:-1}],
+         tone:"dark",col:"center",row:"upper",mw:780,tilt:-1,slow:1}],
   /* the family walks the last road in profile, the way they have
-     walked every road in this story, and nobody turns round. The
-     second beat seats them at the door of the house and marks it
-     enter: the walk carries them in, the door takes them, the windows
-     go warm, and the day they arrived on is put away. The reader is
-     left holding the closing frame: a lit house under a deep night
-     and every star out. */
+     walked every road in this story, and nobody turns round. One seat
+     used to stand at the door, and the moment the walk began the whole
+     family sprinted a road's length in a second: a beat is a trigger,
+     not a pace. So the door is now the last rung of a ladder of seats,
+     each a short stroll past the one before, and the family walks the
+     road the way the reader scrolls it: a few steps, a pause, a few
+     steps more. The last rung is marked enter: the door takes them,
+     the windows go warm, and the day they arrived on is put away. */
   hero:[{x:0,form:"family",gait:"walk",pal:1},
-        {x:90,form:"family",gait:"walk",seat:{x:900},enter:1,pal:1}]
+        {x:90, form:"family",gait:"walk",seat:{x:170},pal:1},
+        {x:125,form:"family",gait:"walk",seat:{x:255},pal:1},
+        {x:160,form:"family",gait:"walk",seat:{x:340},pal:1},
+        {x:195,form:"family",gait:"walk",seat:{x:425},pal:1},
+        {x:230,form:"family",gait:"walk",seat:{x:510},pal:1},
+        {x:265,form:"family",gait:"walk",seat:{x:595},pal:1},
+        {x:300,form:"family",gait:"walk",seat:{x:675},pal:1},
+        {x:335,form:"family",gait:"walk",seat:{x:755},pal:1},
+        {x:370,form:"family",gait:"walk",seat:{x:830},pal:1},
+        {x:405,form:"family",gait:"walk",seat:{x:900},enter:1,pal:1}]
 }
 ];
 
@@ -2460,27 +2523,71 @@ P.streetlamp = function(p){
 };
 
 P.house = function(p){
-  var x = p.x, w = p.w, base = FLOOR + 6, bodyTop = base - 196;
-  var body = cutRect(x, bodyTop, w, 200, 2.6, p.seed, 30);
-  var roof = cut([[x - 24, bodyTop + 8],[x + w * 0.5, bodyTop - 76],[x + w + 24, bodyTop + 8],[x + w + 10, bodyTop + 22],[x - 10, bodyTop + 22]], 2.4, p.seed + 1, 20);
-  var chim = cutRect(x + w * 0.7, bodyTop - 64, 24, 54, 1.6, p.seed + 2);
+  /* Two houses live in this painter. The plain one is scenery. The
+     home one (p.home) is the house the whole story walks to, so it is
+     cut a size up and given the things a lived-in house has: shutters,
+     an upstairs window under the eave, a porch slab, a few flat path
+     stones, and the rigging for the going-to-bed play -- two small
+     silhouette heads clipped inside the upstairs pane, three chimney
+     puffs, and three sleep letters. All of those are cut at opacity
+     zero or below the pane, and only the .home class winds them up. */
+  var home = p.home, base = FLOOR + 6;
+  var x = p.x, w = p.w, bodyTop = base - (home ? 226 : 196);
+  var body = cutRect(x, bodyTop, w, home ? 230 : 200, 2.6, p.seed, 30);
+  var roof = cut([[x - 26, bodyTop + 8],[x + w * 0.5, bodyTop - (home ? 84 : 76)],[x + w + 26, bodyTop + 8],[x + w + 12, bodyTop + 22],[x - 12, bodyTop + 22]], 2.4, p.seed + 1, 20);
+  var chim = home ? cutRect(x + w * 0.30, bodyTop - 98, 26, 88, 1.6, p.seed + 2) :
+    cutRect(x + w * 0.7, bodyTop - 64, 24, 54, 1.6, p.seed + 2);
   var door = cutRect(x + w * 0.6, base - 94, 52, 94, 1.6, p.seed + 3);
-  var win = cutRect(x + w * 0.14, bodyTop + 50, 64, 58, 1.6, p.seed + 4);
-  /* the house the story ends in gets a second, small window upstairs:
-     two windows lit at night is a family home, one is a hallway. It
-     hangs below the eave strip, which reaches down to bodyTop + 22,
-     and sits over the door lintel, clear of the downstairs window. */
-  var win2 = p.win2 ? cutRect(x + w * 0.54, bodyTop + 26, 40, 34, 1.4, p.seed + 7) : "";
-  return one(chim, "f-red2", 4, 5) +
-    one(body, "f-cream", 8, 9) +
-    one(roof, "f-red", 6, 7) +
-    one(win, "f-glass", 3, 4) +
-    '<g class="f-cream2"><path d="' + cutRect(x + w * 0.14 + 29, bodyTop + 50, 6, 58, 1, p.seed + 5) + '"/>' +
-    '<path d="' + cutRect(x + w * 0.14, bodyTop + 76, 64, 6, 1, p.seed + 6) + '"/></g>' +
-    (p.win2 ? one(win2, "f-glass", 3, 4) +
-      '<g class="f-cream2"><path d="' + cutRect(x + w * 0.54 + 17, bodyTop + 26, 6, 34, 1, p.seed + 8) + '"/></g>' : "") +
-    one(door, "f-brown", 3, 4) +
+  var win = home ? cutRect(x + w * 0.13, bodyTop + 62, 70, 66, 1.6, p.seed + 4) :
+    cutRect(x + w * 0.14, bodyTop + 50, 64, 58, 1.6, p.seed + 4);
+  var out = one(chim, "f-red2", 4, 5);
+  if(home){
+    /* the chimney breathes only once somebody is in to light the stove */
+    out += '<g fill="#cbc3c9">' +
+      '<ellipse class="puff p1" cx="' + f(x + w * 0.30 + 13) + '" cy="' + f(bodyTop - 104) + '" rx="6.5" ry="5"/>' +
+      '<ellipse class="puff p2" cx="' + f(x + w * 0.30 + 9)  + '" cy="' + f(bodyTop - 122) + '" rx="8.5" ry="6.5"/>' +
+      '<ellipse class="puff p3" cx="' + f(x + w * 0.30 + 17) + '" cy="' + f(bodyTop - 142) + '" rx="10.5" ry="8"/></g>';
+  }
+  out += one(body, "f-cream", 8, 9) + one(roof, "f-red", 6, 7);
+  if(home){
+    out += '<g class="f-red2"><path d="' + cutRect(x + w * 0.13 - 13, bodyTop + 64, 10, 62, 1.2, p.seed + 9) + '"/>' +
+      '<path d="' + cutRect(x + w * 0.13 + 73, bodyTop + 64, 10, 62, 1.2, p.seed + 10) + '"/></g>';
+  }
+  out += one(win, "f-glass", 3, 4) +
+    '<g class="f-cream2"><path d="' + (home ?
+      cutRect(x + w * 0.13 + 32, bodyTop + 62, 6, 66, 1, p.seed + 5) :
+      cutRect(x + w * 0.14 + 29, bodyTop + 50, 6, 58, 1, p.seed + 5)) + '"/>' +
+    '<path d="' + (home ?
+      cutRect(x + w * 0.13, bodyTop + 92, 70, 6, 1, p.seed + 6) :
+      cutRect(x + w * 0.14, bodyTop + 76, 64, 6, 1, p.seed + 6)) + '"/></g>';
+  if(home){
+    var win2 = cutRect(x + w * 0.54, bodyTop + 28, 40, 34, 1.4, p.seed + 7);
+    out += one(win2, "f-glass", 3, 4) +
+      /* the pane is its own clip, so the heads rise inside the glass
+         and nowhere else: a shadow theatre the size of one window */
+      '<clipPath id="homewin"><path d="' + win2 + '"/></clipPath>' +
+      '<g clip-path="url(#homewin)" fill="#2a2234">' +
+      '<g class="kidpeek"><circle cx="' + f(x + w * 0.54 + 13) + '" cy="' + f(bodyTop + 56) + '" r="8"/>' +
+      '<circle cx="' + f(x + w * 0.54 + 9) + '" cy="' + f(bodyTop + 50) + '" r="4"/></g>' +
+      '<g class="babypeek"><circle cx="' + f(x + w * 0.54 + 29) + '" cy="' + f(bodyTop + 59) + '" r="6.5"/>' +
+      '<circle cx="' + f(x + w * 0.54 + 32) + '" cy="' + f(bodyTop + 53) + '" r="2.6"/></g></g>' +
+      '<g class="f-cream2"><path d="' + cutRect(x + w * 0.54 + 17, bodyTop + 28, 6, 34, 1, p.seed + 8) + '"/></g>';
+    out += '<g class="f-cream2"><path d="' + cutRect(x + w * 0.565, base - 6, 70, 12, 1.2, p.seed + 11) + '"/></g>' +
+      '<g class="f-cream2" opacity=".55">' +
+      '<path d="' + cutRect(x + w * 0.49 - 17, base + 4, 34, 7, 1.2, p.seed + 12) + '"/>' +
+      '<path d="' + cutRect(x + w * 0.26 - 17, base + 8, 34, 7, 1.2, p.seed + 13) + '"/>' +
+      '<path d="' + cutRect(x + w * 0.02 - 17, base + 5, 34, 7, 1.2, p.seed + 14) + '"/>' +
+      '<path d="' + cutRect(x - w * 0.21 - 17, base + 9, 34, 7, 1.2, p.seed + 15) + '"/></g>';
+  }
+  out += one(door, "f-brown", 3, 4) +
     '<g class="f-gold"><circle cx="' + f(x + w * 0.6 + 42) + '" cy="' + f(base - 48) + '" r="3.4"/></g>';
+  if(home){
+    out += '<g fill="#f4e8d0" text-anchor="middle">' +
+      '<text class="sgn zz z1" x="' + f(x + w * 0.755) + '" y="' + f(bodyTop + 14) + '" font-size="11">z</text>' +
+      '<text class="sgn zz z2" x="' + f(x + w * 0.81) + '" y="' + f(bodyTop - 2) + '" font-size="14">z</text>' +
+      '<text class="sgn zz z3" x="' + f(x + w * 0.875) + '" y="' + f(bodyTop - 20) + '" font-size="18">z</text></g>';
+  }
+  return out;
 };
 
 P.housefar = function(p){
@@ -3783,7 +3890,8 @@ for(j = 0; j < TIMELINE.length; j++){
   for(i = 0; i < gl.length; i++){
     var g = gl[i], gd = document.createElement("div");
     gd.className = "glow " + (g.when === "day" ? "g-day" : g.when === "any" ? "g-any" :
-      g.when === "home" ? "g-home" : "g-night") + (g.crt ? " g-crt" : "");
+      g.when === "home" ? "g-home" : "g-night") + (g.crt ? " g-crt" : "") +
+      (g.cls ? " " + g.cls : "");
     gd.style.setProperty("--str", g.str);
     gd.style.background = "radial-gradient(circle closest-side, rgba(" + g.c + ",.62) 0%, rgba(" + g.c +
       ",.34) 42%, rgba(" + g.c + ",.1) 72%, rgba(" + g.c + ",0) 100%)";
@@ -3814,7 +3922,8 @@ for(j = 0; j < TIMELINE.length; j++){
   for(i = 0; i < cl.length; i++){
     var c = cl[i], wrap = document.createElement("div"), html = "", k2;
     wrap.className = "capw" + (c.kind === "title" ? " titw" : "") +
-      (c.tone === "dark" ? " dark" : "") + (c.big ? " big" : "");
+      (c.tone === "dark" ? " dark" : "") + (c.big ? " big" : "") +
+      (c.slow ? " slow" : "");
     wrap.style.setProperty("--mw", c.mw + "px");
     wrap.style.setProperty("--tilt", f(c.tilt || -1) + "deg");
     /* hs: a hand cut type size for a headline that has to hold one long
@@ -4679,7 +4788,7 @@ scrollEl.addEventListener("scroll", kick, {passive:true});
    the story instead of leaving for another page. The camera's own
    easing turns the jump into a fast riffle through the set, and with
    reduced motion the engine already lands it in one frame. The href
-   still points at ../../ so the chip keeps working without JS. */
+   still points at ../../classic.html so the chip keeps working without JS. */
 (function(){
   var sk = document.querySelector("a.skip");
   if(!sk) return;
